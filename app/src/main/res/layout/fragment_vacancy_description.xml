@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/description"
+        android:textSize="20sp"
+        android:id="@+id/name_description"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/phone"
+        android:layout_marginTop="15dp"
+        android:id="@+id/name_phone"
+        android:layout_below="@+id/name_description"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/name_phone"
+        android:layout_below="@+id/name_description"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:text="@string/number_phone"
+        android:textColor="@android:color/holo_blue_light"
+        android:id="@+id/phone"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/email"
+        android:layout_marginTop="8dp"
+        android:id="@+id/name_email"
+        android:layout_below="@+id/name_phone"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/name_email"
+        android:layout_below="@+id/name_phone"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="15dp"
+        android:textColor="@android:color/holo_blue_light"
+        android:id="@+id/email"
+        android:text="@string/address_email"/>
+
+</RelativeLayout>

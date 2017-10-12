@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ItUniverApp1</string>
+    <string name="test">Test text</string>
+    <string name="description">Description</string>
+    <string name="phone">Phone:</string>
+    <string name="email">Email:</string>
+    <string name="number_phone">+780077892568</string>
+    <string name="address_email">name@email.com</string>
+</resources>
