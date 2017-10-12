@@ -25,7 +25,7 @@ public class ListVacanciesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_vacancies, container, false);
 
-        RecyclerView listVacanciesRecycler = (RecyclerView)view.findViewById(R.id.list_vacancies_recycler);
+        RecyclerView listVacanciesRecycler = (RecyclerView)view.findViewById(R.id.recycler_list_vacancies);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         listVacanciesRecycler.setLayoutManager(layoutManager);
         ListVacanciesAdapter adapter = new ListVacanciesAdapter();

@@ -26,8 +26,8 @@ public class VacancyDescriptionFragment extends Fragment implements View.OnClick
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         RelativeLayout relativeLayout = (RelativeLayout) inflater.inflate(R.layout.fragment_vacancy_description, container, false);
-        tvPhone = (TextView) relativeLayout.findViewById(R.id.phone);
-        tvEmail = (TextView) relativeLayout.findViewById(R.id.email);
+        tvPhone = (TextView) relativeLayout.findViewById(R.id.text_phone);
+        tvEmail = (TextView) relativeLayout.findViewById(R.id.text_email);
         tvPhone.setOnClickListener(this);
         tvEmail.setOnClickListener(this);
 
@@ -37,14 +37,13 @@ public class VacancyDescriptionFragment extends Fragment implements View.OnClick
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.phone :
-                Intent callIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:"));
+            case R.id.text_phone :
+                Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"));
                 callIntent.setData(Uri.parse("tel:" + tvPhone.getText().toString()));
-                Intent callChooser = Intent.createChooser(callIntent, "Phone");
-                startActivity(callChooser);
+                startActivity(callIntent);
                 break;
-            case R.id.email :
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"));
+            case R.id.text_email :
+                Intent emailIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:"));
                 emailIntent.setData(Uri.parse("mailto:" + tvEmail.getText().toString()));
                 Intent emailChooser = Intent.createChooser(emailIntent, "Email");
                 startActivity(emailChooser);

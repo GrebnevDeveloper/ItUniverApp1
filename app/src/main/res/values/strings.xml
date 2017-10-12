@@ -6,4 +6,7 @@
     <string name="email">Email:</string>
     <string name="number_phone">+780077892568</string>
     <string name="address_email">name@email.com</string>
+    <string name="create_entry">Create entry</string>
+    <string name="here_we_describe_the_vacancy">Here we describe the vacancy</string>
+    <string name="here_we_describe_the_resume">Here we describe the resume</string>
 </resources>

@@ -15,8 +15,8 @@ import com.developer.grebnev.ituniverapp1.R;
 
 public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdapter.ViewHolder> {
 
-    private Listener listener;
     private final String TAG = this.getClass().getSimpleName();
+    private Listener listener;
 
     public interface Listener {
         void onClick(int position);
@@ -24,7 +24,7 @@ public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdap
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        CardView cv = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.card_vancies, parent, false);
+        CardView cv = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_vacancies, parent, false);
         Log.d(TAG, "Create view holder");
         return new ViewHolder(cv);
     }
