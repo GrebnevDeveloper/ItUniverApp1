@@ -19,7 +19,9 @@ import com.developer.grebnev.ituniverapp1.mvp.presenters.ListVacanciesPresenter;
 import com.developer.grebnev.ituniverapp1.mvp.views.ListVacanciesView;
 import com.developer.grebnev.ituniverapp1.ui.adapters.ListVacanciesAdapter;
 
+import java.util.Deque;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,7 +59,7 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
     }
 
     @Override
-    public void showListVacancies(List<Vacancy> vacancies) {
+    public void showListVacancies(Deque<Map<Integer, List<Vacancy>>> vacancies) {
         adapter.setListVacancies(vacancies);
     }
 

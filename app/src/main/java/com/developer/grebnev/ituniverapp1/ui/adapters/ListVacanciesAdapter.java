@@ -9,11 +9,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.developer.grebnev.ituniverapp1.R;
+import com.developer.grebnev.ituniverapp1.consts.EndlessRecyclerConstants;
 import com.developer.grebnev.ituniverapp1.data.DatabaseQuery;
 import com.developer.grebnev.ituniverapp1.mvp.models.Vacancy;
 
-import java.util.ArrayList;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Grebnev on 11.10.2017.
@@ -21,11 +24,11 @@ import java.util.List;
 
 public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdapter.ViewHolder> {
 
-    private final String TAG = this.getClass().getSimpleName();
+    private static final String TAG = ListVacanciesAdapter.class.getSimpleName();
     private Listener listener;
-    private List<Vacancy> vacancies = new ArrayList<>();
-    DatabaseQuery queryDB = new DatabaseQuery();
-    private int countVacancies = queryDB.getCountVacancies();
+    private Deque<Map<Integer, List<Vacancy>>> dequeVacancies = new ArrayDeque<>(2);
+    private DatabaseQuery query = new DatabaseQuery();
+    private int countVacancies = query.getCountVacancies();
 
     public interface Listener {
         void onClick(int position);
@@ -54,7 +57,20 @@ public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdap
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         CardView cv = holder.cardVacancies;
         TextView tvTestText = (TextView) cv.findViewById(R.id.text_test);
-        tvTestText.setText(vacancies.get(position % 100).getName());
+        if (dequeVacancies.getFirst().containsKey(position / EndlessRecyclerConstants.VOLUME_LOAD + 1)) {
+            tvTestText.setText(dequeVacancies
+                    .getFirst()
+                    .get(position / EndlessRecyclerConstants.VOLUME_LOAD + 1)
+                    .get(position % EndlessRecyclerConstants.VOLUME_LOAD)
+                    .getName());
+        }
+        else {
+            tvTestText.setText(dequeVacancies
+                    .getLast()
+                    .get(position / EndlessRecyclerConstants.VOLUME_LOAD + 1)
+                    .get(position % EndlessRecyclerConstants.VOLUME_LOAD)
+                    .getName());
+        }
         Log.d(TAG, "Bind view holder " + position);
     }
 
@@ -76,7 +92,7 @@ public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdap
         this.listener = listener;
     }
 
-    public void setListVacancies(List<Vacancy> vacancies) {
-        this.vacancies = vacancies;
+    public void setListVacancies(Deque<Map<Integer, List<Vacancy>>> vacancies) {
+        this.dequeVacancies = vacancies;
     }
 }

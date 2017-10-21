@@ -5,7 +5,9 @@ import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 import com.developer.grebnev.ituniverapp1.mvp.models.Vacancy;
 
+import java.util.Deque;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Grebnev on 20.10.2017.
@@ -13,5 +15,5 @@ import java.util.List;
 
 @StateStrategyType(SingleStateStrategy.class)
 public interface ListVacanciesView extends MvpView {
-    void showListVacancies(List<Vacancy> vacancies);
+    void showListVacancies(Deque<Map<Integer, List<Vacancy>>> vacancies);
 }
