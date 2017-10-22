@@ -30,14 +30,14 @@ public abstract class EndlessRecyclerScrollListener extends RecyclerView.OnScrol
         firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
 
         if (dy > 0 && (totalItemCount - visibleItemCount) <= (firstVisibleItem + VISIBLE_THRESHOLD)) {
-            if (totalItemCount < linearLayoutManager.getItemCount() - EndlessRecyclerConstants.VOLUME_LOAD) {
+            if (totalItemCount <= linearLayoutManager.getItemCount()) {
                 totalItemCount += EndlessRecyclerConstants.VOLUME_LOAD;
             }
             onLoadMore(totalItemCount);
         }
         else {
             if (dy < 0 && (totalItemCount - EndlessRecyclerConstants.VOLUME_LOAD) >= (firstVisibleItem - VISIBLE_THRESHOLD)) {
-                if (totalItemCount > EndlessRecyclerConstants.VOLUME_LOAD) {
+                if (totalItemCount >= EndlessRecyclerConstants.VOLUME_LOAD) {
                     totalItemCount -= EndlessRecyclerConstants.VOLUME_LOAD;
                 }
                 onLoadMore(totalItemCount);
