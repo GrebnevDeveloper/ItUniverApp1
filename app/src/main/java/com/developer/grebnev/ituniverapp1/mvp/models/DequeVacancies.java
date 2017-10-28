@@ -28,13 +28,28 @@ public class DequeVacancies {
         if (route == EndlessRecyclerConstants.SCROLL_DOWN && oldRoute == EndlessRecyclerConstants.SCROLL_DOWN) {
             dequeVacancies.pollFirst();
             dequeVacancies.addLast(vacancies);
-        }
-        else {
+        } else {
             if (route == EndlessRecyclerConstants.SCROLL_UP && oldRoute == EndlessRecyclerConstants.SCROLL_UP) {
                 dequeVacancies.pollLast();
                 dequeVacancies.addFirst(vacancies);
             }
         }
         oldRoute = route;
+    }
+
+    public Vacancy getVacancyOfDeque(int position) {
+        if (dequeVacancies.getFirst().containsKey(position / EndlessRecyclerConstants.VOLUME_LOAD + 1)) {
+            return dequeVacancies
+                    .getFirst()
+                    .get(position / EndlessRecyclerConstants.VOLUME_LOAD + 1)
+                    .get(position % EndlessRecyclerConstants.VOLUME_LOAD);
+        }
+        if (dequeVacancies.getLast().containsKey(position / EndlessRecyclerConstants.VOLUME_LOAD + 1)) {
+            return dequeVacancies
+                    .getLast()
+                    .get(position / EndlessRecyclerConstants.VOLUME_LOAD + 1)
+                    .get(position % EndlessRecyclerConstants.VOLUME_LOAD);
+        }
+        return null;
     }
 }

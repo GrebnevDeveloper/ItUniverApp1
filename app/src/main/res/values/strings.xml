@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">ItUniverApp1</string>
-    <string name="test">Test text</string>
     <string name="description">Description</string>
     <string name="phone">Phone:</string>
     <string name="email">Email:</string>
@@ -9,4 +8,5 @@
     <string name="create_entry">Create entry</string>
     <string name="here_we_describe_the_vacancy">Here we describe the vacancy</string>
     <string name="here_we_describe_the_resume">Here we describe the resume</string>
+    <string name="uploading_data">Uploading data</string>
 </resources>

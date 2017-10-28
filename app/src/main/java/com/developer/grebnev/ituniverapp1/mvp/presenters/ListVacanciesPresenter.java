@@ -1,5 +1,8 @@
 package com.developer.grebnev.ituniverapp1.mvp.presenters;
 
+import android.util.Log;
+import android.view.View;
+
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.developer.grebnev.ituniverapp1.consts.EndlessRecyclerConstants;
@@ -11,6 +14,11 @@ import com.developer.grebnev.ituniverapp1.mvp.views.ListVacanciesView;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Grebnev on 20.10.2017.
@@ -18,6 +26,7 @@ import java.util.Map;
 
 @InjectViewState
 public class ListVacanciesPresenter extends MvpPresenter<ListVacanciesView> {
+    private static final String TAG = ListVacanciesPresenter.class.getSimpleName();
     private DequeVacancies dequeVacancies = new DequeVacancies();
     private int totalItemCountPresenter = EndlessRecyclerConstants.VOLUME_LOAD;
 
@@ -25,10 +34,14 @@ public class ListVacanciesPresenter extends MvpPresenter<ListVacanciesView> {
         return totalItemCountPresenter;
     }
 
+    public DequeVacancies getDequeVacancies() {
+        return dequeVacancies;
+    }
+
     public void loadNextDataFromDatabase(int totalItemCount) {
         if (totalItemCountPresenter == totalItemCount) {
             if (!dequeVacancies.getDequeVacancies().isEmpty()) {
-                getViewState().showListVacancies(dequeVacancies.getDequeVacancies());
+                getViewState().showListVacancies(dequeVacancies);
             } else {
                 loadData(EndlessRecyclerConstants.SCROLL_DOWN);
             }
@@ -43,14 +56,32 @@ public class ListVacanciesPresenter extends MvpPresenter<ListVacanciesView> {
         }
     }
 
-    private void loadData(int route) {
-        DatabaseQuery query = new DatabaseQuery();
-        List<Vacancy> vacancies =
-                query.getListVacancies(totalItemCountPresenter - EndlessRecyclerConstants.VOLUME_LOAD,
-                        totalItemCountPresenter + 1);
-        Map<Integer, List<Vacancy>> mapVacancies = new HashMap<>();
-        mapVacancies.put(totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD, vacancies);
-        dequeVacancies.addElementIntoDeque(mapVacancies, route);
-        getViewState().showListVacancies(dequeVacancies.getDequeVacancies());
+    private void loadData(final int route) {
+        Observable.fromCallable(new Callable<DequeVacancies>() {
+            @Override
+            public DequeVacancies call() throws Exception {
+                DatabaseQuery query = new DatabaseQuery();
+                List<Vacancy> vacancies =
+                        query.getListVacancies(totalItemCountPresenter - EndlessRecyclerConstants.VOLUME_LOAD,
+                                totalItemCountPresenter + 1);
+                Map<Integer, List<Vacancy>> mapVacancies = new HashMap<>();
+                mapVacancies.put(totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD, vacancies);
+                dequeVacancies.addElementIntoDeque(mapVacancies, route);
+                return dequeVacancies;
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                    getViewState().showProgressLoad(View.VISIBLE);
+                    Log.d(TAG, "doOnSubscriber");
+                })
+                .doFinally(() -> {
+                    getViewState().showProgressLoad(View.GONE);
+                    Log.d(TAG, "doFinally");
+                })
+                .subscribe(repositories -> {
+                    getViewState().showListVacancies(repositories);
+                }, Throwable::printStackTrace);
     }
 }

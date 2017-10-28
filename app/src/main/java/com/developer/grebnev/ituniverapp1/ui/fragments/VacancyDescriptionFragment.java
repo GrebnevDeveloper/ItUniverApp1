@@ -1,10 +1,10 @@
 package com.developer.grebnev.ituniverapp1.ui.fragments;
 
-import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +12,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.developer.grebnev.ituniverapp1.R;
+import com.developer.grebnev.ituniverapp1.mvp.models.Vacancy;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Grebnev on 11.10.2017.
@@ -19,18 +23,26 @@ import com.developer.grebnev.ituniverapp1.R;
 
 public class VacancyDescriptionFragment extends Fragment implements View.OnClickListener {
 
-    private TextView tvPhone;
-    private TextView tvEmail;
+    @BindView(R.id.text_name_vacancy)
+    TextView tvNameVacancy;
+    @BindView(R.id.text_address_vacancy)
+    TextView tvAddressVacancy;
+    @BindView(R.id.text_phone)
+    TextView tvPhone;
+    @BindView(R.id.text_email)
+    TextView tvEmail;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         RelativeLayout relativeLayout = (RelativeLayout) inflater.inflate(R.layout.fragment_vacancy_description, container, false);
-        tvPhone = (TextView) relativeLayout.findViewById(R.id.text_phone);
-        tvEmail = (TextView) relativeLayout.findViewById(R.id.text_email);
+        ButterKnife.bind(this, relativeLayout);
         tvPhone.setOnClickListener(this);
         tvEmail.setOnClickListener(this);
 
+        Vacancy vacancy = getArguments().getParcelable(ListVacanciesFragment.KEY_VACANCY);
+        tvNameVacancy.setText(vacancy.getName());
+        tvAddressVacancy.setText(vacancy.getAddressVacancy());
         return relativeLayout;
     }
 

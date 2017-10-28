@@ -1,5 +1,6 @@
 package com.developer.grebnev.ituniverapp1.ui.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,15 +14,12 @@ import android.view.ViewGroup;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.developer.grebnev.ituniverapp1.R;
+import com.developer.grebnev.ituniverapp1.mvp.models.DequeVacancies;
 import com.developer.grebnev.ituniverapp1.mvp.models.EndlessRecyclerScrollListener;
 import com.developer.grebnev.ituniverapp1.mvp.models.Vacancy;
 import com.developer.grebnev.ituniverapp1.mvp.presenters.ListVacanciesPresenter;
 import com.developer.grebnev.ituniverapp1.mvp.views.ListVacanciesView;
 import com.developer.grebnev.ituniverapp1.ui.adapters.ListVacanciesAdapter;
-
-import java.util.Deque;
-import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,8 +30,12 @@ import butterknife.ButterKnife;
 
 public class ListVacanciesFragment extends MvpAppCompatFragment implements ListVacanciesView {
 
+    public static final String KEY_VACANCY = "vacancy";
+
     @BindView(R.id.recycler_list_vacancies)
     RecyclerView listVacanciesRecycler;
+
+    ProgressDialog progressDialog;
 
     @InjectPresenter
     ListVacanciesPresenter listVacanciesPresenter;
@@ -52,18 +54,38 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
 
+        createProgressDialog();
         totalItemCountFragment = listVacanciesPresenter.getTotalItemCountPresenter();
         setUpRecyclerView();
         setUpAdapter(listVacanciesRecycler);
         listVacanciesPresenter.loadNextDataFromDatabase(totalItemCountFragment);
     }
 
-    @Override
-    public void showListVacancies(Deque<Map<Integer, List<Vacancy>>> vacancies) {
-        adapter.setListVacancies(vacancies);
+    public static VacancyDescriptionFragment newInstance(Vacancy vacancy) {
+        Bundle args = new Bundle();
+        args.putParcelable(KEY_VACANCY, vacancy);
+        VacancyDescriptionFragment fragment = new VacancyDescriptionFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
-    public void setUpRecyclerView() {
+    @Override
+    public void showProgressLoad(int visibility) {
+        if (visibility == View.VISIBLE) {
+            progressDialog.show();
+        }
+        else {
+            progressDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void showListVacancies(DequeVacancies vacancies) {
+        adapter.setListVacancies(vacancies);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void setUpRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         listVacanciesRecycler.setLayoutManager(layoutManager);
         listVacanciesRecycler.addOnScrollListener(new EndlessRecyclerScrollListener(layoutManager, totalItemCountFragment) {
@@ -75,18 +97,24 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
         });
     }
 
-    public void setUpAdapter(RecyclerView rv) {
+    private void setUpAdapter(RecyclerView rv) {
         adapter = new ListVacanciesAdapter();
         rv.setAdapter(adapter);
         adapter.setListener(new ListVacanciesAdapter.Listener() {
             @Override
             public void onClick(int position) {
-                Fragment fragment = new VacancyDescriptionFragment();
+                Fragment fragment =
+                        ListVacanciesFragment.newInstance(listVacanciesPresenter.getDequeVacancies().getVacancyOfDeque(position));
                 FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.container_fragment, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });
+    }
+
+    private void createProgressDialog() {
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage(getString(R.string.uploading_data));
     }
 }

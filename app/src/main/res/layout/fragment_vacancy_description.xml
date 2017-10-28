@@ -7,24 +7,39 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:id="@+id/text_name_vacancy"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/description"
         android:textSize="20sp"
+        android:layout_below="@+id/text_name_vacancy"
         android:id="@+id/text_name_description"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/phone"
+        android:textSize="15sp"
         android:layout_marginTop="15dp"
-        android:id="@+id/text_name_phone"
+        android:id="@+id/text_address_vacancy"
         android:layout_below="@+id/text_name_description"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/phone"
+        android:layout_marginTop="8dp"
+        android:id="@+id/text_name_phone"
+        android:layout_below="@+id/text_address_vacancy"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/text_name_phone"
-        android:layout_below="@+id/text_name_description"
-        android:layout_marginTop="15dp"
+        android:layout_below="@+id/text_address_vacancy"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="10dp"
         android:text="@string/number_phone"
         android:textColor="@android:color/holo_blue_light"
