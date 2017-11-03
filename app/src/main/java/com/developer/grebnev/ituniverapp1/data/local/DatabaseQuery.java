@@ -1,4 +1,4 @@
-package com.developer.grebnev.ituniverapp1.data;
+package com.developer.grebnev.ituniverapp1.data.local;
 
 import com.activeandroid.query.Select;
 import com.developer.grebnev.ituniverapp1.mvp.models.Vacancy;

@@ -3,7 +3,7 @@ apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.developer.grebnev.ituniverapp1"
         minSdkVersion 14
@@ -41,6 +41,9 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.8.1'
     compile 'io.reactivex.rxjava2:rxjava:2.1.4'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.google.code.gson:gson:2.8.2'
+    compile 'com.squareup.retrofit2:converter-gson:+'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     annotationProcessor 'com.arello-mobile:moxy-compiler:1.5.3'

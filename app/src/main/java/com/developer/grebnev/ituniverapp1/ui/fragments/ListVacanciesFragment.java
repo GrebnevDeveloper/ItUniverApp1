@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.developer.grebnev.ituniverapp1.mvp.models.Vacancy;
 import com.developer.grebnev.ituniverapp1.mvp.presenters.ListVacanciesPresenter;
 import com.developer.grebnev.ituniverapp1.mvp.views.ListVacanciesView;
 import com.developer.grebnev.ituniverapp1.ui.adapters.ListVacanciesAdapter;
+import com.developer.grebnev.ituniverapp1.utils.InternetConnection;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,6 +31,8 @@ import butterknife.ButterKnife;
  */
 
 public class ListVacanciesFragment extends MvpAppCompatFragment implements ListVacanciesView {
+
+    private static final String TAG = ListVacanciesFragment.class.getSimpleName();
 
     public static final String KEY_VACANCY = "vacancy";
 
@@ -58,6 +62,12 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
         totalItemCountFragment = listVacanciesPresenter.getTotalItemCountPresenter();
         setUpRecyclerView();
         setUpAdapter(listVacanciesRecycler);
+        if (InternetConnection.isOnline(getContext())) {
+            Log.d(TAG, "Internet Connection");
+        }
+        else {
+            Log.d(TAG, "Not internet connection");
+        }
         listVacanciesPresenter.loadNextDataFromDatabase(totalItemCountFragment);
     }
 

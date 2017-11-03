@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.developer.grebnev.ituniverapp1.R;
-import com.developer.grebnev.ituniverapp1.data.DatabaseQuery;
+import com.developer.grebnev.ituniverapp1.data.local.DatabaseQuery;
 import com.developer.grebnev.ituniverapp1.mvp.models.DequeVacancies;
 
 import butterknife.BindView;
