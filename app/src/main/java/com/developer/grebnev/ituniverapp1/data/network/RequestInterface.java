@@ -2,7 +2,7 @@ package com.developer.grebnev.ituniverapp1.data.network;
 
 import com.developer.grebnev.ituniverapp1.data.entity.PageVacancy;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
@@ -12,5 +12,5 @@ import retrofit2.http.Query;
 
 public interface RequestInterface {
     @GET("/vacancies")
-    Call<PageVacancy> getVacancies(@Query("per_page") int countVacancies);
+    Observable<PageVacancy> getVacancies(@Query("per_page") int countVacancies, @Query("page") int numberPage);
 }
