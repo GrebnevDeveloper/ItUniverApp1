@@ -16,6 +16,7 @@ import javax.inject.Inject;
 public class MapVacancyMapper {
     @Inject
     public MapVacancyMapper() {}
+
     public Map<Integer, List<Vacancy>> createMapVacancies(int totalItemCountPresenter, List<Vacancy> vacancies) {
         Map<Integer, List<Vacancy>> mapVacancies = new HashMap<>();
         mapVacancies.put(totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD, vacancies);

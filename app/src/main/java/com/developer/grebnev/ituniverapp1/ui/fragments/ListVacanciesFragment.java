@@ -1,7 +1,6 @@
 package com.developer.grebnev.ituniverapp1.ui.fragments;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,11 +14,11 @@ import android.view.ViewGroup;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.developer.grebnev.ituniverapp1.MyApplication;
 import com.developer.grebnev.ituniverapp1.R;
 import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
-import com.developer.grebnev.ituniverapp1.di.components.VacancyComponent;
-import com.developer.grebnev.ituniverapp1.domain.interactor.DequeVacancies;
 import com.developer.grebnev.ituniverapp1.domain.interactor.EndlessRecyclerScrollListener;
+import com.developer.grebnev.ituniverapp1.domain.repository.DequeVacancies;
 import com.developer.grebnev.ituniverapp1.mvp.presenters.ListVacanciesPresenter;
 import com.developer.grebnev.ituniverapp1.mvp.views.ListVacanciesView;
 import com.developer.grebnev.ituniverapp1.ui.adapters.ListVacanciesAdapter;
@@ -38,8 +37,6 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
 
     public static final String KEY_VACANCY = "vacancy";
 
-    private VacancyComponent vacancyComponent;
-
     @BindView(R.id.recycler_list_vacancies)
     RecyclerView listVacanciesRecycler;
 
@@ -55,7 +52,7 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        this.getComponent().inject(this);
+        MyApplication.getApplicationComponent().inject(this);
     }
 
     @Nullable
@@ -136,14 +133,6 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
     private void createProgressDialog() {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage(getString(R.string.uploading_data));
-    }
-
-    public VacancyComponent getComponent() {
-        return vacancyComponent;
-    }
-
-    public Context context() {
-        return this.getActivity().getApplicationContext();
     }
 
 

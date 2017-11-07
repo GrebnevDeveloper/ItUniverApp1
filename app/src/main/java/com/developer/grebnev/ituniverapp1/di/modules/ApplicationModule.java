@@ -2,8 +2,6 @@ package com.developer.grebnev.ituniverapp1.di.modules;
 
 import android.app.Application;
 
-import com.developer.grebnev.ituniverapp1.App;
-
 import dagger.Module;
 import dagger.Provides;
 
@@ -12,9 +10,9 @@ import dagger.Provides;
  */
 @Module
 public class ApplicationModule {
-    App application;
+    Application application;
 
-    public ApplicationModule(App application) {
+    public ApplicationModule(Application application) {
         this.application = application;
     }
 

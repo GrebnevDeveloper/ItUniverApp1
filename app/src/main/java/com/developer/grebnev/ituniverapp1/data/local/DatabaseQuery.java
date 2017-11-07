@@ -6,6 +6,8 @@ import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 
 /**
@@ -13,6 +15,9 @@ import io.reactivex.Observable;
  */
 
 public class DatabaseQuery {
+    @Inject
+    public DatabaseQuery() {}
+
     public List<Vacancy> getFullListVacancies() {
         return new Select()
                 .from(Vacancy.class)

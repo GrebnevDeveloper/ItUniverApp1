@@ -1,0 +1,71 @@
+package com.developer.grebnev.ituniverapp1.domain.repository;
+
+import android.app.Application;
+
+import com.developer.grebnev.ituniverapp1.consts.EndlessRecyclerConstants;
+import com.developer.grebnev.ituniverapp1.data.local.DataManager;
+import com.developer.grebnev.ituniverapp1.data.local.DatabaseQuery;
+import com.developer.grebnev.ituniverapp1.data.repository.VacanciesNetworkRepository;
+import com.developer.grebnev.ituniverapp1.domain.mapper.DequeVacancyMapper;
+import com.developer.grebnev.ituniverapp1.domain.mapper.MapVacancyMapper;
+import com.developer.grebnev.ituniverapp1.utils.InternetConnection;
+
+import javax.inject.Inject;
+
+import io.reactivex.Observable;
+
+/**
+ * Created by Grebnev on 07.11.2017.
+ */
+
+public class DequeVacanciesRepository {
+    Application application;
+    VacanciesNetworkRepository vacanciesNetworkRepository;
+    DataManager dataManager;
+    DatabaseQuery query;
+    MapVacancyMapper mapVacancyMapper;
+    DequeVacancyMapper dequeVacancyMapper;
+    DequeVacancies dequeVacancies;
+
+    @Inject
+    public DequeVacanciesRepository(Application application,
+                                    VacanciesNetworkRepository vacanciesNetworkRepository,
+                                    DataManager dataManager,
+                                    DatabaseQuery query,
+                                    MapVacancyMapper mapVacancyMapper,
+                                    DequeVacancyMapper dequeVacancyMapper,
+                                    DequeVacancies dequeVacancies) {
+        this.application = application;
+        this.vacanciesNetworkRepository = vacanciesNetworkRepository;
+        this.dataManager = dataManager;
+        this.query = query;
+        this.mapVacancyMapper = mapVacancyMapper;
+        this.dequeVacancyMapper = dequeVacancyMapper;
+        this.dequeVacancies = dequeVacancies;
+    }
+
+    public Observable<DequeVacancies> loadVacancies(int totalItemCountPresenter, int route) {
+        if (InternetConnection.isOnline(application.getApplicationContext())) {
+            return vacanciesNetworkRepository.getVacanciesNetwork(EndlessRecyclerConstants.VOLUME_LOAD,
+                    totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD - 1)
+                    .doOnNext(listVacancies -> {
+                        if (totalItemCountPresenter > query.getCountVacancies()) {
+                            dataManager.saveData(listVacancies);
+                        } else {
+                            dataManager.overwriteData(listVacancies, totalItemCountPresenter);
+                        }
+                    })
+                    .map(listVacancies -> mapVacancyMapper.createMapVacancies(totalItemCountPresenter, listVacancies))
+                    .map(mapVacancy -> dequeVacancyMapper.createDequeVacancy(dequeVacancies, mapVacancy, route));
+        }
+        else {
+            if (query.getCountVacancies() != 0) {
+                return query.getListVacancies(totalItemCountPresenter - EndlessRecyclerConstants.VOLUME_LOAD,
+                        totalItemCountPresenter + 1)
+                        .map(listVacancies -> mapVacancyMapper.createMapVacancies(totalItemCountPresenter, listVacancies))
+                        .map(mapVacancy -> dequeVacancyMapper.createDequeVacancy(dequeVacancies, mapVacancy, route));
+            }
+        }
+        return Observable.just(dequeVacancies);
+    }
+}

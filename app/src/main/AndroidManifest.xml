@@ -14,6 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:name=".MyApplication"
         tools:replace="label">
         <meta-data android:name="AA_DB_NAME" android:value="Vacancy.db" />
         <meta-data android:name="AA_DB_VERSION" android:value="2" />

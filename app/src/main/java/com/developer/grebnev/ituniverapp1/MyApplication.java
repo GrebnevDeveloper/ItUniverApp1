@@ -10,8 +10,8 @@ import com.developer.grebnev.ituniverapp1.di.modules.ApplicationModule;
  * Created by Grebnev on 05.11.2017.
  */
 
-public class App extends Application {
-    private ApplicationComponent applicationComponent;
+public class MyApplication extends Application {
+    private static ApplicationComponent applicationComponent;
 
     @Override
     public void onCreate() {
@@ -21,7 +21,7 @@ public class App extends Application {
                 .build();
     }
 
-    public ApplicationComponent getApplicationComponent() {
-        return this.applicationComponent;
+    public static ApplicationComponent getApplicationComponent() {
+        return applicationComponent;
     }
 }

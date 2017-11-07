@@ -1,4 +1,4 @@
-package com.developer.grebnev.ituniverapp1.domain.interactor;
+package com.developer.grebnev.ituniverapp1.domain.repository;
 
 import com.developer.grebnev.ituniverapp1.consts.EndlessRecyclerConstants;
 import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
@@ -9,11 +9,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 /**
- * Created by Grebnev on 04.11.2017.
+ * Created by Grebnev on 07.11.2017.
  */
 
 public class DequeVacancies {
+    @Inject
+    public DequeVacancies() {}
+
     private Deque<Map<Integer, List<Vacancy>>> dequeVacancies = new ArrayDeque<>(2);
     private int oldRoute = EndlessRecyclerConstants.SCROLL_DOWN;
 

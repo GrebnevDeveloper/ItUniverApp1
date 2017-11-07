@@ -9,9 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.developer.grebnev.ituniverapp1.R;
-import com.developer.grebnev.ituniverapp1.consts.EndlessRecyclerConstants;
 import com.developer.grebnev.ituniverapp1.data.local.DatabaseQuery;
-import com.developer.grebnev.ituniverapp1.domain.interactor.DequeVacancies;
+import com.developer.grebnev.ituniverapp1.domain.repository.DequeVacancies;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,14 +57,14 @@ public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdap
             holder.tvAddressVacancy.setText(dequeVacancies.getVacancyOfDeque(position).getCreatedAt() + " " +
             dequeVacancies.getVacancyOfDeque(position).getIdVacancy());
         }
-
+        countVacancies = query.getCountVacancies();
         Log.d(TAG, "Bind view holder " + position);
     }
 
     @Override
     public int getItemCount() {
         Log.d(TAG, "Count vacancies " + countVacancies);
-        return countVacancies + EndlessRecyclerConstants.VOLUME_LOAD;
+        return countVacancies;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
