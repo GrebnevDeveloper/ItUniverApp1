@@ -1,4 +1,4 @@
-package com.developer.grebnev.ituniverapp1.ui.adapters;
+package com.developer.grebnev.ituniverapp1.presentation.ui.adapters;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.developer.grebnev.ituniverapp1.R;
+import com.developer.grebnev.ituniverapp1.consts.EndlessRecyclerConstants;
 import com.developer.grebnev.ituniverapp1.data.local.DatabaseQuery;
 import com.developer.grebnev.ituniverapp1.domain.repository.DequeVacancies;
 
@@ -16,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Grebnev on 11.10.2017.
+ * Created by Grebnev on 07.11.2017.
  */
 
 public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdapter.ViewHolder> {
@@ -34,7 +35,7 @@ public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdap
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         CardView cv = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_vacancies, parent, false);
-        final ViewHolder holder = new ViewHolder(cv);
+        final ListVacanciesAdapter.ViewHolder holder = new ListVacanciesAdapter.ViewHolder(cv);
         cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,11 +52,11 @@ public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdap
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ListVacanciesAdapter.ViewHolder holder, final int position) {
         if (!dequeVacancies.getDequeVacancies().isEmpty()) {
             holder.tvNameVacancy.setText(dequeVacancies.getVacancyOfDeque(position).getName() + " " + position);
             holder.tvAddressVacancy.setText(dequeVacancies.getVacancyOfDeque(position).getCreatedAt() + " " +
-            dequeVacancies.getVacancyOfDeque(position).getIdVacancy());
+                    dequeVacancies.getVacancyOfDeque(position).getIdVacancy());
         }
         countVacancies = query.getCountVacancies();
         Log.d(TAG, "Bind view holder " + position);
@@ -64,6 +65,9 @@ public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdap
     @Override
     public int getItemCount() {
         Log.d(TAG, "Count vacancies " + countVacancies);
+        if (countVacancies == 0) {
+            return countVacancies + EndlessRecyclerConstants.VOLUME_LOAD;
+        }
         return countVacancies;
     }
 

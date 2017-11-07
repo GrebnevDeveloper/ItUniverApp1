@@ -1,4 +1,4 @@
-package com.developer.grebnev.ituniverapp1.ui.fragments;
+package com.developer.grebnev.ituniverapp1.presentation.ui.fragments;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Grebnev on 11.10.2017.
+ * Created by Grebnev on 07.11.2017.
  */
 
 public class VacancyDescriptionFragment extends Fragment implements View.OnClickListener {

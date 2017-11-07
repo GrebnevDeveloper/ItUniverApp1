@@ -2,9 +2,9 @@ package com.developer.grebnev.ituniverapp1.di.components;
 
 import com.developer.grebnev.ituniverapp1.di.modules.ApplicationModule;
 import com.developer.grebnev.ituniverapp1.di.modules.VacancyModule;
-import com.developer.grebnev.ituniverapp1.mvp.presenters.ListVacanciesPresenter;
-import com.developer.grebnev.ituniverapp1.ui.activities.MainActivity;
-import com.developer.grebnev.ituniverapp1.ui.fragments.ListVacanciesFragment;
+import com.developer.grebnev.ituniverapp1.presentation.mvp.presenters.ListVacanciesPresenter;
+import com.developer.grebnev.ituniverapp1.presentation.ui.activities.MainActivity;
+import com.developer.grebnev.ituniverapp1.presentation.ui.fragments.ListVacanciesFragment;
 
 import javax.inject.Singleton;
 

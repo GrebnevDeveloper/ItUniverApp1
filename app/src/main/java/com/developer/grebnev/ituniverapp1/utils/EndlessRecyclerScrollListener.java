@@ -1,4 +1,4 @@
-package com.developer.grebnev.ituniverapp1.domain.interactor;
+package com.developer.grebnev.ituniverapp1.utils;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;

@@ -67,5 +67,27 @@ public class DequeVacanciesRepository {
             }
         }
         return Observable.just(dequeVacancies);
+//        if (InternetConnection.isOnline(application.getApplicationContext())) {
+//            Observable<DequeVacancies> vacanciesFromNetwork =
+//                    vacanciesNetworkRepository.getVacanciesNetwork(EndlessRecyclerConstants.VOLUME_LOAD,
+//                            totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD - 1)
+//                            .doOnNext(listVacancies -> {
+//                                if (totalItemCountPresenter > query.getCountVacancies()) {
+//                                    dataManager.saveData(listVacancies);
+//                                } else {
+//                                    dataManager.overwriteData(listVacancies, totalItemCountPresenter);
+//                                }
+//                            })
+//                            .map(listVacancies -> mapVacancyMapper.createMapVacancies(totalItemCountPresenter, listVacancies))
+//                            .map(mapVacancy -> dequeVacancyMapper.createDequeVacancy(dequeVacancies, mapVacancy, route));
+//        }
+//        Observable<DequeVacancies> vacanciesFromLocal =
+//                query.getListVacancies(totalItemCountPresenter - EndlessRecyclerConstants.VOLUME_LOAD,
+//                        totalItemCountPresenter + 1)
+//                        .map(listVacancies -> mapVacancyMapper.createMapVacancies(totalItemCountPresenter, listVacancies))
+//                        .map(mapVacancy -> dequeVacancyMapper.createDequeVacancy(dequeVacancies, mapVacancy, route));
+//
+//        return Observable
+//                .concat(vacanciesFromLocal, vacanciesFromLocal);
     }
 }

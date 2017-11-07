@@ -1,4 +1,4 @@
-package com.developer.grebnev.ituniverapp1.ui.activities;
+package com.developer.grebnev.ituniverapp1.presentation.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,11 @@ import android.view.MenuItem;
 import com.activeandroid.ActiveAndroid;
 import com.developer.grebnev.ituniverapp1.MyApplication;
 import com.developer.grebnev.ituniverapp1.R;
-import com.developer.grebnev.ituniverapp1.ui.fragments.ListVacanciesFragment;
+import com.developer.grebnev.ituniverapp1.presentation.ui.fragments.ListVacanciesFragment;
+
+/**
+ * Created by Grebnev on 07.11.2017.
+ */
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.developer.grebnev.ituniverapp1.ui.fragments;
+package com.developer.grebnev.ituniverapp1.presentation.ui.fragments;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -17,18 +17,18 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.developer.grebnev.ituniverapp1.MyApplication;
 import com.developer.grebnev.ituniverapp1.R;
 import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
-import com.developer.grebnev.ituniverapp1.domain.interactor.EndlessRecyclerScrollListener;
+import com.developer.grebnev.ituniverapp1.utils.EndlessRecyclerScrollListener;
 import com.developer.grebnev.ituniverapp1.domain.repository.DequeVacancies;
-import com.developer.grebnev.ituniverapp1.mvp.presenters.ListVacanciesPresenter;
-import com.developer.grebnev.ituniverapp1.mvp.views.ListVacanciesView;
-import com.developer.grebnev.ituniverapp1.ui.adapters.ListVacanciesAdapter;
+import com.developer.grebnev.ituniverapp1.presentation.mvp.presenters.ListVacanciesPresenter;
+import com.developer.grebnev.ituniverapp1.presentation.mvp.view.ListVacanciesView;
+import com.developer.grebnev.ituniverapp1.presentation.ui.adapters.ListVacanciesAdapter;
 import com.developer.grebnev.ituniverapp1.utils.InternetConnection;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Grebnev on 11.10.2017.
+ * Created by Grebnev on 07.11.2017.
  */
 
 public class ListVacanciesFragment extends MvpAppCompatFragment implements ListVacanciesView {
@@ -71,8 +71,7 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
         setUpAdapter(listVacanciesRecycler);
         if (InternetConnection.isOnline(getContext())) {
             Log.d(TAG, "Internet Connection");
-        }
-        else {
+        } else {
             Log.d(TAG, "Not internet connection");
         }
         listVacanciesPresenter.loadNextDataFromDatabase(totalItemCountFragment);
@@ -90,8 +89,7 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
     public void showProgressLoad(int visibility) {
         if (visibility == View.VISIBLE) {
             progressDialog.show();
-        }
-        else {
+        } else {
             progressDialog.dismiss();
         }
     }
@@ -134,6 +132,4 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage(getString(R.string.uploading_data));
     }
-
-
 }

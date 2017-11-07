@@ -18,21 +18,21 @@
         tools:replace="label">
         <meta-data android:name="AA_DB_NAME" android:value="Vacancy.db" />
         <meta-data android:name="AA_DB_VERSION" android:value="2" />
-        <activity android:name=".ui.activities.MainActivity">
+        <activity android:name=".presentation.ui.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.AddVacancyActivity">
+        <activity android:name=".presentation.ui.activities.AddVacancyActivity">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_CREATE_ENTRY"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.AddResumeActivity">
+        <activity android:name=".presentation.ui.activities.AddResumeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_CREATE_ENTRY"/>
 

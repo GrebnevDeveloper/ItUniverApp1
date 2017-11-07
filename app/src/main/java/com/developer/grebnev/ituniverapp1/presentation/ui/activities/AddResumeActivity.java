@@ -1,9 +1,13 @@
-package com.developer.grebnev.ituniverapp1.ui.activities;
+package com.developer.grebnev.ituniverapp1.presentation.ui.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.developer.grebnev.ituniverapp1.R;
+
+/**
+ * Created by Grebnev on 07.11.2017.
+ */
 
 public class AddResumeActivity extends AppCompatActivity {
 
