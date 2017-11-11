@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.developer.grebnev.ituniverapp1.R;
-import com.developer.grebnev.ituniverapp1.consts.EndlessRecyclerConstants;
 import com.developer.grebnev.ituniverapp1.data.local.DatabaseQuery;
 import com.developer.grebnev.ituniverapp1.domain.repository.DequeVacancies;
 
@@ -64,11 +63,19 @@ public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdap
 
     @Override
     public int getItemCount() {
-        Log.d(TAG, "Count vacancies " + countVacancies);
-        if (countVacancies == 0) {
-            return countVacancies + EndlessRecyclerConstants.VOLUME_LOAD;
+        int keyOut = 0;
+        if (!dequeVacancies.getDequeVacancies().isEmpty()) {
+            for (Integer key : dequeVacancies.getDequeVacancies().getLast().keySet()) {
+                keyOut = key * 100;
+            }
         }
-        return countVacancies;
+        Log.d(TAG, "Count item " + keyOut + " " + countVacancies);
+        if (countVacancies >= keyOut || countVacancies == 0) {
+            return keyOut;
+        }
+        else {
+            return countVacancies;
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

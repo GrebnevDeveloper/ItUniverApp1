@@ -1,5 +1,7 @@
 package com.developer.grebnev.ituniverapp1.presentation.mvp.presenters;
 
+import android.view.View;
+
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.developer.grebnev.ituniverapp1.MyApplication;
@@ -59,6 +61,12 @@ public class ListVacanciesPresenter extends MvpPresenter<ListVacanciesView> {
         dequeVacanciesInteractor.getDequeVacancies(totalItemCountPresenter, route)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                    getViewState().showProgressLoad(View.VISIBLE);
+                })
+                .doFinally(() -> {
+                    getViewState().showProgressLoad(View.INVISIBLE);
+                })
                 .subscribe(repository -> {
                     dequeVacancies = repository;
                     getViewState().showListVacancies(repository);
