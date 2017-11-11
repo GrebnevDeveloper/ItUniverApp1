@@ -14,7 +14,7 @@ import io.reactivex.Observable;
  * Created by Grebnev on 07.11.2017.
  */
 
-public class VacanciesNetworkRepository {
+public class VacanciesNetworkRepository implements VacanciesNetworkInterface{
     VacancyJsonMapper vacancyJsonMapper;
 
     @Inject
@@ -22,6 +22,7 @@ public class VacanciesNetworkRepository {
         this.vacancyJsonMapper = vacancyJsonMapper;
     }
 
+    @Override
     public Observable<List<Vacancy>> getVacanciesNetwork(int countVacancies, int numberPage) {
         return RetrofitManager.getRequestInterface().getVacancies(countVacancies, numberPage)
                 .map(pageVacancy -> vacancyJsonMapper.transformJsonToVacancy(pageVacancy));

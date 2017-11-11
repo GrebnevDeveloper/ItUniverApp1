@@ -11,7 +11,7 @@ import io.reactivex.Observable;
  * Created by Grebnev on 07.11.2017.
  */
 
-public class DequeVacanciesInteractor {
+public class DequeVacanciesInteractor implements DequeIteractorInterface{
     DequeVacanciesRepository dequeVacanciesRepository;
 
     @Inject
@@ -19,7 +19,13 @@ public class DequeVacanciesInteractor {
         this.dequeVacanciesRepository = dequeVacanciesRepository;
     }
 
+    @Override
     public Observable<DequeVacancies> getDequeVacancies(int totalItemCountPresenter, int route) {
         return dequeVacanciesRepository.loadVacancies(totalItemCountPresenter, route);
+    }
+
+    @Override
+    public boolean isInternetConnection() {
+        return dequeVacanciesRepository.isInternetConnection();
     }
 }

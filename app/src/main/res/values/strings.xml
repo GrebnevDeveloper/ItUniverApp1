@@ -9,4 +9,5 @@
     <string name="here_we_describe_the_vacancy">Here we describe the vacancy</string>
     <string name="here_we_describe_the_resume">Here we describe the resume</string>
     <string name="uploading_data">Uploading data</string>
+    <string name="no_connection">No internet connection</string>
 </resources>

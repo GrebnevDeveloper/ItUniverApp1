@@ -3,11 +3,11 @@ package com.developer.grebnev.ituniverapp1.presentation.ui.fragments;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +17,11 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.developer.grebnev.ituniverapp1.MyApplication;
 import com.developer.grebnev.ituniverapp1.R;
 import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
-import com.developer.grebnev.ituniverapp1.utils.EndlessRecyclerScrollListener;
 import com.developer.grebnev.ituniverapp1.domain.repository.DequeVacancies;
 import com.developer.grebnev.ituniverapp1.presentation.mvp.presenters.ListVacanciesPresenter;
 import com.developer.grebnev.ituniverapp1.presentation.mvp.view.ListVacanciesView;
 import com.developer.grebnev.ituniverapp1.presentation.ui.adapters.ListVacanciesAdapter;
-import com.developer.grebnev.ituniverapp1.utils.InternetConnection;
+import com.developer.grebnev.ituniverapp1.utils.EndlessRecyclerScrollListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,11 +68,6 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
         totalItemCountFragment = listVacanciesPresenter.getTotalItemCountPresenter();
         setUpRecyclerView();
         setUpAdapter(listVacanciesRecycler);
-        if (InternetConnection.isOnline(getContext())) {
-            Log.d(TAG, "Internet Connection");
-        } else {
-            Log.d(TAG, "Not internet connection");
-        }
         listVacanciesPresenter.loadNextDataFromDatabase(totalItemCountFragment);
     }
 
@@ -98,6 +92,11 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
     public void showListVacancies(DequeVacancies vacancies) {
         adapter.setListVacancies(vacancies);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showErrorConnection() {
+        Snackbar.make(getView(), R.string.no_connection, Snackbar.LENGTH_LONG).show();
     }
 
     private void setUpRecyclerView() {

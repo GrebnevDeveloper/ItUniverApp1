@@ -13,10 +13,11 @@ import io.reactivex.Observable;
  * Created by Grebnev on 18.10.2017.
  */
 
-public class DatabaseQuery {
+public class DataQuery implements DataQueryInterface{
     @Inject
-    public DatabaseQuery() {}
+    public DataQuery() {}
 
+    @Override
     public Observable<List<Vacancy>> getListVacancies(int start, int end) {
         return Observable.just(new Select()
                 .from(Vacancy.class)
@@ -24,6 +25,7 @@ public class DatabaseQuery {
                 .execute());
     }
 
+    @Override
     public int getCountVacancies() {
         return new Select()
                 .from(Vacancy.class)

@@ -58,6 +58,9 @@ public class ListVacanciesPresenter extends MvpPresenter<ListVacanciesView> {
     }
 
     private void loadData(final int route) {
+        if (!dequeVacanciesInteractor.isInternetConnection()) {
+            getViewState().showErrorConnection();
+        }
         dequeVacanciesInteractor.getDequeVacancies(totalItemCountPresenter, route)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

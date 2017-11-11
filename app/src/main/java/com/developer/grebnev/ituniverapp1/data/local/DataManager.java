@@ -13,10 +13,11 @@ import javax.inject.Singleton;
  * Created by Grebnev on 04.11.2017.
  */
 @Singleton
-public class DataManager {
+public class DataManager implements DataManagerInterface {
     @Inject
     public DataManager() {}
 
+    @Override
     public void saveData(List<Vacancy> vacancies) {
         ActiveAndroid.beginTransaction();
         try {
@@ -31,6 +32,7 @@ public class DataManager {
         }
     }
 
+    @Override
     public void overwriteData(List<Vacancy> vacancies, int totalItemCount) {
         ActiveAndroid.beginTransaction();
         try {

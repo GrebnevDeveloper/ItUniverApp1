@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.developer.grebnev.ituniverapp1.consts.EndlessRecyclerConstants;
 import com.developer.grebnev.ituniverapp1.data.local.DataManager;
-import com.developer.grebnev.ituniverapp1.data.local.DatabaseQuery;
+import com.developer.grebnev.ituniverapp1.data.local.DataQuery;
 import com.developer.grebnev.ituniverapp1.data.repository.VacanciesNetworkRepository;
 import com.developer.grebnev.ituniverapp1.domain.mapper.DequeVacancyMapper;
 import com.developer.grebnev.ituniverapp1.domain.mapper.MapVacancyMapper;
@@ -22,7 +22,7 @@ public class DequeVacanciesRepository {
     Application application;
     VacanciesNetworkRepository vacanciesNetworkRepository;
     DataManager dataManager;
-    DatabaseQuery query;
+    DataQuery query;
     MapVacancyMapper mapVacancyMapper;
     DequeVacancyMapper dequeVacancyMapper;
     DequeVacancies dequeVacancies;
@@ -31,7 +31,7 @@ public class DequeVacanciesRepository {
     public DequeVacanciesRepository(Application application,
                                     VacanciesNetworkRepository vacanciesNetworkRepository,
                                     DataManager dataManager,
-                                    DatabaseQuery query,
+                                    DataQuery query,
                                     MapVacancyMapper mapVacancyMapper,
                                     DequeVacancyMapper dequeVacancyMapper,
                                     DequeVacancies dequeVacancies) {
@@ -69,5 +69,14 @@ public class DequeVacanciesRepository {
                             .map(mapVacancy -> dequeVacancyMapper.createDequeVacancy(dequeVacancies, mapVacancy, route));
         }
         return vacanciesFromNetwork.switchIfEmpty(vacanciesFromLocal);
+    }
+
+    public boolean isInternetConnection() {
+        if (InternetConnection.isOnline(application.getApplicationContext())) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

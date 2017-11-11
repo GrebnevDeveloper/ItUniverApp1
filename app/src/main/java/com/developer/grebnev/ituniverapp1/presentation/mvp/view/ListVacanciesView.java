@@ -13,4 +13,5 @@ import com.developer.grebnev.ituniverapp1.domain.repository.DequeVacancies;
 public interface ListVacanciesView extends MvpView {
     void showProgressLoad(int visibility);
     void showListVacancies(DequeVacancies vacancies);
+    void showErrorConnection();
 }

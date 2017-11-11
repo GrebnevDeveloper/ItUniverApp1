@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.developer.grebnev.ituniverapp1.R;
-import com.developer.grebnev.ituniverapp1.data.local.DatabaseQuery;
+import com.developer.grebnev.ituniverapp1.data.local.DataQuery;
 import com.developer.grebnev.ituniverapp1.domain.repository.DequeVacancies;
 
 import butterknife.BindView;
@@ -24,7 +24,7 @@ public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdap
     private static final String TAG = ListVacanciesAdapter.class.getSimpleName();
     private Listener listener;
     private DequeVacancies dequeVacancies = new DequeVacancies();
-    private DatabaseQuery query = new DatabaseQuery();
+    private DataQuery query = new DataQuery();
     private int countVacancies = query.getCountVacancies();
 
     public interface Listener {
