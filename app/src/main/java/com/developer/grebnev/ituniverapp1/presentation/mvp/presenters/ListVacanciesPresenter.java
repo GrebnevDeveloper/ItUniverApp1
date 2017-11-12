@@ -6,8 +6,8 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.developer.grebnev.ituniverapp1.MyApplication;
 import com.developer.grebnev.ituniverapp1.consts.EndlessRecyclerConstants;
+import com.developer.grebnev.ituniverapp1.domain.deque.DequeVacancies;
 import com.developer.grebnev.ituniverapp1.domain.interactor.DequeVacanciesInteractor;
-import com.developer.grebnev.ituniverapp1.domain.repository.DequeVacancies;
 import com.developer.grebnev.ituniverapp1.presentation.mvp.view.ListVacanciesView;
 
 import javax.inject.Inject;
@@ -20,10 +20,9 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 @InjectViewState
-public class ListVacanciesPresenter extends MvpPresenter<ListVacanciesView> {
+public class ListVacanciesPresenter extends MvpPresenter<ListVacanciesView> implements ListPresenterInterface {
     private static final String TAG = ListVacanciesPresenter.class.getSimpleName();
-    private DequeVacancies dequeVacancies = new DequeVacancies();
-    private int totalItemCountPresenter = EndlessRecyclerConstants.VOLUME_LOAD;
+
     @Inject
     DequeVacanciesInteractor dequeVacanciesInteractor;
 
@@ -31,37 +30,21 @@ public class ListVacanciesPresenter extends MvpPresenter<ListVacanciesView> {
         MyApplication.getApplicationComponent().inject(this);
     }
 
-    public int getTotalItemCountPresenter() {
-        return totalItemCountPresenter;
-    }
-
-    public DequeVacancies getDequeVacancies() {
-        return dequeVacancies;
-    }
-
     public void loadNextDataFromDatabase(int totalItemCount) {
-        if (totalItemCountPresenter == totalItemCount) {
-            if (!dequeVacancies.getDequeVacancies().isEmpty()) {
-                getViewState().showListVacancies(dequeVacancies);
-            } else {
-                loadData(EndlessRecyclerConstants.SCROLL_DOWN);
-            }
-        } else {
-            if (totalItemCountPresenter > totalItemCount) {
-                totalItemCountPresenter = totalItemCount;
-                loadData(EndlessRecyclerConstants.SCROLL_UP);
-            } else {
-                totalItemCountPresenter = totalItemCount;
-                loadData(EndlessRecyclerConstants.SCROLL_DOWN);
-            }
+        int scroll = dequeVacanciesInteractor.getScrollConstants(totalItemCount);
+        if (scroll == EndlessRecyclerConstants.SCROLL_NO) {
+            getViewState().showListVacancies(dequeVacanciesInteractor.getDequeVacancies());
+        }
+        else {
+            loadData(scroll);
         }
     }
 
-    private void loadData(final int route) {
+    public void loadData(final int route) {
         if (!dequeVacanciesInteractor.isInternetConnection()) {
             getViewState().showErrorConnection();
         }
-        dequeVacanciesInteractor.getDequeVacancies(totalItemCountPresenter, route)
+        dequeVacanciesInteractor.getDequeVacancies(dequeVacanciesInteractor.getTotalItemCountPresenter(), route)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> {
@@ -71,8 +54,18 @@ public class ListVacanciesPresenter extends MvpPresenter<ListVacanciesView> {
                     getViewState().showProgressLoad(View.INVISIBLE);
                 })
                 .subscribe(repository -> {
-                    dequeVacancies = repository;
+                    dequeVacanciesInteractor.setDequeVacancies(repository);
                     getViewState().showListVacancies(repository);
                 });
+    }
+
+    @Override
+    public int getTotalItemCountPresenter() {
+        return dequeVacanciesInteractor.getTotalItemCountPresenter();
+    }
+
+    @Override
+    public DequeVacancies getDequeVacancies() {
+        return dequeVacanciesInteractor.getDequeVacancies();
     }
 }

@@ -1,7 +1,8 @@
 package com.developer.grebnev.ituniverapp1.domain.interactor;
 
-import com.developer.grebnev.ituniverapp1.domain.repository.DequeVacancies;
-import com.developer.grebnev.ituniverapp1.domain.repository.DequeVacanciesRepository;
+import com.developer.grebnev.ituniverapp1.consts.EndlessRecyclerConstants;
+import com.developer.grebnev.ituniverapp1.domain.deque.DequeVacancies;
+import com.developer.grebnev.ituniverapp1.domain.deque.DequeVacanciesLoader;
 
 import javax.inject.Inject;
 
@@ -12,12 +13,15 @@ import io.reactivex.Observable;
  */
 
 public class DequeVacanciesInteractor implements DequeIteractorInterface{
-    DequeVacanciesRepository dequeVacanciesRepository;
+    DequeVacanciesLoader dequeVacanciesRepository;
 
     @Inject
-    public DequeVacanciesInteractor(DequeVacanciesRepository dequeVacanciesRepository) {
+    public DequeVacanciesInteractor(DequeVacanciesLoader dequeVacanciesRepository) {
         this.dequeVacanciesRepository = dequeVacanciesRepository;
     }
+
+    private DequeVacancies dequeVacancies = new DequeVacancies();
+    private int totalItemCountPresenter = EndlessRecyclerConstants.VOLUME_LOAD;
 
     @Override
     public Observable<DequeVacancies> getDequeVacancies(int totalItemCountPresenter, int route) {
@@ -27,5 +31,39 @@ public class DequeVacanciesInteractor implements DequeIteractorInterface{
     @Override
     public boolean isInternetConnection() {
         return dequeVacanciesRepository.isInternetConnection();
+    }
+
+    @Override
+    public int getTotalItemCountPresenter() {
+        return totalItemCountPresenter;
+    }
+
+    @Override
+    public DequeVacancies getDequeVacancies() {
+        return dequeVacancies;
+    }
+
+    @Override
+    public void setDequeVacancies(DequeVacancies dequeVacancies) {
+        this.dequeVacancies = dequeVacancies;
+    }
+
+    @Override
+    public int getScrollConstants(int totalItemCount) {
+        if (totalItemCountPresenter == totalItemCount) {
+            if (!dequeVacancies.getDequeVacancies().isEmpty()) {
+                return EndlessRecyclerConstants.SCROLL_NO;
+            } else {
+                return EndlessRecyclerConstants.SCROLL_DOWN;
+            }
+        } else {
+            if (totalItemCountPresenter > totalItemCount) {
+                totalItemCountPresenter = totalItemCount;
+                return EndlessRecyclerConstants.SCROLL_UP;
+            } else {
+                totalItemCountPresenter = totalItemCount;
+                return EndlessRecyclerConstants.SCROLL_DOWN;
+            }
+        }
     }
 }

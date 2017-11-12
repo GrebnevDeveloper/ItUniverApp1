@@ -1,4 +1,4 @@
-package com.developer.grebnev.ituniverapp1.domain.repository;
+package com.developer.grebnev.ituniverapp1.domain.deque;
 
 import android.app.Application;
 
@@ -15,10 +15,10 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 
 /**
- * Created by Grebnev on 07.11.2017.
+ * Created by Grebnev on 12.11.2017.
  */
 
-public class DequeVacanciesRepository {
+public class DequeVacanciesLoader {
     Application application;
     VacanciesNetworkRepository vacanciesNetworkRepository;
     DataManager dataManager;
@@ -28,7 +28,7 @@ public class DequeVacanciesRepository {
     DequeVacancies dequeVacancies;
 
     @Inject
-    public DequeVacanciesRepository(Application application,
+    public DequeVacanciesLoader(Application application,
                                     VacanciesNetworkRepository vacanciesNetworkRepository,
                                     DataManager dataManager,
                                     DataQuery query,

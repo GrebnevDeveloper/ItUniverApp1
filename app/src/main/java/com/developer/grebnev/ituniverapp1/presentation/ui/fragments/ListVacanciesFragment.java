@@ -17,7 +17,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.developer.grebnev.ituniverapp1.MyApplication;
 import com.developer.grebnev.ituniverapp1.R;
 import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
-import com.developer.grebnev.ituniverapp1.domain.repository.DequeVacancies;
+import com.developer.grebnev.ituniverapp1.domain.deque.DequeVacancies;
 import com.developer.grebnev.ituniverapp1.presentation.mvp.presenters.ListVacanciesPresenter;
 import com.developer.grebnev.ituniverapp1.presentation.mvp.view.ListVacanciesView;
 import com.developer.grebnev.ituniverapp1.presentation.ui.adapters.ListVacanciesAdapter;

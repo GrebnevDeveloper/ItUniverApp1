@@ -1,6 +1,7 @@
 package com.developer.grebnev.ituniverapp1.domain.interactor;
 
-import com.developer.grebnev.ituniverapp1.domain.repository.DequeVacancies;
+
+import com.developer.grebnev.ituniverapp1.domain.deque.DequeVacancies;
 
 import io.reactivex.Observable;
 
@@ -11,4 +12,8 @@ import io.reactivex.Observable;
 public interface DequeIteractorInterface {
     Observable<DequeVacancies> getDequeVacancies(int totalItemCountPresenter, int route);
     boolean isInternetConnection();
+    int getTotalItemCountPresenter();
+    DequeVacancies getDequeVacancies();
+    void setDequeVacancies(DequeVacancies dequeVacancies);
+    int getScrollConstants(int totalItemCount);
 }

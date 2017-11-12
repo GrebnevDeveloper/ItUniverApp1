@@ -9,8 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.developer.grebnev.ituniverapp1.R;
+import com.developer.grebnev.ituniverapp1.consts.EndlessRecyclerConstants;
 import com.developer.grebnev.ituniverapp1.data.local.DataQuery;
-import com.developer.grebnev.ituniverapp1.domain.repository.DequeVacancies;
+import com.developer.grebnev.ituniverapp1.domain.deque.DequeVacancies;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -66,7 +67,7 @@ public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdap
         int keyOut = 0;
         if (!dequeVacancies.getDequeVacancies().isEmpty()) {
             for (Integer key : dequeVacancies.getDequeVacancies().getLast().keySet()) {
-                keyOut = key * 100;
+                keyOut = key * EndlessRecyclerConstants.VOLUME_LOAD;
             }
         }
         Log.d(TAG, "Count item " + keyOut + " " + countVacancies);
