@@ -12,6 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.developer.grebnev.ituniverapp1.R;
+import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
+import com.developer.grebnev.ituniverapp1.data.entity.VacancyParce;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,9 +41,10 @@ public class VacancyDescriptionFragment extends Fragment implements View.OnClick
         tvPhone.setOnClickListener(this);
         tvEmail.setOnClickListener(this);
 
-//        Vacancy vacancy = getArguments().getParcelable(ListVacanciesFragment.KEY_VACANCY);
-//        tvNameVacancy.setText(vacancy.getName());
-//        tvAddressVacancy.setText(vacancy.getAddressVacancy());
+        VacancyParce vacancyParce = getArguments().getParcelable(ListVacanciesFragment.KEY_VACANCY);
+        Vacancy vacancy = vacancyParce.description().get(0);
+        tvNameVacancy.setText(vacancy.getName());
+        tvAddressVacancy.setText(vacancy.getCreatedAt());
         return relativeLayout;
     }
 

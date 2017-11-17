@@ -21,6 +21,7 @@ public class DequeVacancies implements DequeVacanciesInterface {
 
     private Deque<Map<Integer, List<Vacancy>>> dequeVacancies = new ArrayDeque<>(2);
     private int oldRoute = EndlessRecyclerConstants.SCROLL_DOWN;
+    private Map<Integer, Long> mapTime = new HashMap<>();
 
     @Override
     public Deque<Map<Integer, List<Vacancy>>> getDequeVacancies() {
@@ -60,5 +61,15 @@ public class DequeVacancies implements DequeVacanciesInterface {
                     .get(position % EndlessRecyclerConstants.VOLUME_LOAD);
         }
         return null;
+    }
+
+    @Override
+    public void writeTime(int page, long time) {
+        mapTime.put(page, time);
+    }
+
+    @Override
+    public Map<Integer, Long> getMapTime() {
+        return mapTime;
     }
 }

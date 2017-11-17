@@ -10,6 +10,8 @@ import com.developer.grebnev.ituniverapp1.domain.mapper.DequeVacancyMapper;
 import com.developer.grebnev.ituniverapp1.domain.mapper.MapVacancyMapper;
 import com.developer.grebnev.ituniverapp1.utils.InternetConnection;
 
+import java.util.Calendar;
+
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
@@ -29,12 +31,12 @@ public class DequeVacanciesLoader {
 
     @Inject
     public DequeVacanciesLoader(Application application,
-                                    VacanciesNetworkRepository vacanciesNetworkRepository,
-                                    DataManager dataManager,
-                                    DataQuery query,
-                                    MapVacancyMapper mapVacancyMapper,
-                                    DequeVacancyMapper dequeVacancyMapper,
-                                    DequeVacancies dequeVacancies) {
+                                VacanciesNetworkRepository vacanciesNetworkRepository,
+                                DataManager dataManager,
+                                DataQuery query,
+                                MapVacancyMapper mapVacancyMapper,
+                                DequeVacancyMapper dequeVacancyMapper,
+                                DequeVacancies dequeVacancies) {
         this.application = application;
         this.vacanciesNetworkRepository = vacanciesNetworkRepository;
         this.dataManager = dataManager;
@@ -45,37 +47,54 @@ public class DequeVacanciesLoader {
     }
 
     public Observable<DequeVacancies> loadVacancies(int totalItemCountPresenter, int route) {
+        Calendar c = Calendar.getInstance();
+        long time = c.getTimeInMillis();
         Observable<DequeVacancies> vacanciesFromNetwork = Observable.empty();
-        if (InternetConnection.isOnline(application.getApplicationContext()) && route == EndlessRecyclerConstants.SCROLL_DOWN) {
-            vacanciesFromNetwork =
-                    vacanciesNetworkRepository.getVacanciesNetwork(EndlessRecyclerConstants.VOLUME_LOAD,
-                            totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD - 1)
-                            .doOnNext(listVacancies -> {
-                                if (totalItemCountPresenter > query.getCountVacancies()) {
-                                    dataManager.saveData(listVacancies);
-                                } else {
-                                    dataManager.overwriteData(listVacancies, totalItemCountPresenter);
-                                }
-                            })
-                            .map(listVacancies -> mapVacancyMapper.createMapVacancies(totalItemCountPresenter, listVacancies))
-                            .map(mapVacancy -> dequeVacancyMapper.createDequeVacancy(dequeVacancies, mapVacancy, route));
+        if (isInternetConnection()) {
+            if (dequeVacancies.getMapTime().containsKey(totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD)) {
+                if (time - dequeVacancies.getMapTime().get(totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD)
+                            > 100 * 60 * 10) {
+                    vacanciesFromNetwork = getDataFromNetwork(totalItemCountPresenter, route, time);
+                }
+            }
+            else {
+                vacanciesFromNetwork = getDataFromNetwork(totalItemCountPresenter, route, time);
+            }
         }
         Observable<DequeVacancies> vacanciesFromLocal = Observable.just(dequeVacancies);
         if (query.getCountVacancies() != 0) {
-            vacanciesFromLocal =
-                    query.getListVacancies(totalItemCountPresenter - EndlessRecyclerConstants.VOLUME_LOAD,
-                            totalItemCountPresenter + 1)
-                            .map(listVacancies -> mapVacancyMapper.createMapVacancies(totalItemCountPresenter, listVacancies))
-                            .map(mapVacancy -> dequeVacancyMapper.createDequeVacancy(dequeVacancies, mapVacancy, route));
+            vacanciesFromLocal = getDataFromLocal(totalItemCountPresenter, route);
         }
         return vacanciesFromNetwork.switchIfEmpty(vacanciesFromLocal);
+    }
+
+    private Observable<DequeVacancies> getDataFromNetwork(int totalItemCountPresenter, int route, long time) {
+        return vacanciesNetworkRepository.getVacanciesNetwork(EndlessRecyclerConstants.VOLUME_LOAD,
+                totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD - 1)
+                .doOnNext(listVacancies -> {
+                    if (totalItemCountPresenter > query.getCountVacancies()) {
+                        dataManager.saveData(listVacancies);
+                    } else {
+                        dataManager.overwriteData(listVacancies, totalItemCountPresenter);
+                    }
+                    dequeVacancies.writeTime(totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD,
+                            time);
+                })
+                .map(listVacancies -> mapVacancyMapper.createMapVacancies(totalItemCountPresenter, listVacancies))
+                .map(mapVacancy -> dequeVacancyMapper.createDequeVacancy(dequeVacancies, mapVacancy, route));
+    }
+
+    private Observable<DequeVacancies> getDataFromLocal(int totalItemCountPresenter, int route) {
+        return query.getListVacancies(totalItemCountPresenter - EndlessRecyclerConstants.VOLUME_LOAD,
+                totalItemCountPresenter + 1)
+                .map(listVacancies -> mapVacancyMapper.createMapVacancies(totalItemCountPresenter, listVacancies))
+                .map(mapVacancy -> dequeVacancyMapper.createDequeVacancy(dequeVacancies, mapVacancy, route));
     }
 
     public boolean isInternetConnection() {
         if (InternetConnection.isOnline(application.getApplicationContext())) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }

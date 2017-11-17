@@ -14,4 +14,6 @@ public interface DequeVacanciesInterface {
     Deque<Map<Integer, List<Vacancy>>> getDequeVacancies();
     void addElementIntoDeque(Map<Integer, List<Vacancy>> vacancies, int route);
     Vacancy getVacancyOfDeque(int position);
+    void writeTime(int page, long time);
+    Map<Integer, Long> getMapTime();
 }
