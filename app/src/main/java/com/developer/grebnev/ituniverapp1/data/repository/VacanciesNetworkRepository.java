@@ -23,8 +23,14 @@ public class VacanciesNetworkRepository implements VacanciesNetworkInterface{
     }
 
     @Override
-    public Observable<List<Vacancy>> getVacanciesNetwork(int countVacancies, int numberPage) {
-        return RetrofitManager.getRequestInterface().getVacancies(countVacancies, numberPage)
-                .map(pageVacancy -> vacancyJsonMapper.transformJsonToVacancy(pageVacancy));
+    public Observable<List<Vacancy>> getVacanciesNetwork(String textSearch, int countVacancies, int numberPage) {
+        if (textSearch.equals("")) {
+            return RetrofitManager.getRequestInterface().getVacancies(countVacancies, numberPage)
+                    .map(pageVacancy -> vacancyJsonMapper.transformJsonToVacancy(pageVacancy));
+        }
+        else {
+            return RetrofitManager.getRequestInterface().getResultSearch(textSearch, countVacancies, numberPage)
+                    .map(pageVacancy -> vacancyJsonMapper.transformJsonToVacancy(pageVacancy));
+        }
     }
 }

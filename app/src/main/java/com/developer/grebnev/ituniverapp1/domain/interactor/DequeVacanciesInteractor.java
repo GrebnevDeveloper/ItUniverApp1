@@ -22,10 +22,11 @@ public class DequeVacanciesInteractor implements DequeIteractorInterface{
 
     private DequeVacancies dequeVacancies = new DequeVacancies();
     private int totalItemCountPresenter = EndlessRecyclerConstants.VOLUME_LOAD;
+    private String textSearch = "";
 
     @Override
     public Observable<DequeVacancies> getDequeVacancies(int totalItemCountPresenter, int route) {
-        return dequeVacanciesRepository.loadVacancies(totalItemCountPresenter, route);
+        return dequeVacanciesRepository.loadVacancies(textSearch ,totalItemCountPresenter, route);
     }
 
     @Override
@@ -36,6 +37,11 @@ public class DequeVacanciesInteractor implements DequeIteractorInterface{
     @Override
     public int getTotalItemCountPresenter() {
         return totalItemCountPresenter;
+    }
+
+    @Override
+    public void setTotalItemCountPresenter(int countPresenter) {
+        this.totalItemCountPresenter = countPresenter;
     }
 
     @Override
@@ -65,5 +71,15 @@ public class DequeVacanciesInteractor implements DequeIteractorInterface{
                 return EndlessRecyclerConstants.SCROLL_DOWN;
             }
         }
+    }
+
+    @Override
+    public String getTextSearch() {
+        return textSearch;
+    }
+
+    @Override
+    public void setTextSearch(String textSearch) {
+        this.textSearch = textSearch;
     }
 }

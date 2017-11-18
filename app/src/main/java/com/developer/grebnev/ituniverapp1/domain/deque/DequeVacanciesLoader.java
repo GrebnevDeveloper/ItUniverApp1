@@ -46,19 +46,18 @@ public class DequeVacanciesLoader {
         this.dequeVacancies = dequeVacancies;
     }
 
-    public Observable<DequeVacancies> loadVacancies(int totalItemCountPresenter, int route) {
-        Calendar c = Calendar.getInstance();
-        long time = c.getTimeInMillis();
+    public Observable<DequeVacancies> loadVacancies(String textSearch, int totalItemCountPresenter, int route) {
         Observable<DequeVacancies> vacanciesFromNetwork = Observable.empty();
         if (isInternetConnection()) {
-            if (dequeVacancies.getMapTime().containsKey(totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD)) {
-                if (time - dequeVacancies.getMapTime().get(totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD)
+            if (dequeVacancies.getMapTime().containsKey(totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD) &&
+                    textSearch.equals("")) {
+                if (getCurrentTime() - dequeVacancies.getMapTime().get(totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD)
                             > 100 * 60 * 10) {
-                    vacanciesFromNetwork = getDataFromNetwork(totalItemCountPresenter, route, time);
+                    vacanciesFromNetwork = getDataFromNetwork(textSearch, totalItemCountPresenter, route, getCurrentTime());
                 }
             }
             else {
-                vacanciesFromNetwork = getDataFromNetwork(totalItemCountPresenter, route, time);
+                vacanciesFromNetwork = getDataFromNetwork(textSearch, totalItemCountPresenter, route, getCurrentTime());
             }
         }
         Observable<DequeVacancies> vacanciesFromLocal = Observable.just(dequeVacancies);
@@ -68,8 +67,8 @@ public class DequeVacanciesLoader {
         return vacanciesFromNetwork.switchIfEmpty(vacanciesFromLocal);
     }
 
-    private Observable<DequeVacancies> getDataFromNetwork(int totalItemCountPresenter, int route, long time) {
-        return vacanciesNetworkRepository.getVacanciesNetwork(EndlessRecyclerConstants.VOLUME_LOAD,
+    private Observable<DequeVacancies> getDataFromNetwork(String textSearch, int totalItemCountPresenter, int route, long time) {
+        return vacanciesNetworkRepository.getVacanciesNetwork(textSearch, EndlessRecyclerConstants.VOLUME_LOAD,
                 totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD - 1)
                 .doOnNext(listVacancies -> {
                     if (totalItemCountPresenter > query.getCountVacancies()) {
@@ -89,6 +88,12 @@ public class DequeVacanciesLoader {
                 totalItemCountPresenter + 1)
                 .map(listVacancies -> mapVacancyMapper.createMapVacancies(totalItemCountPresenter, listVacancies))
                 .map(mapVacancy -> dequeVacancyMapper.createDequeVacancy(dequeVacancies, mapVacancy, route));
+    }
+
+    private long getCurrentTime() {
+        Calendar c = Calendar.getInstance();
+        long time = c.getTimeInMillis();
+        return time;
     }
 
     public boolean isInternetConnection() {

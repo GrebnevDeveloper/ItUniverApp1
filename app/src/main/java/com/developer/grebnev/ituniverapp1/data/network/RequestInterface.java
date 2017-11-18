@@ -13,4 +13,9 @@ import retrofit2.http.Query;
 public interface RequestInterface {
     @GET("/vacancies")
     Observable<PageVacancy> getVacancies(@Query("per_page") int countVacancies, @Query("page") int numberPage);
+
+    @GET("/vacancies")
+    Observable<PageVacancy> getResultSearch(@Query("text") String textSearch,
+                                            @Query("per_page") int countVacancies,
+                                            @Query("page") int numberPage);
 }

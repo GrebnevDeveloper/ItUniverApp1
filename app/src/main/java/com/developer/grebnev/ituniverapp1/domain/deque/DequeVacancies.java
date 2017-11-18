@@ -34,6 +34,10 @@ public class DequeVacancies implements DequeVacanciesInterface {
             dequeVacancies.push(new HashMap<Integer, List<Vacancy>>());
             dequeVacancies.push(new HashMap<Integer, List<Vacancy>>());
         }
+        if (route == EndlessRecyclerConstants.SCROLL_NO) {
+            route = EndlessRecyclerConstants.SCROLL_DOWN;
+            oldRoute = EndlessRecyclerConstants.SCROLL_DOWN;
+        }
         if (route == EndlessRecyclerConstants.SCROLL_DOWN && oldRoute == EndlessRecyclerConstants.SCROLL_DOWN) {
             dequeVacancies.pollFirst();
             dequeVacancies.addLast(vacancies);

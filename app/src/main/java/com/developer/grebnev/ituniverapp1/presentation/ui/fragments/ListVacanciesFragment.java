@@ -6,9 +6,16 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -21,6 +28,7 @@ import com.developer.grebnev.ituniverapp1.data.entity.VacancyParce;
 import com.developer.grebnev.ituniverapp1.domain.deque.DequeVacancies;
 import com.developer.grebnev.ituniverapp1.presentation.mvp.presenters.ListVacanciesPresenter;
 import com.developer.grebnev.ituniverapp1.presentation.mvp.view.ListVacanciesView;
+import com.developer.grebnev.ituniverapp1.presentation.ui.activities.MainActivity;
 import com.developer.grebnev.ituniverapp1.presentation.ui.adapters.ListVacanciesAdapter;
 import com.developer.grebnev.ituniverapp1.utils.EndlessRecyclerScrollListener;
 
@@ -42,6 +50,9 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
     @BindView(R.id.recycler_list_vacancies)
     RecyclerView listVacanciesRecycler;
 
+    @BindView(R.id.swipe_refresh)
+    SwipeRefreshLayout swipeRefreshLayout;
+
     ProgressDialog progressDialog;
 
     @InjectPresenter
@@ -54,6 +65,7 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         MyApplication.getApplicationComponent().inject(this);
     }
 
@@ -72,6 +84,43 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
         setUpRecyclerView();
         setUpAdapter(listVacanciesRecycler);
         listVacanciesPresenter.loadNextDataFromDatabase(totalItemCountFragment);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.search_option_menu, menu);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        SearchView searchView = new SearchView(((MainActivity) getContext()).getSupportActionBar().getThemedContext());
+        searchView.setIconifiedByDefault(true);
+        searchView.setSubmitButtonEnabled(true);
+
+        MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
+        MenuItemCompat.setActionView(item, searchView);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                listVacanciesPresenter.setTextSearch(query);
+                listVacanciesPresenter.setTotalItemCountPresenter(100);
+                totalItemCountFragment = listVacanciesPresenter.getTotalItemCountPresenter();
+                listVacanciesPresenter.loadNextDataFromDatabase(totalItemCountFragment);
+                Log.d("well", "submit " + query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //listVacanciesPresenter.loadNextDataFromDatabase(newText, totalItemCountFragment);
+                Log.d("well", " this worked " + newText);
+                return false;
+            }
+        });
     }
 
     public static VacancyDescriptionFragment newInstance(Vacancy vacancy) {
@@ -131,6 +180,10 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
                 fragmentTransaction.commit();
             }
         });
+    }
+
+    private void setUpSwipeToRefreshLayout(View rootView) {
+        //swipeRefreshLayout.setOnRefreshListener(() -> );
     }
 
     private void createProgressDialog() {
