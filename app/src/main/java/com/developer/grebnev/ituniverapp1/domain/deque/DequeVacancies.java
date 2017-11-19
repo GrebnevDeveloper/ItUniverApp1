@@ -1,6 +1,6 @@
 package com.developer.grebnev.ituniverapp1.domain.deque;
 
-import com.developer.grebnev.ituniverapp1.consts.EndlessRecyclerConstants;
+import com.developer.grebnev.ituniverapp1.utils.EndlessRecyclerConstants;
 import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
 
 import java.util.ArrayDeque;
@@ -30,13 +30,14 @@ public class DequeVacancies implements DequeVacanciesInterface {
 
     @Override
     public void addElementIntoDeque(Map<Integer, List<Vacancy>> vacancies, int route) {
-        if (dequeVacancies.isEmpty()) {
-            dequeVacancies.push(new HashMap<Integer, List<Vacancy>>());
-            dequeVacancies.push(new HashMap<Integer, List<Vacancy>>());
-        }
         if (route == EndlessRecyclerConstants.SCROLL_NO) {
             route = EndlessRecyclerConstants.SCROLL_DOWN;
             oldRoute = EndlessRecyclerConstants.SCROLL_DOWN;
+            dequeVacancies = new ArrayDeque<>(2);
+        }
+        if (dequeVacancies.isEmpty()) {
+            dequeVacancies.push(new HashMap<Integer, List<Vacancy>>());
+            dequeVacancies.push(new HashMap<Integer, List<Vacancy>>());
         }
         if (route == EndlessRecyclerConstants.SCROLL_DOWN && oldRoute == EndlessRecyclerConstants.SCROLL_DOWN) {
             dequeVacancies.pollFirst();

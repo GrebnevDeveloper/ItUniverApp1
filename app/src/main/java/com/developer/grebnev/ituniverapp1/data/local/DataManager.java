@@ -1,7 +1,7 @@
 package com.developer.grebnev.ituniverapp1.data.local;
 
 import com.activeandroid.ActiveAndroid;
-import com.developer.grebnev.ituniverapp1.consts.EndlessRecyclerConstants;
+import com.developer.grebnev.ituniverapp1.utils.EndlessRecyclerConstants;
 import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
 
 import java.util.List;

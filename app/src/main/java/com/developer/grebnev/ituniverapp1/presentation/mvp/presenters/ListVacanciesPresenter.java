@@ -5,7 +5,7 @@ import android.view.View;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.developer.grebnev.ituniverapp1.MyApplication;
-import com.developer.grebnev.ituniverapp1.consts.EndlessRecyclerConstants;
+import com.developer.grebnev.ituniverapp1.utils.EndlessRecyclerConstants;
 import com.developer.grebnev.ituniverapp1.domain.deque.DequeVacancies;
 import com.developer.grebnev.ituniverapp1.domain.interactor.DequeVacanciesInteractor;
 import com.developer.grebnev.ituniverapp1.presentation.mvp.view.ListVacanciesView;
@@ -13,6 +13,7 @@ import com.developer.grebnev.ituniverapp1.presentation.mvp.view.ListVacanciesVie
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -22,6 +23,8 @@ import io.reactivex.schedulers.Schedulers;
 @InjectViewState
 public class ListVacanciesPresenter extends MvpPresenter<ListVacanciesView> implements ListPresenterInterface {
     private static final String TAG = ListVacanciesPresenter.class.getSimpleName();
+
+    private CompositeDisposable disposable = new CompositeDisposable();
 
     @Inject
     DequeVacanciesInteractor dequeVacanciesInteractor;
@@ -34,8 +37,7 @@ public class ListVacanciesPresenter extends MvpPresenter<ListVacanciesView> impl
         int scroll = dequeVacanciesInteractor.getScrollConstants(totalItemCount);
         if (scroll == EndlessRecyclerConstants.SCROLL_NO && getTextSearch().equals("")) {
             getViewState().showListVacancies(dequeVacanciesInteractor.getDequeVacancies());
-        }
-        else {
+        } else {
             loadData(scroll);
         }
     }
@@ -44,7 +46,7 @@ public class ListVacanciesPresenter extends MvpPresenter<ListVacanciesView> impl
         if (!dequeVacanciesInteractor.isInternetConnection()) {
             getViewState().showErrorConnection();
         }
-        dequeVacanciesInteractor.getDequeVacancies(dequeVacanciesInteractor.getTotalItemCountPresenter(), route)
+        disposable.add(dequeVacanciesInteractor.getDequeVacancies(dequeVacanciesInteractor.getTotalItemCountPresenter(), route)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> {
@@ -56,7 +58,20 @@ public class ListVacanciesPresenter extends MvpPresenter<ListVacanciesView> impl
                 .subscribe(repository -> {
                     dequeVacanciesInteractor.setDequeVacancies(repository);
                     getViewState().showListVacancies(repository);
-                });
+                }));
+//        dequeVacanciesInteractor.getDequeVacancies(dequeVacanciesInteractor.getTotalItemCountPresenter(), route)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .doOnSubscribe(disposable -> {
+//                    getViewState().showProgressLoad(View.VISIBLE);
+//                })
+//                .doFinally(() -> {
+//                    getViewState().showProgressLoad(View.INVISIBLE);
+//                })
+//                .subscribe(repository -> {
+//                    dequeVacanciesInteractor.setDequeVacancies(repository);
+//                    getViewState().showListVacancies(repository);
+//                });
     }
 
     @Override
@@ -84,5 +99,11 @@ public class ListVacanciesPresenter extends MvpPresenter<ListVacanciesView> impl
         dequeVacanciesInteractor.setTextSearch(textSearch);
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (disposable.isDisposed()) {
+            disposable.dispose();
+        }
+    }
 }

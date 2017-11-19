@@ -1,6 +1,5 @@
 package com.developer.grebnev.ituniverapp1.presentation.ui.fragments;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -53,8 +52,6 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    ProgressDialog progressDialog;
-
     @InjectPresenter
     ListVacanciesPresenter listVacanciesPresenter;
 
@@ -79,10 +76,10 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ButterKnife.bind(this, view);
 
-        createProgressDialog();
         totalItemCountFragment = listVacanciesPresenter.getTotalItemCountPresenter();
         setUpRecyclerView();
         setUpAdapter(listVacanciesRecycler);
+        setUpSwipeToRefreshLayout(view);
         listVacanciesPresenter.loadNextDataFromDatabase(totalItemCountFragment);
     }
 
@@ -110,14 +107,17 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
                 listVacanciesPresenter.setTotalItemCountPresenter(100);
                 totalItemCountFragment = listVacanciesPresenter.getTotalItemCountPresenter();
                 listVacanciesPresenter.loadNextDataFromDatabase(totalItemCountFragment);
-                Log.d("well", "submit " + query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                //listVacanciesPresenter.loadNextDataFromDatabase(newText, totalItemCountFragment);
-                Log.d("well", " this worked " + newText);
+                if (newText.equals("") && !listVacanciesPresenter.getTextSearch().equals("")) {
+                    listVacanciesPresenter.setTextSearch(newText);
+                    listVacanciesPresenter.setTotalItemCountPresenter(100);
+                    totalItemCountFragment = listVacanciesPresenter.getTotalItemCountPresenter();
+                    listVacanciesPresenter.loadNextDataFromDatabase(totalItemCountFragment);
+                }
                 return false;
             }
         });
@@ -137,9 +137,9 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
     @Override
     public void showProgressLoad(int visibility) {
         if (visibility == View.VISIBLE) {
-            progressDialog.show();
+            swipeRefreshLayout.setRefreshing(true);
         } else {
-            progressDialog.dismiss();
+            swipeRefreshLayout.setRefreshing(false);
         }
     }
 
@@ -147,6 +147,7 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
     public void showListVacancies(DequeVacancies vacancies) {
         adapter.setListVacancies(vacancies);
         adapter.notifyDataSetChanged();
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -183,11 +184,15 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
     }
 
     private void setUpSwipeToRefreshLayout(View rootView) {
-        //swipeRefreshLayout.setOnRefreshListener(() -> );
-    }
-
-    private void createProgressDialog() {
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage(getString(R.string.uploading_data));
+        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                listVacanciesPresenter.setTotalItemCountPresenter(100);
+                totalItemCountFragment = listVacanciesPresenter.getTotalItemCountPresenter();
+                listVacanciesPresenter.loadNextDataFromDatabase(totalItemCountFragment);
+                Log.d(TAG, "Swipe refresh");
+            }
+        });
     }
 }

@@ -2,7 +2,7 @@ package com.developer.grebnev.ituniverapp1.domain.deque;
 
 import android.app.Application;
 
-import com.developer.grebnev.ituniverapp1.consts.EndlessRecyclerConstants;
+import com.developer.grebnev.ituniverapp1.utils.EndlessRecyclerConstants;
 import com.developer.grebnev.ituniverapp1.data.local.DataManager;
 import com.developer.grebnev.ituniverapp1.data.local.DataQuery;
 import com.developer.grebnev.ituniverapp1.data.repository.VacanciesNetworkRepository;

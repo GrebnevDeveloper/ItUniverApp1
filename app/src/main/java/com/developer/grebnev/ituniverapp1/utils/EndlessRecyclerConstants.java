@@ -1,4 +1,4 @@
-package com.developer.grebnev.ituniverapp1.consts;
+package com.developer.grebnev.ituniverapp1.utils;
 
 /**
  * Created by Grebnev on 21.10.2017.

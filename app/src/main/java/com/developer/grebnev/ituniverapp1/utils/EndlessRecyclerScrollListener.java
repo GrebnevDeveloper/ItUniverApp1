@@ -3,8 +3,6 @@ package com.developer.grebnev.ituniverapp1.utils;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.developer.grebnev.ituniverapp1.consts.EndlessRecyclerConstants;
-
 /**
  * Created by Grebnev on 19.10.2017.
  */
