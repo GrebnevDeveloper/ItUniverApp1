@@ -22,6 +22,7 @@ public class DequeVacancies implements DequeVacanciesInterface {
     private Deque<Map<Integer, List<Vacancy>>> dequeVacancies = new ArrayDeque<>(2);
     private int oldRoute = EndlessRecyclerConstants.SCROLL_DOWN;
     private Map<Integer, Long> mapTime = new HashMap<>();
+    private String oldTextSearch = "";
 
     @Override
     public Deque<Map<Integer, List<Vacancy>>> getDequeVacancies() {
@@ -76,5 +77,15 @@ public class DequeVacancies implements DequeVacanciesInterface {
     @Override
     public Map<Integer, Long> getMapTime() {
         return mapTime;
+    }
+
+    @Override
+    public void setOldTextSearch(String textSearch) {
+        this.oldTextSearch = textSearch;
+    }
+
+    @Override
+    public String getOldTextSearch() {
+        return oldTextSearch;
     }
 }

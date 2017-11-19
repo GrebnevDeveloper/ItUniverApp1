@@ -21,10 +21,44 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/requirement"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/text_name_description"
+        android:id="@+id/text_name_requirement"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/text_requirement_vacancy"
+        android:layout_below="@+id/text_name_requirement"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/responsibility"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/text_requirement_vacancy"
+        android:id="@+id/text_name_responsibility"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/text_responsibility_vacancy"
+        android:layout_below="@+id/text_name_responsibility"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textSize="15sp"
         android:layout_marginTop="15dp"
         android:id="@+id/text_address_vacancy"
-        android:layout_below="@+id/text_name_description"/>
+        android:layout_below="@+id/text_responsibility_vacancy"/>
 
     <TextView
         android:layout_width="wrap_content"

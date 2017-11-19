@@ -26,6 +26,10 @@ public class VacancyDescriptionFragment extends Fragment implements View.OnClick
 
     @BindView(R.id.text_name_vacancy)
     TextView tvNameVacancy;
+    @BindView(R.id.text_requirement_vacancy)
+    TextView tvRequirementVacancy;
+    @BindView(R.id.text_responsibility_vacancy)
+    TextView tvResponsibilityVacancy;
     @BindView(R.id.text_address_vacancy)
     TextView tvAddressVacancy;
     @BindView(R.id.text_phone)
@@ -44,7 +48,9 @@ public class VacancyDescriptionFragment extends Fragment implements View.OnClick
         VacancyParce vacancyParce = getArguments().getParcelable(ListVacanciesFragment.KEY_VACANCY);
         Vacancy vacancy = vacancyParce.description().get(0);
         tvNameVacancy.setText(vacancy.getName());
-        tvAddressVacancy.setText(vacancy.getCreatedAt());
+        tvRequirementVacancy.setText(vacancy.getSnippet().getRequirement());
+        //tvAddressVacancy.setText(vacancy.getSnippet().getResponsibility());
+        tvResponsibilityVacancy.setText(vacancy.getSnippet().getResponsibility());
         return relativeLayout;
     }
 

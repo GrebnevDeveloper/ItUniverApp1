@@ -50,13 +50,14 @@ public class DequeVacanciesLoader {
         Observable<DequeVacancies> vacanciesFromNetwork = Observable.empty();
         if (isInternetConnection()) {
             if (dequeVacancies.getMapTime().containsKey(totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD) &&
-                    textSearch.equals("")) {
+                    dequeVacancies.getOldTextSearch().equals(textSearch)) {
                 if (getCurrentTime() - dequeVacancies.getMapTime().get(totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD)
                             > 100 * 60 * 10) {
                     vacanciesFromNetwork = getDataFromNetwork(textSearch, totalItemCountPresenter, route, getCurrentTime());
                 }
             }
             else {
+                dequeVacancies.setOldTextSearch(textSearch);
                 vacanciesFromNetwork = getDataFromNetwork(textSearch, totalItemCountPresenter, route, getCurrentTime());
             }
         }

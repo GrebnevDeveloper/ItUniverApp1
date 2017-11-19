@@ -147,7 +147,7 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
     public void showListVacancies(DequeVacancies vacancies) {
         adapter.setListVacancies(vacancies);
         adapter.notifyDataSetChanged();
-        swipeRefreshLayout.setRefreshing(false);
+        showProgressLoad(View.INVISIBLE);
     }
 
     @Override
@@ -184,7 +184,6 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
     }
 
     private void setUpSwipeToRefreshLayout(View rootView) {
-        swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

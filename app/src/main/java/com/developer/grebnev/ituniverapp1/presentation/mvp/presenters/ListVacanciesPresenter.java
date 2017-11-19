@@ -59,19 +59,6 @@ public class ListVacanciesPresenter extends MvpPresenter<ListVacanciesView> impl
                     dequeVacanciesInteractor.setDequeVacancies(repository);
                     getViewState().showListVacancies(repository);
                 }));
-//        dequeVacanciesInteractor.getDequeVacancies(dequeVacanciesInteractor.getTotalItemCountPresenter(), route)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .doOnSubscribe(disposable -> {
-//                    getViewState().showProgressLoad(View.VISIBLE);
-//                })
-//                .doFinally(() -> {
-//                    getViewState().showProgressLoad(View.INVISIBLE);
-//                })
-//                .subscribe(repository -> {
-//                    dequeVacanciesInteractor.setDequeVacancies(repository);
-//                    getViewState().showListVacancies(repository);
-//                });
     }
 
     @Override

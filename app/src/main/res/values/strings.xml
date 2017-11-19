@@ -10,4 +10,6 @@
     <string name="here_we_describe_the_resume">Here we describe the resume</string>
     <string name="uploading_data">Uploading data</string>
     <string name="no_connection">No internet connection</string>
+    <string name="requirement">Requirement:</string>
+    <string name="responsibility">Responsibility:</string>
 </resources>

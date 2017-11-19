@@ -54,9 +54,9 @@ public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdap
     @Override
     public void onBindViewHolder(final ListVacanciesAdapter.ViewHolder holder, final int position) {
         if (!dequeVacancies.getDequeVacancies().isEmpty()) {
-            holder.tvNameVacancy.setText(dequeVacancies.getVacancyOfDeque(position).getName() + " " + position);
-            holder.tvAddressVacancy.setText(dequeVacancies.getVacancyOfDeque(position).getCreatedAt() + " " +
-                    dequeVacancies.getVacancyOfDeque(position).getIdVacancy());
+            holder.tvNameVacancy.setText(dequeVacancies.getVacancyOfDeque(position).getName());
+            //holder.tvAddressVacancy.setText(dequeVacancies.getVacancyOfDeque(position).getCreatedAt());
+            holder.tvAddressVacancy.setText(dequeVacancies.getVacancyOfDeque(position).getCreatedAt());
         }
         countVacancies = query.getCountVacancies();
         Log.d(TAG, "Bind view holder " + position);
@@ -73,8 +73,7 @@ public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdap
         Log.d(TAG, "Count item " + keyOut + " " + countVacancies);
         if (countVacancies >= keyOut || countVacancies == 0) {
             return keyOut;
-        }
-        else {
+        } else {
             return countVacancies;
         }
     }
