@@ -1,10 +1,17 @@
-package com.developer.grebnev.ituniverapp1.data.entity;
+package com.developer.grebnev.ituniverapp1.data.local.model;
+
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 
 /**
  * Created by Grebnev on 02.11.2017.
  */
-public class Snippet{
+@Table(name = "Snippet")
+public class SnippetLocal extends Model{
+    @Column(name = "requirement")
     private String requirement;
+    @Column(name = "responsibility")
     private String responsibility;
 
     public String getRequirement() {

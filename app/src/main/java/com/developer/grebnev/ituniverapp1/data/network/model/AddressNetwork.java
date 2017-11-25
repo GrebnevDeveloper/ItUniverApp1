@@ -1,11 +1,20 @@
-package com.developer.grebnev.ituniverapp1.data.entity;
+package com.developer.grebnev.ituniverapp1.data.network.model;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Grebnev on 02.11.2017.
  */
-public class Address {
+public class AddressNetwork {
+    @SerializedName("building")
+    @Expose
     private String building;
+    @SerializedName("city")
+    @Expose
     private String city;
+    @SerializedName("street")
+    @Expose
     private String street;
 
     public String getBuilding() {

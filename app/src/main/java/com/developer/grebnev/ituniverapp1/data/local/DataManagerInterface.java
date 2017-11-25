@@ -1,5 +1,6 @@
 package com.developer.grebnev.ituniverapp1.data.local;
 
+
 import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
 
 import java.util.List;

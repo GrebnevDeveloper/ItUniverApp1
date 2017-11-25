@@ -1,6 +1,6 @@
 package com.developer.grebnev.ituniverapp1.data.local;
 
-import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
+import com.developer.grebnev.ituniverapp1.data.local.model.VacancyLocal;
 
 import java.util.List;
 
@@ -11,6 +11,6 @@ import io.reactivex.Observable;
  */
 
 public interface DataQueryInterface {
-    Observable<List<Vacancy>> getListVacancies(int start, int end);
+    Observable<List<VacancyLocal>> getListVacancies(int start, int end);
     int getCountVacancies();
 }

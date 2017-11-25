@@ -1,5 +1,7 @@
 package com.developer.grebnev.ituniverapp1.di.modules;
 
+import com.developer.grebnev.ituniverapp1.data.local.DataQuery;
+import com.developer.grebnev.ituniverapp1.data.local.DataQueryInterface;
 import com.developer.grebnev.ituniverapp1.data.network.ApiConstants;
 import com.developer.grebnev.ituniverapp1.data.network.RequestInterface;
 import com.google.gson.Gson;
@@ -35,5 +37,10 @@ public class VacancyModule {
     @Provides
     public RequestInterface provideRequest(Retrofit retrofit) {
         return retrofit.create(RequestInterface.class);
+    }
+
+    @Provides
+    public DataQueryInterface provideQuery() {
+        return new DataQuery();
     }
 }

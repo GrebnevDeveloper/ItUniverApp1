@@ -1,40 +1,19 @@
 package com.developer.grebnev.ituniverapp1.data.entity;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.developer.grebnev.ituniverapp1.data.local.model.AddressLocal;
+import com.developer.grebnev.ituniverapp1.data.local.model.SnippetLocal;
+import com.developer.grebnev.ituniverapp1.data.network.model.AddressNetwork;
+import com.developer.grebnev.ituniverapp1.data.network.model.SnippetNetwork;
 
 /**
  * Created by Grebnev on 02.11.2017.
  */
-@Table(name = "Vacancy")
-public class Vacancy extends Model {
-    @Column(name = "snippet")
-    @SerializedName("snippet")
-    @Expose
+public class Vacancy {
     private Snippet snippet;
-    @Column(name = "name")
-    @SerializedName("name")
-    @Expose
     private String name;
-    @Column(name = "created_at")
-    @SerializedName("created_at")
-    @Expose
     private String createdAt;
-    @Column(name = "address")
-    @SerializedName("address")
-    @Expose
     private Address address;
-    @Column(name = "id_vacancy")
-    @SerializedName("id")
-    @Expose
     private String idVacancy;
-
-    public Vacancy() {
-        super();
-    }
 
     public String getName() {
         return name;
@@ -60,6 +39,24 @@ public class Vacancy extends Model {
         this.address = address;
     }
 
+    public void setAddress(AddressNetwork address) {
+        this.address = new Address();
+        if (address != null) {
+            this.address.setCity(address.getCity());
+            this.address.setStreet(address.getStreet());
+            this.address.setBuilding(address.getBuilding());
+        }
+    }
+
+    public void setAddress(AddressLocal address) {
+        this.address = new Address();
+        if (address != null) {
+            this.address.setCity(address.getCity());
+            this.address.setStreet(address.getStreet());
+            this.address.setBuilding(address.getBuilding());
+        }
+    }
+
     public String getIdVacancy() {
         return idVacancy;
     }
@@ -74,5 +71,17 @@ public class Vacancy extends Model {
 
     public void setSnippet(Snippet snippet) {
         this.snippet = snippet;
+    }
+
+    public void setSnippet(SnippetNetwork snippet) {
+        this.snippet = new Snippet();
+        this.snippet.setRequirement(snippet.getRequirement());
+        this.snippet.setResponsibility(snippet.getResponsibility());
+    }
+
+    public void setSnippet(SnippetLocal snippet) {
+        this.snippet = new Snippet();
+        this.snippet.setRequirement(snippet.getRequirement());
+        this.snippet.setResponsibility(snippet.getResponsibility());
     }
 }

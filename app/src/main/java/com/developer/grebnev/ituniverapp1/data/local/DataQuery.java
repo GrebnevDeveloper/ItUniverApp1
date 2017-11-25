@@ -1,7 +1,7 @@
 package com.developer.grebnev.ituniverapp1.data.local;
 
 import com.activeandroid.query.Select;
-import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
+import com.developer.grebnev.ituniverapp1.data.local.model.VacancyLocal;
 
 import java.util.List;
 
@@ -15,14 +15,13 @@ import io.reactivex.Observable;
 
 public class DataQuery implements DataQueryInterface {
     @Inject
-    public DataQuery() {
-    }
+    public DataQuery() {}
 
     @Override
-    public Observable<List<Vacancy>> getListVacancies(int start, int end) {
+    public Observable<List<VacancyLocal>> getListVacancies(int start, int end) {
         return Observable.fromCallable(() ->
                 new Select()
-                        .from(Vacancy.class)
+                        .from(VacancyLocal.class)
                         .where("ROWID > ? and ROWID < ?", start, end)
                         .execute()
         );
@@ -31,7 +30,7 @@ public class DataQuery implements DataQueryInterface {
     @Override
     public int getCountVacancies() {
         return new Select()
-                .from(Vacancy.class)
+                .from(VacancyLocal.class)
                 .count();
     }
 }

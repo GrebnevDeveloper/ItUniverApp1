@@ -1,10 +1,17 @@
-package com.developer.grebnev.ituniverapp1.data.entity;
+package com.developer.grebnev.ituniverapp1.data.network.model;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Grebnev on 02.11.2017.
  */
-public class Snippet{
+public class SnippetNetwork {
+    @SerializedName("requirement")
+    @Expose
     private String requirement;
+    @SerializedName("responsibility")
+    @Expose
     private String responsibility;
 
     public String getRequirement() {

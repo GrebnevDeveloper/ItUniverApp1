@@ -2,6 +2,7 @@ package com.developer.grebnev.ituniverapp1.data.local;
 
 import com.activeandroid.ActiveAndroid;
 import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
+import com.developer.grebnev.ituniverapp1.data.local.model.VacancyLocal;
 import com.developer.grebnev.ituniverapp1.utils.EndlessRecyclerConstants;
 
 import java.util.List;
@@ -22,8 +23,8 @@ public class DataManager implements DataManagerInterface {
         ActiveAndroid.beginTransaction();
         try {
             for (int i = 0; i < vacancies.size(); i++) {
-                Vacancy vacancy = new Vacancy();
-                vacancy = vacancies.get(i);
+                VacancyLocal vacancy = new VacancyLocal();
+                fromNetworkToLocal(vacancies.get(i), vacancy);
                 vacancy.save();
             }
             ActiveAndroid.setTransactionSuccessful();
@@ -37,17 +38,21 @@ public class DataManager implements DataManagerInterface {
         ActiveAndroid.beginTransaction();
         try {
             for (int i = 0; i < vacancies.size(); i++) {
-                Vacancy vacancy = Vacancy.load(Vacancy.class, (totalItemCount - EndlessRecyclerConstants.VOLUME_LOAD + i + 1));
-                vacancy.setAddress(vacancies.get(i).getAddress());
-                vacancy.setCreatedAt(vacancies.get(i).getCreatedAt());
-                vacancy.setIdVacancy(vacancies.get(i).getIdVacancy());
-                vacancy.setName(vacancies.get(i).getName());
-                vacancy.setSnippet(vacancies.get(i).getSnippet());
-                vacancy.save();
+                VacancyLocal vacancyLocal = VacancyLocal.load(VacancyLocal.class, (totalItemCount - EndlessRecyclerConstants.VOLUME_LOAD + i + 1));
+                fromNetworkToLocal(vacancies.get(i), vacancyLocal);
+                vacancyLocal.save();
             }
             ActiveAndroid.setTransactionSuccessful();
         } finally {
             ActiveAndroid.endTransaction();
         }
+    }
+
+    private void fromNetworkToLocal(Vacancy vacancy, VacancyLocal vacancyLocal) {
+        vacancyLocal.setAddress(vacancy.getAddress());
+        vacancyLocal.setCreatedAt(vacancy.getCreatedAt());
+        vacancyLocal.setIdVacancy(vacancy.getIdVacancy());
+        vacancyLocal.setName(vacancy.getName());
+        vacancyLocal.setSnippet(vacancy.getSnippet());
     }
 }

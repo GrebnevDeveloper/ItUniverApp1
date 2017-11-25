@@ -1,4 +1,4 @@
-package com.developer.grebnev.ituniverapp1.data.entity;
+package com.developer.grebnev.ituniverapp1.data.network.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -9,16 +9,16 @@ import java.util.List;
  * Created by Grebnev on 03.11.2017.
  */
 
-public class PageVacancy {
+public class PageVacancyNetwork {
     @SerializedName("items")
     @Expose
-    private List<Vacancy> vacanciesList = null;
+    private List<VacancyNetwork> vacanciesList = null;
 
-    public List<Vacancy> getVacanciesList() {
+    public List<VacancyNetwork> getVacanciesList() {
         return vacanciesList;
     }
 
-    public void setVacanciesList(List<Vacancy> vacanciesList) {
+    public void setVacanciesList(List<VacancyNetwork> vacanciesList) {
         this.vacanciesList = vacanciesList;
     }
 }

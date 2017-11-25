@@ -1,7 +1,7 @@
 package com.developer.grebnev.ituniverapp1.data.entity.mapper;
 
-import com.developer.grebnev.ituniverapp1.data.entity.PageVacancy;
-import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
+import com.developer.grebnev.ituniverapp1.data.network.model.PageVacancyNetwork;
+import com.developer.grebnev.ituniverapp1.data.network.model.VacancyNetwork;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class VacancyJsonMapper {
     @Inject
     public VacancyJsonMapper() {}
 
-    public List<Vacancy> transformJsonToVacancy(PageVacancy pageVacancy) {
+    public List<VacancyNetwork> transformJsonToVacancy(PageVacancyNetwork pageVacancy) {
         return pageVacancy.getVacanciesList();
     }
 }

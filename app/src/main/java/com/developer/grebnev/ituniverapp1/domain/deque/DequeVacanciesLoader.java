@@ -2,12 +2,12 @@ package com.developer.grebnev.ituniverapp1.domain.deque;
 
 import android.app.Application;
 
-import com.developer.grebnev.ituniverapp1.utils.EndlessRecyclerConstants;
 import com.developer.grebnev.ituniverapp1.data.local.DataManager;
 import com.developer.grebnev.ituniverapp1.data.local.DataQuery;
-import com.developer.grebnev.ituniverapp1.data.repository.VacanciesNetworkRepository;
+import com.developer.grebnev.ituniverapp1.data.repository.VacanciesRepository;
 import com.developer.grebnev.ituniverapp1.domain.mapper.DequeVacancyMapper;
 import com.developer.grebnev.ituniverapp1.domain.mapper.MapVacancyMapper;
+import com.developer.grebnev.ituniverapp1.utils.EndlessRecyclerConstants;
 import com.developer.grebnev.ituniverapp1.utils.InternetConnection;
 
 import java.util.Calendar;
@@ -22,7 +22,7 @@ import io.reactivex.Observable;
 
 public class DequeVacanciesLoader {
     Application application;
-    VacanciesNetworkRepository vacanciesNetworkRepository;
+    VacanciesRepository vacanciesRepository;
     DataManager dataManager;
     DataQuery query;
     MapVacancyMapper mapVacancyMapper;
@@ -31,14 +31,14 @@ public class DequeVacanciesLoader {
 
     @Inject
     public DequeVacanciesLoader(Application application,
-                                VacanciesNetworkRepository vacanciesNetworkRepository,
+                                VacanciesRepository vacanciesRepository,
                                 DataManager dataManager,
                                 DataQuery query,
                                 MapVacancyMapper mapVacancyMapper,
                                 DequeVacancyMapper dequeVacancyMapper,
                                 DequeVacancies dequeVacancies) {
         this.application = application;
-        this.vacanciesNetworkRepository = vacanciesNetworkRepository;
+        this.vacanciesRepository = vacanciesRepository;
         this.dataManager = dataManager;
         this.query = query;
         this.mapVacancyMapper = mapVacancyMapper;
@@ -61,6 +61,7 @@ public class DequeVacanciesLoader {
                 vacanciesFromNetwork = getDataFromNetwork(textSearch, totalItemCountPresenter, route, getCurrentTime());
             }
         }
+       // Single<DequeVacancies> vacanciesSingle = Single.fromCallable(() -> dequeVacancies);
         Observable<DequeVacancies> vacanciesFromLocal = Observable.just(dequeVacancies);
         if (query.getCountVacancies() != 0) {
             vacanciesFromLocal = getDataFromLocal(totalItemCountPresenter, route);
@@ -69,7 +70,7 @@ public class DequeVacanciesLoader {
     }
 
     private Observable<DequeVacancies> getDataFromNetwork(String textSearch, int totalItemCountPresenter, int route, long time) {
-        return vacanciesNetworkRepository.getVacanciesNetwork(textSearch, EndlessRecyclerConstants.VOLUME_LOAD,
+        return vacanciesRepository.getVacanciesNetwork(textSearch, EndlessRecyclerConstants.VOLUME_LOAD,
                 totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD - 1)
                 .doOnNext(listVacancies -> {
                     if (totalItemCountPresenter > query.getCountVacancies()) {
@@ -85,7 +86,7 @@ public class DequeVacanciesLoader {
     }
 
     private Observable<DequeVacancies> getDataFromLocal(int totalItemCountPresenter, int route) {
-        return query.getListVacancies(totalItemCountPresenter - EndlessRecyclerConstants.VOLUME_LOAD,
+        return vacanciesRepository.getVacanciesLocal(totalItemCountPresenter - EndlessRecyclerConstants.VOLUME_LOAD,
                 totalItemCountPresenter + 1)
                 .map(listVacancies -> mapVacancyMapper.createMapVacancies(totalItemCountPresenter, listVacancies))
                 .map(mapVacancy -> dequeVacancyMapper.createDequeVacancy(dequeVacancies, mapVacancy, route));
