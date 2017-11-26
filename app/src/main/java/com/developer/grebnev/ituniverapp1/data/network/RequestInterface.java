@@ -1,9 +1,11 @@
 package com.developer.grebnev.ituniverapp1.data.network;
 
 import com.developer.grebnev.ituniverapp1.data.network.model.PageVacancyNetwork;
+import com.developer.grebnev.ituniverapp1.data.network.model.VacancyNetwork;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -18,4 +20,7 @@ public interface RequestInterface {
     Observable<PageVacancyNetwork> getResultSearch(@Query("text") String textSearch,
                                             @Query("per_page") int countVacancies,
                                             @Query("page") int numberPage);
+
+    @GET("/vacancies/{vacancy_id}")
+    Observable<VacancyNetwork> getVacancyDetail(@Path("vacancy_id") String vacancyId);
 }

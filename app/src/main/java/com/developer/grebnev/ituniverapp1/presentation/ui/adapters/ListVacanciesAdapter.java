@@ -54,9 +54,22 @@ public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdap
     @Override
     public void onBindViewHolder(final ListVacanciesAdapter.ViewHolder holder, final int position) {
         if (!dequeVacancies.getDequeVacancies().isEmpty()) {
-            holder.tvNameVacancy.setText(dequeVacancies.getVacancyOfDeque(position).getName());
-            //holder.tvAddressVacancy.setText(dequeVacancies.getVacancyOfDeque(position).getCreatedAt());
-            holder.tvAddressVacancy.setText(dequeVacancies.getVacancyOfDeque(position).getCreatedAt());
+            holder.tvNameVacancy.setText(dequeVacancies.getVacancyOfDeque(position).name());
+            if (dequeVacancies.getVacancyOfDeque(position).salary() != null) {
+                holder.tvSalaryVacancy.setText("from " + dequeVacancies.getVacancyOfDeque(position).salary().from() +
+                " to " + dequeVacancies.getVacancyOfDeque(position).salary().to() + " " +
+                        dequeVacancies.getVacancyOfDeque(position).salary().currency());
+            }
+            if (dequeVacancies.getVacancyOfDeque(position).employer() != null) {
+                holder.tvEmployerVacancy.setText(dequeVacancies.getVacancyOfDeque(position).employer().name());
+            }
+            if (dequeVacancies.getVacancyOfDeque(position).address() != null) {
+                holder.tvAddressVacancy.setText(dequeVacancies.getVacancyOfDeque(position).address().city() + ", " +
+                        dequeVacancies.getVacancyOfDeque(position).address().street() + ", " +
+                        dequeVacancies.getVacancyOfDeque(position).address().building());
+            }
+            holder.tvDateCreatedVacancy.setText(dequeVacancies.getVacancyOfDeque(position).createdAt().substring(0, 10)
+                    + " in " + dequeVacancies.getVacancyOfDeque(position).createdAt().substring(12, 16));
         }
         countVacancies = query.getCountVacancies();
         Log.d(TAG, "Bind view holder " + position);
@@ -81,8 +94,14 @@ public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdap
     public static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.text_name_vacancy)
         TextView tvNameVacancy;
+        @BindView(R.id.text_salary_vacancy)
+        TextView tvSalaryVacancy;
+        @BindView(R.id.text_employer_vacancy)
+        TextView tvEmployerVacancy;
         @BindView(R.id.text_address_vacancy)
         TextView tvAddressVacancy;
+        @BindView(R.id.text_date_created_vacancy)
+        TextView tvDateCreatedVacancy;
 
         public ViewHolder(CardView cv) {
             super(cv);

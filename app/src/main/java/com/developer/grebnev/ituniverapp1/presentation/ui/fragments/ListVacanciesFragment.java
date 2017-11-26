@@ -23,15 +23,12 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.developer.grebnev.ituniverapp1.MyApplication;
 import com.developer.grebnev.ituniverapp1.R;
 import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
-import com.developer.grebnev.ituniverapp1.data.entity.VacancyParce;
 import com.developer.grebnev.ituniverapp1.domain.deque.DequeVacancies;
 import com.developer.grebnev.ituniverapp1.presentation.mvp.presenters.ListVacanciesPresenter;
 import com.developer.grebnev.ituniverapp1.presentation.mvp.view.ListVacanciesView;
 import com.developer.grebnev.ituniverapp1.presentation.ui.activities.MainActivity;
 import com.developer.grebnev.ituniverapp1.presentation.ui.adapters.ListVacanciesAdapter;
 import com.developer.grebnev.ituniverapp1.utils.EndlessRecyclerScrollListener;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -125,10 +122,10 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
 
     public static VacancyDescriptionFragment newInstance(Vacancy vacancy) {
         Bundle args = new Bundle();
-        ArrayList<Vacancy> tmp = new ArrayList<>();
-        tmp.add(vacancy);
-        VacancyParce vacancyParce = VacancyParce.create(tmp);
-        args.putParcelable(KEY_VACANCY, vacancyParce);
+        //ArrayList<Vacancy> tmp = new ArrayList<>();
+       //tmp.add(vacancy);
+        //VacancyParce vacancyParce = VacancyParce.create(tmp);
+        args.putParcelable(KEY_VACANCY, vacancy);
         VacancyDescriptionFragment fragment = new VacancyDescriptionFragment();
         fragment.setArguments(args);
         return fragment;

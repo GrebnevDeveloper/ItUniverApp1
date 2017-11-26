@@ -1,6 +1,5 @@
 package com.developer.grebnev.ituniverapp1.data.network.model;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -8,13 +7,10 @@ import com.google.gson.annotations.SerializedName;
  */
 public class AddressNetwork {
     @SerializedName("building")
-    @Expose
     private String building;
     @SerializedName("city")
-    @Expose
     private String city;
     @SerializedName("street")
-    @Expose
     private String street;
 
     public String getBuilding() {

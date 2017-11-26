@@ -4,21 +4,24 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.developer.grebnev.ituniverapp1.data.entity.Address;
-import com.developer.grebnev.ituniverapp1.data.entity.Snippet;
 
 /**
  * Created by Grebnev on 02.11.2017.
  */
 @Table(name = "Vacancy")
 public class VacancyLocal extends Model{
-    @Column(name = "snippet")
-    private SnippetLocal snippet;
+    @Column(name = "salary")
+    private SalaryLocal salary;
     @Column(name = "name")
     private String name;
+    @Column(name = "description")
+    private String description;
     @Column(name = "created_at")
     private String createdAt;
     @Column(name = "address")
     private AddressLocal address;
+    @Column(name = "employer")
+    private EmployerLocal employer;
     @Column(name = "id_vacancy")
     private String idVacancy;
 
@@ -53,10 +56,34 @@ public class VacancyLocal extends Model{
     public void setAddress(Address address) {
         this.address = new AddressLocal();
         if (address != null) {
-            this.address.setCity(address.getCity());
-            this.address.setStreet(address.getStreet());
-            this.address.setBuilding(address.getBuilding());
+            this.address.setCity(address.city());
+            this.address.setStreet(address.street());
+            this.address.setBuilding(address.building());
         }
+    }
+
+    public SalaryLocal getSalary() {
+        return salary;
+    }
+
+    public void setSalary(SalaryLocal salary) {
+        this.salary = salary;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public EmployerLocal getEmployer() {
+        return employer;
+    }
+
+    public void setEmployer(EmployerLocal employer) {
+        this.employer = employer;
     }
 
     public String getIdVacancy() {
@@ -65,19 +92,5 @@ public class VacancyLocal extends Model{
 
     public void setIdVacancy(String id) {
         this.idVacancy = id;
-    }
-
-    public SnippetLocal getSnippet() {
-        return snippet;
-    }
-
-    public void setSnippet(SnippetLocal snippet) {
-        this.snippet = snippet;
-    }
-
-    public void setSnippet(Snippet snippet) {
-        this.snippet = new SnippetLocal();
-        this.snippet.setRequirement(snippet.getRequirement());
-        this.snippet.setResponsibility(snippet.getResponsibility());
     }
 }

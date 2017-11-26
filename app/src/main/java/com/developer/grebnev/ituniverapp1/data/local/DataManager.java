@@ -49,10 +49,10 @@ public class DataManager implements DataManagerInterface {
     }
 
     private void fromNetworkToLocal(Vacancy vacancy, VacancyLocal vacancyLocal) {
-        vacancyLocal.setAddress(vacancy.getAddress());
-        vacancyLocal.setCreatedAt(vacancy.getCreatedAt());
-        vacancyLocal.setIdVacancy(vacancy.getIdVacancy());
-        vacancyLocal.setName(vacancy.getName());
-        vacancyLocal.setSnippet(vacancy.getSnippet());
+        vacancyLocal.setAddress(vacancy.address());
+        vacancyLocal.setCreatedAt(vacancy.createdAt());
+        vacancyLocal.setIdVacancy(vacancy.idVacancy());
+        vacancyLocal.setName(vacancy.name());
+        //vacancyLocal.setSnippet(vacancy.getSnippet());
     }
 }

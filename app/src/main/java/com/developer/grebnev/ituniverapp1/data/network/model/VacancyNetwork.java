@@ -1,26 +1,26 @@
 package com.developer.grebnev.ituniverapp1.data.network.model;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Grebnev on 02.11.2017.
  */
 public class VacancyNetwork {
-    @SerializedName("snippet")
-    @Expose
-    private SnippetNetwork snippet;
+    @SerializedName("salary")
+    private SalaryNetwork salary;
     @SerializedName("name")
-    @Expose
     private String name;
+    @SerializedName("description")
+    private String description;
     @SerializedName("created_at")
-    @Expose
     private String createdAt;
     @SerializedName("address")
-    @Expose
     private AddressNetwork address;
+    @SerializedName("employer")
+    private EmployerNetwork employer;
+    @SerializedName("contacts")
+    private ContactsNetwork contacts;
     @SerializedName("id")
-    @Expose
     private String idVacancy;
 
     public VacancyNetwork() {
@@ -37,6 +37,14 @@ public class VacancyNetwork {
 
     public String getCreatedAt() {
         return createdAt;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setCreatedAt(String createdAt) {
@@ -59,11 +67,27 @@ public class VacancyNetwork {
         this.idVacancy = id;
     }
 
-    public SnippetNetwork getSnippet() {
-        return snippet;
+    public SalaryNetwork getSalary() {
+        return salary;
     }
 
-    public void setSnippet(SnippetNetwork snippet) {
-        this.snippet = snippet;
+    public void setSalary(SalaryNetwork salary) {
+        this.salary = salary;
+    }
+
+    public EmployerNetwork getEmployer() {
+        return employer;
+    }
+
+    public void setEmployer(EmployerNetwork employer) {
+        this.employer = employer;
+    }
+
+    public ContactsNetwork getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(ContactsNetwork contacts) {
+        this.contacts = contacts;
     }
 }

@@ -1,87 +1,33 @@
 package com.developer.grebnev.ituniverapp1.data.entity;
 
-import com.developer.grebnev.ituniverapp1.data.local.model.AddressLocal;
-import com.developer.grebnev.ituniverapp1.data.local.model.SnippetLocal;
-import com.developer.grebnev.ituniverapp1.data.network.model.AddressNetwork;
-import com.developer.grebnev.ituniverapp1.data.network.model.SnippetNetwork;
+import android.os.Parcelable;
+
+import com.google.auto.value.AutoValue;
+
+import javax.annotation.Nullable;
 
 /**
  * Created by Grebnev on 02.11.2017.
  */
-public class Vacancy {
-    private Snippet snippet;
-    private String name;
-    private String createdAt;
-    private Address address;
-    private String idVacancy;
+@AutoValue
+public abstract class Vacancy implements Parcelable{
+    @Nullable public abstract Salary salary();
+    public abstract String name();
+    @Nullable public abstract String description();
+    public abstract String createdAt();
+    @Nullable public abstract Address address();
+    @Nullable public abstract Employer employer();
+    @Nullable public abstract Contacts contacts();
+    public abstract String idVacancy();
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public void setAddress(AddressNetwork address) {
-        this.address = new Address();
-        if (address != null) {
-            this.address.setCity(address.getCity());
-            this.address.setStreet(address.getStreet());
-            this.address.setBuilding(address.getBuilding());
-        }
-    }
-
-    public void setAddress(AddressLocal address) {
-        this.address = new Address();
-        if (address != null) {
-            this.address.setCity(address.getCity());
-            this.address.setStreet(address.getStreet());
-            this.address.setBuilding(address.getBuilding());
-        }
-    }
-
-    public String getIdVacancy() {
-        return idVacancy;
-    }
-
-    public void setIdVacancy(String id) {
-        this.idVacancy = id;
-    }
-
-    public Snippet getSnippet() {
-        return snippet;
-    }
-
-    public void setSnippet(Snippet snippet) {
-        this.snippet = snippet;
-    }
-
-    public void setSnippet(SnippetNetwork snippet) {
-        this.snippet = new Snippet();
-        this.snippet.setRequirement(snippet.getRequirement());
-        this.snippet.setResponsibility(snippet.getResponsibility());
-    }
-
-    public void setSnippet(SnippetLocal snippet) {
-        this.snippet = new Snippet();
-        this.snippet.setRequirement(snippet.getRequirement());
-        this.snippet.setResponsibility(snippet.getResponsibility());
+    public static Vacancy create(Salary salary,
+                                 String name,
+                                 String description,
+                                 String createdAt,
+                                 Address address,
+                                 Employer employer,
+                                 Contacts contacts,
+                                 String idVacancy) {
+        return new AutoValue_Vacancy(salary, name, description, createdAt, address, employer, contacts, idVacancy);
     }
 }

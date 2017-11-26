@@ -38,18 +38,24 @@ public class VacanciesRepository implements VacanciesInterface{
         if (textSearch.equals("")) {
             return requestInterface.getVacancies(countVacancies, numberPage)
                     .map(pageVacancy -> vacancyJsonMapper.transformJsonToVacancy(pageVacancy))
-                    .map(listVacanciesNetwork -> vacancyEntityMapper.transformFromNetwork(listVacanciesNetwork));
+                    .map(listVacanciesNetwork -> vacancyEntityMapper.transformListFromNetwork(listVacanciesNetwork));
         }
         else {
             return requestInterface.getResultSearch(textSearch, countVacancies, numberPage)
                     .map(pageVacancy -> vacancyJsonMapper.transformJsonToVacancy(pageVacancy))
-                    .map(listVacanciesNetwork -> vacancyEntityMapper.transformFromNetwork(listVacanciesNetwork));
+                    .map(listVacanciesNetwork -> vacancyEntityMapper.transformListFromNetwork(listVacanciesNetwork));
         }
     }
 
     @Override
     public Observable<List<Vacancy>> getVacanciesLocal(int start, int end) {
         return dataQueryInterface.getListVacancies(start, end)
-                .map(listVacanciesLocal -> vacancyEntityMapper.transformFromLocal(listVacanciesLocal));
+                .map(listVacanciesLocal -> vacancyEntityMapper.transformListFromLocal(listVacanciesLocal));
+    }
+
+    @Override
+    public Observable<Vacancy> getVacancyDetail(String vacancyId) {
+        return requestInterface.getVacancyDetail(vacancyId)
+                .map(vacancyNetwork -> vacancyEntityMapper.transformFromNetwork(vacancyNetwork));
     }
 }

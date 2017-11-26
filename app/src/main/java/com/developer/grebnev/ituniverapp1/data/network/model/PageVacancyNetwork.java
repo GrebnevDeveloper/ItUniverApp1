@@ -1,6 +1,5 @@
 package com.developer.grebnev.ituniverapp1.data.network.model;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -11,7 +10,6 @@ import java.util.List;
 
 public class PageVacancyNetwork {
     @SerializedName("items")
-    @Expose
     private List<VacancyNetwork> vacanciesList = null;
 
     public List<VacancyNetwork> getVacanciesList() {

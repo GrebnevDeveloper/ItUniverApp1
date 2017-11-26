@@ -12,4 +12,5 @@
     <string name="no_connection">No internet connection</string>
     <string name="requirement">Requirement:</string>
     <string name="responsibility">Responsibility:</string>
+    <string name="salary_not_specified">Salary not specified</string>
 </resources>

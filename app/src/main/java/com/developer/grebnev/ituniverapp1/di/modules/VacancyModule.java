@@ -4,8 +4,6 @@ import com.developer.grebnev.ituniverapp1.data.local.DataQuery;
 import com.developer.grebnev.ituniverapp1.data.local.DataQueryInterface;
 import com.developer.grebnev.ituniverapp1.data.network.ApiConstants;
 import com.developer.grebnev.ituniverapp1.data.network.RequestInterface;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import dagger.Module;
@@ -18,18 +16,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 @Module
 public class VacancyModule {
-    @Provides
-    public Gson provideGsonBuilder() {
-        return new GsonBuilder()
-                .excludeFieldsWithoutExposeAnnotation()
-                .create();
-    }
 
     @Provides
-    public Retrofit provideRetrofit(Gson gson) {
+    public Retrofit provideRetrofit() {
         return new Retrofit.Builder()
                 .baseUrl(ApiConstants.URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
