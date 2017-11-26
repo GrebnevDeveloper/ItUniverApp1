@@ -6,6 +6,7 @@ import com.developer.grebnev.ituniverapp1.presentation.mvp.presenters.ListVacanc
 import com.developer.grebnev.ituniverapp1.presentation.mvp.presenters.VacancyDescriptionPresenter;
 import com.developer.grebnev.ituniverapp1.presentation.ui.activities.MainActivity;
 import com.developer.grebnev.ituniverapp1.presentation.ui.fragments.ListVacanciesFragment;
+import com.developer.grebnev.ituniverapp1.presentation.ui.fragments.VacancyDescriptionFragment;
 
 import javax.inject.Singleton;
 
@@ -19,6 +20,7 @@ import dagger.Component;
 public interface ApplicationComponent {
     void inject(MainActivity mainActivity);
     void inject(ListVacanciesFragment listVacanciesFragment);
+    void inject(VacancyDescriptionFragment vacancyDescriptionFragment);
     void inject(ListVacanciesPresenter listVacanciesPresenter);
     void inject(VacancyDescriptionPresenter vacancyDescriptionPresenter);
 }

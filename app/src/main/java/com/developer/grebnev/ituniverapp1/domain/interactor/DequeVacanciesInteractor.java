@@ -7,17 +7,18 @@ import com.developer.grebnev.ituniverapp1.domain.deque.DequeVacanciesLoader;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by Grebnev on 07.11.2017.
  */
 
 public class DequeVacanciesInteractor implements DequeIteractorInterface{
-    DequeVacanciesLoader dequeVacanciesRepository;
+    DequeVacanciesLoader dequeVacanciesLoader;
 
     @Inject
-    public DequeVacanciesInteractor(DequeVacanciesLoader dequeVacanciesRepository) {
-        this.dequeVacanciesRepository = dequeVacanciesRepository;
+    public DequeVacanciesInteractor(DequeVacanciesLoader dequeVacanciesLoader) {
+        this.dequeVacanciesLoader = dequeVacanciesLoader;
     }
 
     private DequeVacancies dequeVacancies = new DequeVacancies();
@@ -26,12 +27,12 @@ public class DequeVacanciesInteractor implements DequeIteractorInterface{
 
     @Override
     public Observable<DequeVacancies> getDequeVacancies(int totalItemCountPresenter, int route) {
-        return dequeVacanciesRepository.loadVacancies(textSearch ,totalItemCountPresenter, route);
+        return dequeVacanciesLoader.loadVacancies(textSearch ,totalItemCountPresenter, route);
     }
 
     @Override
     public boolean isInternetConnection() {
-        return dequeVacanciesRepository.isInternetConnection();
+        return dequeVacanciesLoader.isInternetConnection();
     }
 
     @Override
@@ -81,5 +82,9 @@ public class DequeVacanciesInteractor implements DequeIteractorInterface{
     @Override
     public void setTextSearch(String textSearch) {
         this.textSearch = textSearch;
+    }
+
+    public CompositeDisposable getCompositeDisposableData() {
+        return dequeVacanciesLoader.getCompositeDisposableData();
     }
 }

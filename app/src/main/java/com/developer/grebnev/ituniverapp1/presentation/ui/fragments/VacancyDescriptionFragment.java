@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.developer.grebnev.ituniverapp1.MyApplication;
 import com.developer.grebnev.ituniverapp1.R;
 import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
 import com.developer.grebnev.ituniverapp1.presentation.mvp.presenters.VacancyDescriptionPresenter;
@@ -52,6 +53,12 @@ public class VacancyDescriptionFragment extends MvpAppCompatFragment implements 
     TextView tvEmail;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        MyApplication.getApplicationComponent().inject(this);
+    }
 
     @Nullable
     @Override
@@ -93,7 +100,6 @@ public class VacancyDescriptionFragment extends MvpAppCompatFragment implements 
             tvLocation.setText(vacancy.address().city() + ", " + vacancy.address().street() + ", " + vacancy.address().building());
         }
         vacancyDescriptionPresenter.loadVacancyDescription(vacancy.idVacancy());
-
     }
 
     @Override
@@ -109,11 +115,15 @@ public class VacancyDescriptionFragment extends MvpAppCompatFragment implements 
     public void showFullData(Vacancy vacancy) {
         tvDescriptionVacancy.setText(Html.fromHtml(vacancy.description()));
         if (vacancy.contacts() != null) {
-            tvEmail.setText(vacancy.contacts().email());
-            tvPhone.setText(vacancy.contacts().phones().get(0).country() +
-                    vacancy.contacts().phones().get(0).city() + vacancy.contacts().phones().get(0).number());
-            tvPhone.setOnClickListener(this);
-            tvEmail.setOnClickListener(this);
+            if (vacancy.contacts().email() != null) {
+                tvEmail.setText(vacancy.contacts().email());
+                tvEmail.setOnClickListener(this);
+            }
+            if (vacancy.contacts().phones().size() > 0) {
+                tvPhone.setText(vacancy.contacts().phones().get(0).country() +
+                        vacancy.contacts().phones().get(0).city() + vacancy.contacts().phones().get(0).number());
+                tvPhone.setOnClickListener(this);
+            }
         }
     }
 

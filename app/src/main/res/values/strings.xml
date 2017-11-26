@@ -13,4 +13,6 @@
     <string name="requirement">Requirement:</string>
     <string name="responsibility">Responsibility:</string>
     <string name="salary_not_specified">Salary not specified</string>
+    <string name="not_phone">Not phone number</string>
+    <string name="not_email">Not email</string>
 </resources>

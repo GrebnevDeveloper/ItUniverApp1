@@ -3,7 +3,6 @@ package com.developer.grebnev.ituniverapp1.data.local.model;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.developer.grebnev.ituniverapp1.data.entity.Address;
 
 /**
  * Created by Grebnev on 02.11.2017.
@@ -51,15 +50,6 @@ public class VacancyLocal extends Model{
 
     public void setAddress(AddressLocal address) {
         this.address = address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = new AddressLocal();
-        if (address != null) {
-            this.address.setCity(address.city());
-            this.address.setStreet(address.street());
-            this.address.setBuilding(address.building());
-        }
     }
 
     public SalaryLocal getSalary() {

@@ -6,6 +6,9 @@ import com.developer.grebnev.ituniverapp1.data.entity.Employer;
 import com.developer.grebnev.ituniverapp1.data.entity.Phone;
 import com.developer.grebnev.ituniverapp1.data.entity.Salary;
 import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
+import com.developer.grebnev.ituniverapp1.data.local.model.AddressLocal;
+import com.developer.grebnev.ituniverapp1.data.local.model.EmployerLocal;
+import com.developer.grebnev.ituniverapp1.data.local.model.SalaryLocal;
 import com.developer.grebnev.ituniverapp1.data.local.model.VacancyLocal;
 import com.developer.grebnev.ituniverapp1.data.network.model.PhoneNetwork;
 import com.developer.grebnev.ituniverapp1.data.network.model.VacancyNetwork;
@@ -21,8 +24,7 @@ import javax.inject.Inject;
 
 public class VacancyEntityMapper {
     @Inject
-    public VacancyEntityMapper() {
-    }
+    public VacancyEntityMapper() {}
 
     public List<Vacancy> transformListFromNetwork(List<VacancyNetwork> vacanciesNetwork) {
         List<Vacancy> vacancies = new ArrayList<>();
@@ -114,5 +116,43 @@ public class VacancyEntityMapper {
                 null,
                 vacancyLocal.getIdVacancy());
         return vacancy;
+    }
+
+    public List<VacancyLocal> transformListToLocal(List<Vacancy> vacancyList) {
+        List<VacancyLocal> vacancyLocals = new ArrayList<>();
+        for (Vacancy vacancy : vacancyList) {
+            VacancyLocal vacancyLocal = new VacancyLocal();
+            SalaryLocal salaryLocal = new SalaryLocal();
+            if (vacancy.salary() != null) {
+                salaryLocal.setTo(vacancy.salary().to());
+                salaryLocal.setFrom(vacancy.salary().from());
+                salaryLocal.setCurrency(vacancy.salary().currency());
+            }
+            vacancyLocal.setSalary(salaryLocal);
+
+            AddressLocal addressLocal = new AddressLocal();
+            if (vacancy.address() != null) {
+                addressLocal.setCity(vacancy.address().city());
+                addressLocal.setStreet(vacancy.address().street());
+                addressLocal.setBuilding(vacancy.address().building());
+            }
+            vacancyLocal.setAddress(addressLocal);
+
+            EmployerLocal employerLocal = new EmployerLocal();
+            if (vacancy.employer() != null) {
+                employerLocal.setName(vacancy.employer().name());
+            }
+            vacancyLocal.setEmployer(employerLocal);
+            vacancyLocal.setName(vacancy.name());
+            vacancyLocal.setIdVacancy(vacancy.idVacancy());
+            if (vacancy.description() != null) {
+                vacancyLocal.setDescription(vacancy.description());
+            }
+            vacancyLocal.setCreatedAt(vacancy.createdAt());
+
+            vacancyLocals.add(vacancyLocal);
+        }
+
+        return vacancyLocals;
     }
 }

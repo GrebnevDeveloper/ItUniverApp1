@@ -80,6 +80,14 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
         listVacanciesPresenter.loadNextDataFromDatabase(totalItemCountFragment);
     }
 
+    public static VacancyDescriptionFragment newInstance(Vacancy vacancy) {
+        Bundle args = new Bundle();
+        args.putParcelable(KEY_VACANCY, vacancy);
+        VacancyDescriptionFragment fragment = new VacancyDescriptionFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -118,17 +126,6 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
                 return false;
             }
         });
-    }
-
-    public static VacancyDescriptionFragment newInstance(Vacancy vacancy) {
-        Bundle args = new Bundle();
-        //ArrayList<Vacancy> tmp = new ArrayList<>();
-       //tmp.add(vacancy);
-        //VacancyParce vacancyParce = VacancyParce.create(tmp);
-        args.putParcelable(KEY_VACANCY, vacancy);
-        VacancyDescriptionFragment fragment = new VacancyDescriptionFragment();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override

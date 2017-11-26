@@ -15,6 +15,7 @@ import java.util.Calendar;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by Grebnev on 12.11.2017.
@@ -52,7 +53,7 @@ public class DequeVacanciesLoader {
             if (dequeVacancies.getMapTime().containsKey(totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD) &&
                     dequeVacancies.getOldTextSearch().equals(textSearch)) {
                 if (getCurrentTime() - dequeVacancies.getMapTime().get(totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD)
-                            > 100 * 60 * 10) {
+                            > 100 * 60 * 10 && route == EndlessRecyclerConstants.SCROLL_DOWN) {
                     vacanciesFromNetwork = getDataFromNetwork(textSearch, totalItemCountPresenter, route, getCurrentTime());
                 }
             }
@@ -61,7 +62,6 @@ public class DequeVacanciesLoader {
                 vacanciesFromNetwork = getDataFromNetwork(textSearch, totalItemCountPresenter, route, getCurrentTime());
             }
         }
-       // Single<DequeVacancies> vacanciesSingle = Single.fromCallable(() -> dequeVacancies);
         Observable<DequeVacancies> vacanciesFromLocal = Observable.just(dequeVacancies);
         if (query.getCountVacancies() != 0) {
             vacanciesFromLocal = getDataFromLocal(totalItemCountPresenter, route);
@@ -104,5 +104,9 @@ public class DequeVacanciesLoader {
         } else {
             return false;
         }
+    }
+
+    public CompositeDisposable getCompositeDisposableData() {
+        return dataManager.getCompositeDisposable();
     }
 }

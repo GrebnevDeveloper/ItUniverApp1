@@ -83,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/number_phone"
+                android:text="@string/not_phone"
                 android:textColor="@android:color/holo_blue_light"/>
 
             <TextView
@@ -97,9 +97,9 @@
                 android:id="@+id/text_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/address_email"
+                android:text="@string/not_email"
                 android:textColor="@android:color/holo_blue_light"
                 android:layout_marginBottom="20dp"/>
         </LinearLayout>

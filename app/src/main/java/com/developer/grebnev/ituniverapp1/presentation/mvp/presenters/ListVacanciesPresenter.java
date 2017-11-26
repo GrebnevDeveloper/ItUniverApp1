@@ -89,6 +89,7 @@ public class ListVacanciesPresenter extends MvpPresenter<ListVacanciesView> impl
     @Override
     public void onDestroy() {
         super.onDestroy();
+        disposable.addAll(dequeVacanciesInteractor.getCompositeDisposableData());
         if (disposable.isDisposed()) {
             disposable.dispose();
         }

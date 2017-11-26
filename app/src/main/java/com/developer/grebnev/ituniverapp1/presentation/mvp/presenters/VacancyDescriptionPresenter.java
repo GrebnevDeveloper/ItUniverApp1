@@ -11,6 +11,7 @@ import com.developer.grebnev.ituniverapp1.presentation.mvp.view.VacancyDescripti
 import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -19,6 +20,9 @@ import io.reactivex.schedulers.Schedulers;
 
 @InjectViewState
 public class VacancyDescriptionPresenter extends MvpPresenter<VacancyDescriptionView> {
+
+    private CompositeDisposable disposable = new CompositeDisposable();
+
     @Inject
     VacancyDescriptionInteractor vacancyDescriptionInteractor;
 
@@ -27,7 +31,7 @@ public class VacancyDescriptionPresenter extends MvpPresenter<VacancyDescription
     }
 
     public void loadVacancyDescription(String vacancyId) {
-        vacancyDescriptionInteractor.getDetailVacancy(vacancyId)
+        disposable.add(vacancyDescriptionInteractor.getDetailVacancy(vacancyId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> {
@@ -37,7 +41,16 @@ public class VacancyDescriptionPresenter extends MvpPresenter<VacancyDescription
                     getViewState().showProgressLoad(View.INVISIBLE);
                 })
                 .subscribe(repository -> {
-                      getViewState().showFullData(repository);
-                });
+                    getViewState().showFullData(repository);
+                }));
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (disposable.isDisposed()) {
+            disposable.dispose();
+        }
     }
 }
