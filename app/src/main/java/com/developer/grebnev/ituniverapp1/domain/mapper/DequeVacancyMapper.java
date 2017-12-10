@@ -1,7 +1,7 @@
 package com.developer.grebnev.ituniverapp1.domain.mapper;
 
-import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
 import com.developer.grebnev.ituniverapp1.domain.deque.DequeVacancies;
+import com.developer.grebnev.ituniverapp1.presentation.mvp.model.Vacancy;
 
 import java.util.List;
 import java.util.Map;

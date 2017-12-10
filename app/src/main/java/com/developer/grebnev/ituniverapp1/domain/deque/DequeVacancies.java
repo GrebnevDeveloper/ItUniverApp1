@@ -1,7 +1,7 @@
 package com.developer.grebnev.ituniverapp1.domain.deque;
 
+import com.developer.grebnev.ituniverapp1.presentation.mvp.model.Vacancy;
 import com.developer.grebnev.ituniverapp1.utils.EndlessRecyclerConstants;
-import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -17,7 +17,8 @@ import javax.inject.Inject;
 
 public class DequeVacancies implements DequeVacanciesInterface {
     @Inject
-    public DequeVacancies() {}
+    public DequeVacancies() {
+    }
 
     private Deque<Map<Integer, List<Vacancy>>> dequeVacancies = new ArrayDeque<>(2);
     private int oldRoute = EndlessRecyclerConstants.SCROLL_DOWN;

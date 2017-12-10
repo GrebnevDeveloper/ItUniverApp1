@@ -20,15 +20,18 @@ import android.view.ViewGroup;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.developer.grebnev.ituniverapp1.MyApplication;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.developer.grebnev.ituniverapp1.R;
-import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
+import com.developer.grebnev.ituniverapp1.di.ComponentManager;
 import com.developer.grebnev.ituniverapp1.domain.deque.DequeVacancies;
+import com.developer.grebnev.ituniverapp1.presentation.mvp.model.Vacancy;
 import com.developer.grebnev.ituniverapp1.presentation.mvp.presenters.ListVacanciesPresenter;
 import com.developer.grebnev.ituniverapp1.presentation.mvp.view.ListVacanciesView;
 import com.developer.grebnev.ituniverapp1.presentation.ui.activities.MainActivity;
 import com.developer.grebnev.ituniverapp1.presentation.ui.adapters.ListVacanciesAdapter;
 import com.developer.grebnev.ituniverapp1.utils.EndlessRecyclerScrollListener;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,8 +52,17 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout swipeRefreshLayout;
 
+    @Inject
     @InjectPresenter
     ListVacanciesPresenter listVacanciesPresenter;
+
+    @ProvidePresenter
+    ListVacanciesPresenter providePresenter() {
+        return listVacanciesPresenter;
+    }
+
+    public ListVacanciesFragment() {
+    }
 
     ListVacanciesAdapter adapter;
 
@@ -58,9 +70,11 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        ComponentManager.getInstance().getListVacanciesComponent().inject(this);
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        MyApplication.getApplicationComponent().inject(this);
+//        MyApplication.getApplicationComponent().inject(this);
+
     }
 
     @Nullable
@@ -187,5 +201,11 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
                 Log.d(TAG, "Swipe refresh");
             }
         });
+    }
+
+    @Override
+    public void onDestroy() {
+        ComponentManager.getInstance().clearListVacancyComponent();
+        super.onDestroy();
     }
 }

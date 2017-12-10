@@ -55,21 +55,10 @@ public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdap
     public void onBindViewHolder(final ListVacanciesAdapter.ViewHolder holder, final int position) {
         if (!dequeVacancies.getDequeVacancies().isEmpty()) {
             holder.tvNameVacancy.setText(dequeVacancies.getVacancyOfDeque(position).name());
-            if (dequeVacancies.getVacancyOfDeque(position).salary() != null) {
-                holder.tvSalaryVacancy.setText("from " + dequeVacancies.getVacancyOfDeque(position).salary().from() +
-                " to " + dequeVacancies.getVacancyOfDeque(position).salary().to() + " " +
-                        dequeVacancies.getVacancyOfDeque(position).salary().currency());
-            }
-            if (dequeVacancies.getVacancyOfDeque(position).employer() != null) {
-                holder.tvEmployerVacancy.setText(dequeVacancies.getVacancyOfDeque(position).employer().name());
-            }
-            if (dequeVacancies.getVacancyOfDeque(position).address() != null) {
-                holder.tvAddressVacancy.setText(dequeVacancies.getVacancyOfDeque(position).address().city() + ", " +
-                        dequeVacancies.getVacancyOfDeque(position).address().street() + ", " +
-                        dequeVacancies.getVacancyOfDeque(position).address().building());
-            }
-            holder.tvDateCreatedVacancy.setText(dequeVacancies.getVacancyOfDeque(position).createdAt().substring(0, 10)
-                    + " in " + dequeVacancies.getVacancyOfDeque(position).createdAt().substring(12, 16));
+            holder.tvSalaryVacancy.setText(dequeVacancies.getVacancyOfDeque(position).salary());
+            holder.tvEmployerVacancy.setText(dequeVacancies.getVacancyOfDeque(position).employer());
+            holder.tvAddressVacancy.setText(dequeVacancies.getVacancyOfDeque(position).address());
+            holder.tvDateCreatedVacancy.setText(dequeVacancies.getVacancyOfDeque(position).createdAt());
         }
         countVacancies = query.getCountVacancies();
         Log.d(TAG, "Bind view holder " + position);

@@ -1,6 +1,7 @@
 package com.developer.grebnev.ituniverapp1.domain.interactor;
 
-import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
+
+import com.developer.grebnev.ituniverapp1.domain.entity.Vacancy;
 
 import io.reactivex.Observable;
 

@@ -1,7 +1,8 @@
 package com.developer.grebnev.ituniverapp1.domain.interactor;
 
-import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
-import com.developer.grebnev.ituniverapp1.data.repository.VacanciesRepository;
+import com.developer.grebnev.ituniverapp1.data.repository.RepositoryInterface;
+import com.developer.grebnev.ituniverapp1.di.scopes.DescriptionVacacnyScope;
+import com.developer.grebnev.ituniverapp1.domain.entity.Vacancy;
 
 import javax.inject.Inject;
 
@@ -10,17 +11,17 @@ import io.reactivex.Observable;
 /**
  * Created by Grebnev on 26.11.2017.
  */
-
+@DescriptionVacacnyScope
 public class VacancyDescriptionInteractor implements DescriptionInteractorInterface {
-    VacanciesRepository vacanciesRepository;
+    RepositoryInterface repositoryInterface;
 
     @Inject
-    public VacancyDescriptionInteractor(VacanciesRepository vacanciesRepository) {
-        this.vacanciesRepository = vacanciesRepository;
+    public VacancyDescriptionInteractor(RepositoryInterface repositoryInterface) {
+        this.repositoryInterface = repositoryInterface;
     }
 
     @Override
     public Observable<Vacancy> getDetailVacancy(String vacancyId) {
-        return vacanciesRepository.getVacancyDetail(vacancyId);
+        return repositoryInterface.getVacancyDetail(vacancyId);
     }
 }

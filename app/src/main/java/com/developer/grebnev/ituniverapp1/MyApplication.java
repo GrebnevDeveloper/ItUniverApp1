@@ -2,6 +2,7 @@ package com.developer.grebnev.ituniverapp1;
 
 import android.app.Application;
 
+import com.developer.grebnev.ituniverapp1.di.ComponentManager;
 import com.developer.grebnev.ituniverapp1.di.components.ApplicationComponent;
 import com.developer.grebnev.ituniverapp1.di.components.DaggerApplicationComponent;
 import com.developer.grebnev.ituniverapp1.di.modules.ApplicationModule;
@@ -19,6 +20,7 @@ public class MyApplication extends Application {
         this.applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
+        ComponentManager.getInstance().initApplicationComponent();
     }
 
     public static ApplicationComponent getApplicationComponent() {

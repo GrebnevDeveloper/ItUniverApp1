@@ -1,6 +1,7 @@
 package com.developer.grebnev.ituniverapp1.domain.deque;
 
-import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
+
+import com.developer.grebnev.ituniverapp1.presentation.mvp.model.Vacancy;
 
 import java.util.Deque;
 import java.util.List;

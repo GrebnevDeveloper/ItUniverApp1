@@ -1,7 +1,7 @@
 package com.developer.grebnev.ituniverapp1.domain.mapper;
 
+import com.developer.grebnev.ituniverapp1.presentation.mvp.model.Vacancy;
 import com.developer.grebnev.ituniverapp1.utils.EndlessRecyclerConstants;
-import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
 
 import java.util.HashMap;
 import java.util.List;

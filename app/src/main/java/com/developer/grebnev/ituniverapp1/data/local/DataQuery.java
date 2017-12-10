@@ -15,7 +15,8 @@ import io.reactivex.Observable;
 
 public class DataQuery implements DataQueryInterface {
     @Inject
-    public DataQuery() {}
+    public DataQuery() {
+    }
 
     @Override
     public Observable<List<VacancyLocal>> getListVacancies(int start, int end) {

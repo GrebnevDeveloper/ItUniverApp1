@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.activeandroid.ActiveAndroid;
-import com.developer.grebnev.ituniverapp1.MyApplication;
 import com.developer.grebnev.ituniverapp1.R;
 import com.developer.grebnev.ituniverapp1.presentation.ui.fragments.ListVacanciesFragment;
 
@@ -22,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        MyApplication.getApplicationComponent().inject(this);
+//        MyApplication.getApplicationComponent().inject(this);
 
         ActiveAndroid.initialize(this);
 

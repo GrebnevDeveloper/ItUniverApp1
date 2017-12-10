@@ -4,12 +4,13 @@ package com.developer.grebnev.ituniverapp1.domain.interactor;
 import com.developer.grebnev.ituniverapp1.domain.deque.DequeVacancies;
 
 import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by Grebnev on 11.11.2017.
  */
 
-public interface DequeIteractorInterface {
+public interface DequeInteractorInterface {
     Observable<DequeVacancies> getDequeVacancies(int totalItemCountPresenter, int route);
     boolean isInternetConnection();
     int getTotalItemCountPresenter();
@@ -19,4 +20,5 @@ public interface DequeIteractorInterface {
     int getScrollConstants(int totalItemCount);
     String getTextSearch();
     void setTextSearch(String textSearch);
+    CompositeDisposable getCompositeDisposableData();
 }

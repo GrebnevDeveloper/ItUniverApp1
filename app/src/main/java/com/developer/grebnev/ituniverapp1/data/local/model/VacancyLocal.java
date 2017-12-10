@@ -24,10 +24,6 @@ public class VacancyLocal extends Model{
     @Column(name = "id_vacancy")
     private String idVacancy;
 
-    public VacancyLocal() {
-        super();
-    }
-
     public String getName() {
         return name;
     }

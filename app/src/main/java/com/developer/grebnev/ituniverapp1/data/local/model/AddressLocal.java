@@ -32,7 +32,6 @@ public class AddressLocal extends Model {
         this.city = city;
     }
 
-
     public String getStreet() {
         return street;
     }

@@ -2,6 +2,8 @@ package com.developer.grebnev.ituniverapp1.di.modules;
 
 import android.app.Application;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -16,6 +18,7 @@ public class ApplicationModule {
         this.application = application;
     }
 
+    @Singleton
     @Provides
     public Application providesApplication() {
         return application;

@@ -16,10 +16,6 @@ public class SalaryLocal extends Model{
     @Column(name = "currency")
     private String currency;
 
-    public SalaryLocal() {
-        super();
-    }
-
     public Integer getTo() {
         return to;
     }

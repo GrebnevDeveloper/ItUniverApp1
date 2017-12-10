@@ -15,11 +15,14 @@ import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.developer.grebnev.ituniverapp1.MyApplication;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.developer.grebnev.ituniverapp1.R;
-import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
+import com.developer.grebnev.ituniverapp1.di.ComponentManager;
+import com.developer.grebnev.ituniverapp1.presentation.mvp.model.Vacancy;
 import com.developer.grebnev.ituniverapp1.presentation.mvp.presenters.VacancyDescriptionPresenter;
 import com.developer.grebnev.ituniverapp1.presentation.mvp.view.VacancyDescriptionView;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +33,7 @@ import butterknife.ButterKnife;
 
 public class VacancyDescriptionFragment extends MvpAppCompatFragment implements VacancyDescriptionView, View.OnClickListener {
 
+    @Inject
     @InjectPresenter
     VacancyDescriptionPresenter vacancyDescriptionPresenter;
 
@@ -54,10 +58,18 @@ public class VacancyDescriptionFragment extends MvpAppCompatFragment implements 
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
+    @ProvidePresenter
+    VacancyDescriptionPresenter provideDescriptionPresenter() {
+        return vacancyDescriptionPresenter;
+    }
+
+    public VacancyDescriptionFragment() {}
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        ComponentManager.getInstance().getDescriptionVacancyComponent().inject(this);
         super.onCreate(savedInstanceState);
-        MyApplication.getApplicationComponent().inject(this);
+//        MyApplication.getApplicationComponent().inject(this);
     }
 
     @Nullable
@@ -90,15 +102,10 @@ public class VacancyDescriptionFragment extends MvpAppCompatFragment implements 
     public void showDataFromDeque() {
         Vacancy vacancy = getArguments().getParcelable(ListVacanciesFragment.KEY_VACANCY);
         tvNameVacancy.setText(vacancy.name());
-        if (vacancy.salary() != null) {
-            tvSalary.setText("from " + vacancy.salary().from() + " to " + vacancy.salary().to() + " " +
-                    vacancy.salary().currency());
-        }
-        tvDatePublished.setText(vacancy.createdAt().substring(0, 10) + " in " + vacancy.createdAt().substring(12, 16));
-        tvNameEmployer.setText(vacancy.employer().name());
-        if (vacancy.address() != null) {
-            tvLocation.setText(vacancy.address().city() + ", " + vacancy.address().street() + ", " + vacancy.address().building());
-        }
+        tvSalary.setText(vacancy.salary());
+        tvDatePublished.setText(vacancy.createdAt());
+        tvNameEmployer.setText(vacancy.employer());
+        tvLocation.setText(vacancy.address());
         vacancyDescriptionPresenter.loadVacancyDescription(vacancy.idVacancy());
     }
 
@@ -114,21 +121,20 @@ public class VacancyDescriptionFragment extends MvpAppCompatFragment implements 
     @Override
     public void showFullData(Vacancy vacancy) {
         tvDescriptionVacancy.setText(Html.fromHtml(vacancy.description()));
-        if (vacancy.contacts() != null) {
-            if (vacancy.contacts().email() != null) {
-                tvEmail.setText(vacancy.contacts().email());
-                tvEmail.setOnClickListener(this);
-            }
-            if (vacancy.contacts().phones().size() > 0) {
-                tvPhone.setText(vacancy.contacts().phones().get(0).country() +
-                        vacancy.contacts().phones().get(0).city() + vacancy.contacts().phones().get(0).number());
-                tvPhone.setOnClickListener(this);
-            }
-        }
+        tvEmail.setText(vacancy.email());
+        tvEmail.setOnClickListener(this);
+        tvPhone.setText(vacancy.phone());
+        tvPhone.setOnClickListener(this);
     }
 
     @Override
     public void showErrorConnection() {
         Snackbar.make(getView(), R.string.no_connection, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onDestroy() {
+        ComponentManager.getInstance().clearDescriptionVacancyComponent();
+        super.onDestroy();
     }
 }

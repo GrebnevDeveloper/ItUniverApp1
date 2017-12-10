@@ -4,8 +4,9 @@ import android.view.View;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
-import com.developer.grebnev.ituniverapp1.MyApplication;
-import com.developer.grebnev.ituniverapp1.domain.interactor.VacancyDescriptionInteractor;
+import com.developer.grebnev.ituniverapp1.domain.deque.DequeLoaderInterface;
+import com.developer.grebnev.ituniverapp1.domain.interactor.DescriptionInteractorInterface;
+import com.developer.grebnev.ituniverapp1.domain.mapper.VacancyPresentationMapper;
 import com.developer.grebnev.ituniverapp1.presentation.mvp.view.VacancyDescriptionView;
 
 import javax.inject.Inject;
@@ -23,26 +24,44 @@ public class VacancyDescriptionPresenter extends MvpPresenter<VacancyDescription
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
-    @Inject
-    VacancyDescriptionInteractor vacancyDescriptionInteractor;
+    private DescriptionInteractorInterface descriptionInteractorInterface;
 
-    public VacancyDescriptionPresenter() {
-        MyApplication.getApplicationComponent().inject(this);
+    private DequeLoaderInterface dequeLoaderInterface;
+
+    private VacancyPresentationMapper vacancyPresentationMapper;
+
+    @Inject
+    public VacancyDescriptionPresenter(DescriptionInteractorInterface descriptionInteractorInterface,
+                                       DequeLoaderInterface dequeLoaderInterface,
+                                       VacancyPresentationMapper vacancyPresentationMapper) {
+        this.descriptionInteractorInterface = descriptionInteractorInterface;
+        this.dequeLoaderInterface = dequeLoaderInterface;
+        this.vacancyPresentationMapper = vacancyPresentationMapper;
     }
 
+//    public VacancyDescriptionPresenter() {
+//        MyApplication.getApplicationComponent().inject(this);
+//    }
+
     public void loadVacancyDescription(String vacancyId) {
-        disposable.add(vacancyDescriptionInteractor.getDetailVacancy(vacancyId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(disposable -> {
-                    getViewState().showProgressLoad(View.VISIBLE);
-                })
-                .doFinally(() -> {
-                    getViewState().showProgressLoad(View.INVISIBLE);
-                })
-                .subscribe(repository -> {
-                    getViewState().showFullData(repository);
-                }));
+        if (!dequeLoaderInterface.isInternetConnection()) {
+            getViewState().showErrorConnection();
+        }
+        else {
+            disposable.add(descriptionInteractorInterface.getDetailVacancy(vacancyId)
+                    .map(vacancy -> vacancyPresentationMapper.transformFromEntity(vacancy))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe(disposable -> {
+                        getViewState().showProgressLoad(View.VISIBLE);
+                    })
+                    .doFinally(() -> {
+                        getViewState().showProgressLoad(View.INVISIBLE);
+                    })
+                    .subscribe(repository -> {
+                        getViewState().showFullData(repository);
+                    }));
+        }
 
     }
 

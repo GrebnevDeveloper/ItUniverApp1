@@ -17,7 +17,7 @@
         android:name=".MyApplication"
         tools:replace="label">
         <meta-data android:name="AA_DB_NAME" android:value="Vacancy.db" />
-        <meta-data android:name="AA_DB_VERSION" android:value="1" />
+        <meta-data android:name="AA_DB_VERSION" android:value="5" />
         <activity android:name=".presentation.ui.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

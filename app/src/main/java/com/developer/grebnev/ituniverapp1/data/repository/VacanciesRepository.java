@@ -1,34 +1,35 @@
 package com.developer.grebnev.ituniverapp1.data.repository;
 
-import com.developer.grebnev.ituniverapp1.data.entity.Vacancy;
-import com.developer.grebnev.ituniverapp1.data.entity.mapper.VacancyEntityMapper;
-import com.developer.grebnev.ituniverapp1.data.entity.mapper.VacancyJsonMapper;
 import com.developer.grebnev.ituniverapp1.data.local.DataQueryInterface;
+import com.developer.grebnev.ituniverapp1.data.local.mapper.VacancyLocalMapper;
 import com.developer.grebnev.ituniverapp1.data.network.RequestInterface;
+import com.developer.grebnev.ituniverapp1.data.network.mapper.VacancyNetworkMapper;
+import com.developer.grebnev.ituniverapp1.domain.entity.Vacancy;
 
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 
 /**
  * Created by Grebnev on 07.11.2017.
  */
-
-public class VacanciesRepository implements VacanciesInterface{
-    VacancyJsonMapper vacancyJsonMapper;
-    VacancyEntityMapper vacancyEntityMapper;
+@Singleton
+public class VacanciesRepository implements RepositoryInterface{
+    VacancyNetworkMapper vacancyNetworkMapper;
+    VacancyLocalMapper vacancyLocalMapper;
     RequestInterface requestInterface;
     DataQueryInterface dataQueryInterface;
 
     @Inject
-    public VacanciesRepository(VacancyJsonMapper vacancyJsonMapper,
-                                      VacancyEntityMapper vacancyEntityMapper,
+    public VacanciesRepository(VacancyNetworkMapper vacancyNetworkMapper,
+                                      VacancyLocalMapper vacancyLocalMapper,
                                       RequestInterface requestInterface,
                                       DataQueryInterface dataQueryInterface) {
-        this.vacancyJsonMapper = vacancyJsonMapper;
-        this.vacancyEntityMapper = vacancyEntityMapper;
+        this.vacancyNetworkMapper = vacancyNetworkMapper;
+        this.vacancyLocalMapper = vacancyLocalMapper;
         this.requestInterface= requestInterface;
         this.dataQueryInterface = dataQueryInterface;
     }
@@ -37,25 +38,25 @@ public class VacanciesRepository implements VacanciesInterface{
     public Observable<List<Vacancy>> getVacanciesNetwork(String textSearch, int countVacancies, int numberPage) {
         if (textSearch.equals("")) {
             return requestInterface.getVacancies(countVacancies, numberPage)
-                    .map(pageVacancy -> vacancyJsonMapper.transformJsonToVacancy(pageVacancy))
-                    .map(listVacanciesNetwork -> vacancyEntityMapper.transformListFromNetwork(listVacanciesNetwork));
+                    .map(pageVacancy -> vacancyNetworkMapper.transformJsonToVacancy(pageVacancy))
+                    .map(listVacanciesNetwork -> vacancyNetworkMapper.transformListFromNetwork(listVacanciesNetwork));
         }
         else {
             return requestInterface.getResultSearch(textSearch, countVacancies, numberPage)
-                    .map(pageVacancy -> vacancyJsonMapper.transformJsonToVacancy(pageVacancy))
-                    .map(listVacanciesNetwork -> vacancyEntityMapper.transformListFromNetwork(listVacanciesNetwork));
+                    .map(pageVacancy -> vacancyNetworkMapper.transformJsonToVacancy(pageVacancy))
+                    .map(listVacanciesNetwork -> vacancyNetworkMapper.transformListFromNetwork(listVacanciesNetwork));
         }
     }
 
     @Override
     public Observable<List<Vacancy>> getVacanciesLocal(int start, int end) {
         return dataQueryInterface.getListVacancies(start, end)
-                .map(listVacanciesLocal -> vacancyEntityMapper.transformListFromLocal(listVacanciesLocal));
+                .map(listVacanciesLocal -> vacancyLocalMapper.transformListFromLocal(listVacanciesLocal));
     }
 
     @Override
     public Observable<Vacancy> getVacancyDetail(String vacancyId) {
         return requestInterface.getVacancyDetail(vacancyId)
-                .map(vacancyNetwork -> vacancyEntityMapper.transformFromNetwork(vacancyNetwork));
+                .map(vacancyNetwork -> vacancyNetworkMapper.transformFromNetwork(vacancyNetwork));
     }
 }

@@ -1,8 +1,8 @@
 package com.developer.grebnev.ituniverapp1.domain.interactor;
 
-import com.developer.grebnev.ituniverapp1.utils.EndlessRecyclerConstants;
+import com.developer.grebnev.ituniverapp1.domain.deque.DequeLoaderInterface;
 import com.developer.grebnev.ituniverapp1.domain.deque.DequeVacancies;
-import com.developer.grebnev.ituniverapp1.domain.deque.DequeVacanciesLoader;
+import com.developer.grebnev.ituniverapp1.utils.EndlessRecyclerConstants;
 
 import javax.inject.Inject;
 
@@ -13,12 +13,12 @@ import io.reactivex.disposables.CompositeDisposable;
  * Created by Grebnev on 07.11.2017.
  */
 
-public class DequeVacanciesInteractor implements DequeIteractorInterface{
-    DequeVacanciesLoader dequeVacanciesLoader;
+public class DequeVacanciesInteractor implements DequeInteractorInterface{
+    DequeLoaderInterface dequeLoaderInterface;
 
     @Inject
-    public DequeVacanciesInteractor(DequeVacanciesLoader dequeVacanciesLoader) {
-        this.dequeVacanciesLoader = dequeVacanciesLoader;
+    public DequeVacanciesInteractor(DequeLoaderInterface dequeLoaderInterface) {
+        this.dequeLoaderInterface = dequeLoaderInterface;
     }
 
     private DequeVacancies dequeVacancies = new DequeVacancies();
@@ -27,12 +27,12 @@ public class DequeVacanciesInteractor implements DequeIteractorInterface{
 
     @Override
     public Observable<DequeVacancies> getDequeVacancies(int totalItemCountPresenter, int route) {
-        return dequeVacanciesLoader.loadVacancies(textSearch ,totalItemCountPresenter, route);
+        return dequeLoaderInterface.loadVacancies(textSearch ,totalItemCountPresenter, route);
     }
 
     @Override
     public boolean isInternetConnection() {
-        return dequeVacanciesLoader.isInternetConnection();
+        return dequeLoaderInterface.isInternetConnection();
     }
 
     @Override
@@ -84,7 +84,8 @@ public class DequeVacanciesInteractor implements DequeIteractorInterface{
         this.textSearch = textSearch;
     }
 
+    @Override
     public CompositeDisposable getCompositeDisposableData() {
-        return dequeVacanciesLoader.getCompositeDisposableData();
+        return dequeLoaderInterface.getCompositeDisposableData();
     }
 }
