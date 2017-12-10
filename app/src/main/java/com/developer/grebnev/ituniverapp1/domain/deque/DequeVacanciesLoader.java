@@ -1,6 +1,7 @@
 package com.developer.grebnev.ituniverapp1.domain.deque;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.developer.grebnev.ituniverapp1.data.local.DataManagerInterface;
 import com.developer.grebnev.ituniverapp1.data.local.DataQueryInterface;
@@ -26,6 +27,9 @@ import io.reactivex.schedulers.Schedulers;
  */
 @Singleton
 public class DequeVacanciesLoader implements DequeLoaderInterface {
+    private static final String TAG = DequeVacanciesLoader.class.getSimpleName();
+    int itemCount = 0;
+
     Application application;
     RepositoryInterface repositoryInterface;
     DataManagerInterface dataManagerInterface;
@@ -72,8 +76,15 @@ public class DequeVacanciesLoader implements DequeLoaderInterface {
                 vacanciesFromNetwork = getDataFromNetwork(textSearch, totalItemCountPresenter, route, getCurrentTime());
             }
         }
+
+        disposable.add(queryInterface.getCountVacancies()
+                .subscribeOn(Schedulers.io())
+                .subscribe(value -> {
+                    setItemCount(value);
+                }));
+
         Observable<DequeVacancies> vacanciesFromLocal = Observable.just(dequeVacancies);
-        if (queryInterface.getCountVacancies() != 0) {
+        if (itemCount != 0) {
             vacanciesFromLocal = getDataFromLocal(totalItemCountPresenter, route);
         }
         return vacanciesFromNetwork.switchIfEmpty(vacanciesFromLocal);
@@ -83,16 +94,24 @@ public class DequeVacanciesLoader implements DequeLoaderInterface {
         return repositoryInterface.getVacanciesNetwork(textSearch, EndlessRecyclerConstants.VOLUME_LOAD,
                 totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD - 1)
                 .doOnNext(listVacancies -> {
-                    if (totalItemCountPresenter > queryInterface.getCountVacancies()) {
+                    if (totalItemCountPresenter > itemCount) {
                         disposable.add(dataManagerInterface.saveData(listVacancies)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe());
+                                .subscribe(repository -> {
+                                    Log.d(TAG, "Save data " + repository);
+                                }, throwable -> {
+                                    Log.d(TAG, "Error save data " + throwable.toString());
+                                }));
                     } else {
                         disposable.add(dataManagerInterface.overwriteData(listVacancies, totalItemCountPresenter)
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe());
+                                .subscribe(repository -> {
+                                    Log.d(TAG, "Overwrite data " + repository);
+                                }, throwable -> {
+                                    Log.d(TAG, "Error overwrite data " + throwable.toString());
+                                }));
                     }
                     dequeVacancies.writeTime(totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD,
                             time);
@@ -128,5 +147,9 @@ public class DequeVacanciesLoader implements DequeLoaderInterface {
     @Override
     public CompositeDisposable getCompositeDisposableData() {
         return disposable;
+    }
+
+    private void setItemCount(int itemCount) {
+        this.itemCount = itemCount;
     }
 }

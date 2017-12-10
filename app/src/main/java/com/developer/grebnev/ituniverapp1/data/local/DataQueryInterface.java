@@ -12,5 +12,5 @@ import io.reactivex.Observable;
 
 public interface DataQueryInterface {
     Observable<List<VacancyLocal>> getListVacancies(int start, int end);
-    int getCountVacancies();
+    Observable<Integer> getCountVacancies();
 }

@@ -29,9 +29,11 @@ public class DataQuery implements DataQueryInterface {
     }
 
     @Override
-    public int getCountVacancies() {
-        return new Select()
-                .from(VacancyLocal.class)
-                .count();
+    public Observable<Integer> getCountVacancies() {
+        return Observable.fromCallable(() ->
+                new Select()
+                        .from(VacancyLocal.class)
+                        .count()
+        );
     }
 }
