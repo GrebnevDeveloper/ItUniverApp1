@@ -17,6 +17,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -85,10 +86,12 @@ public class DequeVacanciesLoader implements DequeLoaderInterface {
                     if (totalItemCountPresenter > queryInterface.getCountVacancies()) {
                         disposable.add(dataManagerInterface.saveData(listVacancies)
                                 .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe());
                     } else {
                         disposable.add(dataManagerInterface.overwriteData(listVacancies, totalItemCountPresenter)
                                 .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe());
                     }
                     dequeVacancies.writeTime(totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD,

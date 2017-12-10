@@ -23,14 +23,24 @@ import dagger.Provides;
 @Module
 public class DequeModule {
     @Provides
+    public RepositoryInterface provideRepository(VacanciesRepository vacanciesRepository) {
+        return vacanciesRepository;
+    }
+
+    @Provides
+    public static DequeVacanciesInterface provideDequeVacancies(DequeVacancies dequeVacancies) {
+        return dequeVacancies;
+    }
+
+    @Provides
     public DequeLoaderInterface provideDequeLoader(Application application,
-                                                          RepositoryInterface repositoryInterface,
-                                                          DataManagerInterface dataManagerInterface,
-                                                          DataQueryInterface queryInterface,
-                                                          MapVacancyMapper mapVacancyMapper,
-                                                          DequeVacancyMapper dequeVacancyMapper,
-                                                          DequeVacanciesInterface dequeVacanciesInterface,
-                                                          VacancyPresentationMapper vacancyPresentationMapper) {
+                                                   RepositoryInterface repositoryInterface,
+                                                   DataManagerInterface dataManagerInterface,
+                                                   DataQueryInterface queryInterface,
+                                                   MapVacancyMapper mapVacancyMapper,
+                                                   DequeVacancyMapper dequeVacancyMapper,
+                                                   DequeVacanciesInterface dequeVacanciesInterface,
+                                                   VacancyPresentationMapper vacancyPresentationMapper) {
         return new DequeVacanciesLoader(application,
                 repositoryInterface,
                 dataManagerInterface,
@@ -39,14 +49,5 @@ public class DequeModule {
                 dequeVacancyMapper,
                 dequeVacanciesInterface,
                 vacancyPresentationMapper);
-    }
-
-    @Provides
-    public RepositoryInterface provideRepository(VacanciesRepository vacanciesRepository) {
-        return vacanciesRepository;
-    }
-    @Provides
-    public static DequeVacanciesInterface provideDequeVacancies(DequeVacancies dequeVacancies) {
-        return dequeVacancies;
     }
 }

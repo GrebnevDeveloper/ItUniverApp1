@@ -19,4 +19,5 @@ public interface DequeVacanciesInterface {
     Map<Integer, Long> getMapTime();
     void setOldTextSearch(String textSearch);
     String getOldTextSearch();
+    int getItemCount();
 }

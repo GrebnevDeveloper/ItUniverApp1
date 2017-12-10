@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.developer.grebnev.ituniverapp1.R;
-import com.developer.grebnev.ituniverapp1.utils.EndlessRecyclerConstants;
-import com.developer.grebnev.ituniverapp1.data.local.DataQuery;
 import com.developer.grebnev.ituniverapp1.domain.deque.DequeVacancies;
 
 import butterknife.BindView;
@@ -25,8 +23,6 @@ public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdap
     private static final String TAG = ListVacanciesAdapter.class.getSimpleName();
     private Listener listener;
     private DequeVacancies dequeVacancies = new DequeVacancies();
-    private DataQuery query = new DataQuery();
-    private int countVacancies = query.getCountVacancies();
 
     public interface Listener {
         void onClick(int position);
@@ -60,24 +56,13 @@ public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdap
             holder.tvAddressVacancy.setText(dequeVacancies.getVacancyOfDeque(position).address());
             holder.tvDateCreatedVacancy.setText(dequeVacancies.getVacancyOfDeque(position).createdAt());
         }
-        countVacancies = query.getCountVacancies();
         Log.d(TAG, "Bind view holder " + position);
     }
 
     @Override
     public int getItemCount() {
-        int keyOut = 0;
-        if (!dequeVacancies.getDequeVacancies().isEmpty()) {
-            for (Integer key : dequeVacancies.getDequeVacancies().getLast().keySet()) {
-                keyOut = key * EndlessRecyclerConstants.VOLUME_LOAD;
-            }
-        }
-        Log.d(TAG, "Count item " + keyOut + " " + countVacancies);
-        if (countVacancies >= keyOut || countVacancies == 0) {
-            return keyOut;
-        } else {
-            return countVacancies;
-        }
+        Log.d(TAG, "Count from deque " + dequeVacancies.getItemCount());
+        return dequeVacancies.getItemCount();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
