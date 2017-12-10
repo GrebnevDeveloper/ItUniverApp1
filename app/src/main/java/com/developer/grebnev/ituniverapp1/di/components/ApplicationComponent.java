@@ -15,12 +15,5 @@ import dagger.Component;
 @Component(modules = {ApplicationModule.class, DataModule.class, DequeModule.class})
 public interface ApplicationComponent {
     ListVacanciesComponent listVacanciesComponent();
-
     DescriptionVacancyComponent descriptionVacancyComponent();
-
-//    void inject(MainActivity mainActivity);
-//    void inject(ListVacanciesFragment listVacanciesFragment);
-//    void inject(VacancyDescriptionFragment vacancyDescriptionFragment);
-//    void inject(ListVacanciesPresenter listVacanciesPresenter);
-//    void inject(VacancyDescriptionPresenter vacancyDescriptionPresenter);
 }

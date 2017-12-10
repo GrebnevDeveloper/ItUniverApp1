@@ -24,7 +24,7 @@ public class DequeVacancies implements DequeVacanciesInterface {
     private int oldRoute = EndlessRecyclerConstants.SCROLL_DOWN;
     private Map<Integer, Long> mapTime = new HashMap<>();
     private String oldTextSearch = "";
-    private int itemCoutn = 0;
+    private int itemCount = 0;
 
     @Override
     public Deque<Map<Integer, List<Vacancy>>> getDequeVacancies() {
@@ -53,8 +53,8 @@ public class DequeVacancies implements DequeVacanciesInterface {
         }
         oldRoute = route;
         for (Integer key : dequeVacancies.getLast().keySet()) {
-            if (itemCoutn < key * EndlessRecyclerConstants.VOLUME_LOAD) {
-                itemCoutn = key * EndlessRecyclerConstants.VOLUME_LOAD;
+            if (itemCount < key * EndlessRecyclerConstants.VOLUME_LOAD) {
+                itemCount = key * EndlessRecyclerConstants.VOLUME_LOAD;
             }
         }
     }
@@ -98,6 +98,6 @@ public class DequeVacancies implements DequeVacanciesInterface {
 
     @Override
     public int getItemCount() {
-        return itemCoutn;
+        return itemCount;
     }
 }

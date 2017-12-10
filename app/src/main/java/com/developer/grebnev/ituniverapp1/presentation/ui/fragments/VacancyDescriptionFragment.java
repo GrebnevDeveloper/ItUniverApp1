@@ -69,7 +69,6 @@ public class VacancyDescriptionFragment extends MvpAppCompatFragment implements 
     public void onCreate(Bundle savedInstanceState) {
         ComponentManager.getInstance().getDescriptionVacancyComponent().inject(this);
         super.onCreate(savedInstanceState);
-//        MyApplication.getApplicationComponent().inject(this);
     }
 
     @Nullable

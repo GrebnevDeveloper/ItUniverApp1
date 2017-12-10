@@ -39,10 +39,6 @@ public class VacancyDescriptionPresenter extends MvpPresenter<VacancyDescription
         this.vacancyPresentationMapper = vacancyPresentationMapper;
     }
 
-//    public VacancyDescriptionPresenter() {
-//        MyApplication.getApplicationComponent().inject(this);
-//    }
-
     public void loadVacancyDescription(String vacancyId) {
         if (!dequeLoaderInterface.isInternetConnection()) {
             getViewState().showErrorConnection();

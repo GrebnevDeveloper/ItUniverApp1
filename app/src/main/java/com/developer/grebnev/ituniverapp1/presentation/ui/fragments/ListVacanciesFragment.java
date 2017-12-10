@@ -73,8 +73,6 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
         ComponentManager.getInstance().getListVacanciesComponent().inject(this);
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-//        MyApplication.getApplicationComponent().inject(this);
-
     }
 
     @Nullable

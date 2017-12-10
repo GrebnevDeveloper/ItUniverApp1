@@ -6,13 +6,14 @@ import com.developer.grebnev.ituniverapp1.data.local.model.VacancyLocal;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 
 /**
  * Created by Grebnev on 18.10.2017.
  */
-
+@Singleton
 public class DataQuery implements DataQueryInterface {
     @Inject
     public DataQuery() {

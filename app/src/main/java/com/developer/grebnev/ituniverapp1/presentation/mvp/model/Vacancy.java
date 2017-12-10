@@ -1,7 +1,6 @@
 package com.developer.grebnev.ituniverapp1.presentation.mvp.model;
 
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
 
 import com.google.auto.value.AutoValue;
 
@@ -13,8 +12,7 @@ public abstract class Vacancy implements Parcelable {
     public abstract String salary();
 
     public abstract String name();
-
-    @Nullable
+    
     public abstract String description();
 
     public abstract String createdAt();

@@ -17,7 +17,7 @@ import io.reactivex.Observable;
  * Created by Grebnev on 07.11.2017.
  */
 @Singleton
-public class VacanciesRepository implements RepositoryInterface{
+public class VacanciesRepository implements RepositoryInterface {
     VacancyNetworkMapper vacancyNetworkMapper;
     VacancyLocalMapper vacancyLocalMapper;
     RequestInterface requestInterface;
@@ -25,12 +25,12 @@ public class VacanciesRepository implements RepositoryInterface{
 
     @Inject
     public VacanciesRepository(VacancyNetworkMapper vacancyNetworkMapper,
-                                      VacancyLocalMapper vacancyLocalMapper,
-                                      RequestInterface requestInterface,
-                                      DataQueryInterface dataQueryInterface) {
+                               VacancyLocalMapper vacancyLocalMapper,
+                               RequestInterface requestInterface,
+                               DataQueryInterface dataQueryInterface) {
         this.vacancyNetworkMapper = vacancyNetworkMapper;
         this.vacancyLocalMapper = vacancyLocalMapper;
-        this.requestInterface= requestInterface;
+        this.requestInterface = requestInterface;
         this.dataQueryInterface = dataQueryInterface;
     }
 
@@ -40,8 +40,7 @@ public class VacanciesRepository implements RepositoryInterface{
             return requestInterface.getVacancies(countVacancies, numberPage)
                     .map(pageVacancy -> vacancyNetworkMapper.transformJsonToVacancy(pageVacancy))
                     .map(listVacanciesNetwork -> vacancyNetworkMapper.transformListFromNetwork(listVacanciesNetwork));
-        }
-        else {
+        } else {
             return requestInterface.getResultSearch(textSearch, countVacancies, numberPage)
                     .map(pageVacancy -> vacancyNetworkMapper.transformJsonToVacancy(pageVacancy))
                     .map(listVacanciesNetwork -> vacancyNetworkMapper.transformListFromNetwork(listVacanciesNetwork));

@@ -20,7 +20,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 @InjectViewState
-public class ListVacanciesPresenter extends MvpPresenter<ListVacanciesView> {
+public class ListVacanciesPresenter extends MvpPresenter<ListVacanciesView> implements ListPresenterInterface{
     private static final String TAG = ListVacanciesPresenter.class.getSimpleName();
 
     private CompositeDisposable disposable = new CompositeDisposable();
@@ -60,27 +60,27 @@ public class ListVacanciesPresenter extends MvpPresenter<ListVacanciesView> {
                 }));
     }
 
-//    @Override
+    @Override
     public int getTotalItemCountPresenter() {
         return dequeInteractorInterface.getTotalItemCountPresenter();
     }
 
-//    @Override
+    @Override
     public void setTotalItemCountPresenter(int countPresenter) {
         dequeInteractorInterface.setTotalItemCountPresenter(countPresenter);
     }
 
-//    @Override
+    @Override
     public DequeVacancies getDequeVacancies() {
         return dequeInteractorInterface.getDequeVacancies();
     }
 
-//    @Override
+    @Override
     public String getTextSearch() {
         return dequeInteractorInterface.getTextSearch();
     }
 
-//    @Override
+    @Override
     public void setTextSearch(String textSearch) {
         dequeInteractorInterface.setTextSearch(textSearch);
     }

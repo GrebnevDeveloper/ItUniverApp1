@@ -25,20 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.ui.activities.AddVacancyActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.ACTION_CREATE_ENTRY"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
-        <activity android:name=".presentation.ui.activities.AddResumeActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.ACTION_CREATE_ENTRY"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
