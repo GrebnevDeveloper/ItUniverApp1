@@ -121,9 +121,7 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
             @Override
             public boolean onQueryTextSubmit(String query) {
                 listVacanciesPresenter.setTextSearch(query);
-                listVacanciesPresenter.setTotalItemCountPresenter(100);
-                totalItemCountFragment = listVacanciesPresenter.getTotalItemCountPresenter();
-                listVacanciesPresenter.loadNextDataFromDatabase(totalItemCountFragment);
+                loadNewData();
                 return false;
             }
 
@@ -131,9 +129,7 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
             public boolean onQueryTextChange(String newText) {
                 if (newText.equals("") && !listVacanciesPresenter.getTextSearch().equals("")) {
                     listVacanciesPresenter.setTextSearch(newText);
-                    listVacanciesPresenter.setTotalItemCountPresenter(100);
-                    totalItemCountFragment = listVacanciesPresenter.getTotalItemCountPresenter();
-                    listVacanciesPresenter.loadNextDataFromDatabase(totalItemCountFragment);
+                    loadNewData();
                 }
                 return false;
             }
@@ -141,19 +137,15 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
     }
 
     @Override
-    public void showProgressLoad(int visibility) {
-        if (visibility == View.VISIBLE) {
-            swipeRefreshLayout.setRefreshing(true);
-        } else {
-            swipeRefreshLayout.setRefreshing(false);
-        }
+    public void showProgressLoad(boolean visibility) {
+            swipeRefreshLayout.setRefreshing(visibility);
     }
 
     @Override
     public void showListVacancies(DequeVacancies vacancies) {
         adapter.setListVacancies(vacancies);
         adapter.notifyDataSetChanged();
-        showProgressLoad(View.INVISIBLE);
+        showProgressLoad(false);
     }
 
     @Override
@@ -193,17 +185,15 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                listVacanciesPresenter.setTotalItemCountPresenter(100);
-                totalItemCountFragment = listVacanciesPresenter.getTotalItemCountPresenter();
-                listVacanciesPresenter.loadNextDataFromDatabase(totalItemCountFragment);
+                loadNewData();
                 Log.d(TAG, "Swipe refresh");
             }
         });
     }
 
-    @Override
-    public void onDestroy() {
-        ComponentManager.getInstance().clearListVacancyComponent();
-        super.onDestroy();
+    private void loadNewData() {
+        listVacanciesPresenter.setTotalItemCountPresenter(100);
+        totalItemCountFragment = listVacanciesPresenter.getTotalItemCountPresenter();
+        listVacanciesPresenter.loadNextDataFromDatabase(totalItemCountFragment);
     }
 }

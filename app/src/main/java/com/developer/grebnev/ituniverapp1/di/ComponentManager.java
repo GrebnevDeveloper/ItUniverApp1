@@ -13,8 +13,6 @@ public class ComponentManager {
     private static ComponentManager componentManager;
 
     private ApplicationComponent applicationComponent;
-    private DescriptionVacancyComponent descriptionVacancyComponent;
-    private ListVacanciesComponent listVacanciesComponent;
 
     public static ComponentManager getInstance() {
         if (componentManager == null) {
@@ -36,24 +34,11 @@ public class ComponentManager {
     }
 
     public DescriptionVacancyComponent getDescriptionVacancyComponent() {
-        if (descriptionVacancyComponent == null) {
-            descriptionVacancyComponent = getApplicationComponent().descriptionVacancyComponent();
-        }
-        return descriptionVacancyComponent;
-    }
-
-    public void clearDescriptionVacancyComponent() {
-        descriptionVacancyComponent = null;
+        return applicationComponent.descriptionVacancyComponent();
     }
 
     public ListVacanciesComponent getListVacanciesComponent() {
-        if (listVacanciesComponent == null) {
-            listVacanciesComponent = getApplicationComponent().listVacanciesComponent();
-        }
-        return listVacanciesComponent;
+        return applicationComponent.listVacanciesComponent();
     }
 
-    public void clearListVacancyComponent() {
-        listVacanciesComponent = null;
-    }
 }

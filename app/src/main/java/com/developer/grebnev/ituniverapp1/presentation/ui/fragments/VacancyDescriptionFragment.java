@@ -109,8 +109,8 @@ public class VacancyDescriptionFragment extends MvpAppCompatFragment implements 
     }
 
     @Override
-    public void showProgressLoad(int visibility) {
-        if (visibility == View.VISIBLE) {
+    public void showProgressLoad(boolean visibility) {
+        if (visibility) {
             progressBar.setVisibility(View.VISIBLE);
         } else {
             progressBar.setVisibility(View.INVISIBLE);
@@ -129,11 +129,5 @@ public class VacancyDescriptionFragment extends MvpAppCompatFragment implements 
     @Override
     public void showErrorConnection() {
         Snackbar.make(getView(), R.string.no_connection, Snackbar.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onDestroy() {
-        ComponentManager.getInstance().clearDescriptionVacancyComponent();
-        super.onDestroy();
     }
 }

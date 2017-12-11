@@ -11,7 +11,7 @@ import com.developer.grebnev.ituniverapp1.presentation.mvp.model.Vacancy;
 @StateStrategyType(SingleStateStrategy.class)
 public interface VacancyDescriptionView extends MvpView {
     void showDataFromDeque();
-    void showProgressLoad(int visibility);
+    void showProgressLoad(boolean visibility);
     void showFullData(Vacancy vacancy);
     void showErrorConnection();
 }
