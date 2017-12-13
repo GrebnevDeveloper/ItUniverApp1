@@ -61,18 +61,18 @@ public class VacancyPresentationMapper {
         String addressStr = "";
         if (address.getCity() != null && !address.getCity().equals("")) {
             addressStr += address.getCity() + ", ";
-        }
-        else {
+        } else {
             addressStr += address.getCity();
         }
-        if (address.getStreet() != null &&!address.getStreet().equals("")) {
+        if (address.getStreet() != null && !address.getStreet().equals("")) {
             addressStr += address.getStreet() + ", ";
         }
-        if (address.getBuilding() != null &&!address.getBuilding().equals("")) {
+        if (address.getBuilding() != null && !address.getBuilding().equals("")) {
             addressStr += address.getBuilding();
         }
         return addressStr;
     }
+
     private String buildPhoneStr(Phone phone) {
         String phoneStr = "";
         if (phone.getCountry() != null) {

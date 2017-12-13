@@ -13,11 +13,18 @@ import java.util.Map;
 
 public interface DequeVacanciesInterface {
     Deque<Map<Integer, List<Vacancy>>> getDequeVacancies();
+
     void addElementIntoDeque(Map<Integer, List<Vacancy>> vacancies, int route);
+
     Vacancy getVacancyOfDeque(int position);
+
     void writeTime(int page, long time);
+
     Map<Integer, Long> getMapTime();
-    void setOldTextSearch(String textSearch);
+
     String getOldTextSearch();
+
+    void setOldTextSearch(String textSearch);
+
     int getItemCount();
 }

@@ -34,8 +34,7 @@ public abstract class EndlessRecyclerScrollListener extends RecyclerView.OnScrol
             if (totalItemCount < 2000) {
                 onLoadMore(totalItemCount);
             }
-        }
-        else {
+        } else {
             if (dy < 0 && (totalItemCount - EndlessRecyclerConstants.VOLUME_LOAD) >= (firstVisibleItem - VISIBLE_THRESHOLD)) {
                 if (totalItemCount >= EndlessRecyclerConstants.VOLUME_LOAD) {
                     totalItemCount -= EndlessRecyclerConstants.VOLUME_LOAD;

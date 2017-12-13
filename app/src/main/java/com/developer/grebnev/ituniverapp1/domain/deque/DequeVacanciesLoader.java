@@ -39,6 +39,7 @@ public class DequeVacanciesLoader implements DequeLoaderInterface {
     DequeVacanciesInterface dequeVacanciesInterface;
     VacancyPresentationMapper vacancyPresentationMapper;
     CompositeDisposable disposable = new CompositeDisposable();
+    private DequeVacancies dequeVacancies = new DequeVacancies();
 
     @Inject
     public DequeVacanciesLoader(Application application,
@@ -58,8 +59,6 @@ public class DequeVacanciesLoader implements DequeLoaderInterface {
         this.dequeVacanciesInterface = dequeVacanciesInterface;
         this.vacancyPresentationMapper = vacancyPresentationMapper;
     }
-
-    private DequeVacancies dequeVacancies = new DequeVacancies();
 
     @Override
     public Observable<DequeVacancies> loadVacancies(String textSearch, int totalItemCountPresenter, int route) {

@@ -24,10 +24,6 @@ public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdap
     private Listener listener;
     private DequeVacancies dequeVacancies = new DequeVacancies();
 
-    public interface Listener {
-        void onClick(int position);
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         CardView cv = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_vacancies, parent, false);
@@ -65,6 +61,18 @@ public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdap
         return dequeVacancies.getItemCount();
     }
 
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
+
+    public void setListVacancies(DequeVacancies vacancies) {
+        this.dequeVacancies = vacancies;
+    }
+
+    public interface Listener {
+        void onClick(int position);
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.text_name_vacancy)
         TextView tvNameVacancy;
@@ -81,13 +89,5 @@ public class ListVacanciesAdapter extends RecyclerView.Adapter<ListVacanciesAdap
             super(cv);
             ButterKnife.bind(this, cv);
         }
-    }
-
-    public void setListener(Listener listener) {
-        this.listener = listener;
-    }
-
-    public void setListVacancies(DequeVacancies vacancies) {
-        this.dequeVacancies = vacancies;
     }
 }

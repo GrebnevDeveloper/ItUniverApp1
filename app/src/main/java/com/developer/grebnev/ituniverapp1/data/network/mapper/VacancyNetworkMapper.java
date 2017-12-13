@@ -21,7 +21,8 @@ import javax.inject.Inject;
 
 public class VacancyNetworkMapper {
     @Inject
-    public VacancyNetworkMapper() {}
+    public VacancyNetworkMapper() {
+    }
 
     public List<VacancyNetwork> transformJsonToVacancy(PageVacancyNetwork pageVacancy) {
         return pageVacancy.getVacanciesList();
@@ -48,7 +49,8 @@ public class VacancyNetworkMapper {
             description = vacancyNetwork.getDescription();
         }
 
-        Address address = new Address("Not specified address", "", "");;
+        Address address = new Address("Not specified address", "", "");
+        ;
         if (vacancyNetwork.getAddress() != null) {
             address = new Address(vacancyNetwork.getAddress().getBuilding(),
                     vacancyNetwork.getAddress().getCity(),

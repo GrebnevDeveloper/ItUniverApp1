@@ -18,7 +18,7 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 @InjectViewState
-public class ListVacanciesPresenter extends MvpPresenter<ListVacanciesView> implements ListPresenterInterface{
+public class ListVacanciesPresenter extends MvpPresenter<ListVacanciesView> implements ListPresenterInterface {
     private static final String TAG = ListVacanciesPresenter.class.getSimpleName();
 
     private CompositeDisposable disposable = new CompositeDisposable();

@@ -14,6 +14,10 @@ import com.developer.grebnev.ituniverapp1.di.modules.ApplicationModule;
 public class MyApplication extends Application {
     private static ApplicationComponent applicationComponent;
 
+    public static ApplicationComponent getApplicationComponent() {
+        return applicationComponent;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -21,9 +25,5 @@ public class MyApplication extends Application {
                 .applicationModule(new ApplicationModule(this))
                 .build();
         ComponentManager.getInstance().initApplicationComponent();
-    }
-
-    public static ApplicationComponent getApplicationComponent() {
-        return applicationComponent;
     }
 }

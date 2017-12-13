@@ -58,12 +58,13 @@ public class VacancyDescriptionFragment extends MvpAppCompatFragment implements 
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
+    public VacancyDescriptionFragment() {
+    }
+
     @ProvidePresenter
     VacancyDescriptionPresenter provideDescriptionPresenter() {
         return vacancyDescriptionPresenter;
     }
-
-    public VacancyDescriptionFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,12 +84,12 @@ public class VacancyDescriptionFragment extends MvpAppCompatFragment implements 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.text_phone :
+            case R.id.text_phone:
                 Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"));
                 callIntent.setData(Uri.parse("tel:" + tvPhone.getText().toString()));
                 startActivity(callIntent);
                 break;
-            case R.id.text_email :
+            case R.id.text_email:
                 Intent emailIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:"));
                 emailIntent.setData(Uri.parse("mailto:" + tvEmail.getText().toString()));
                 Intent emailChooser = Intent.createChooser(emailIntent, "Email");

@@ -42,10 +42,8 @@ import butterknife.ButterKnife;
 
 public class ListVacanciesFragment extends MvpAppCompatFragment implements ListVacanciesView {
 
-    private static final String TAG = ListVacanciesFragment.class.getSimpleName();
-
     public static final String KEY_VACANCY = "vacancy";
-
+    private static final String TAG = ListVacanciesFragment.class.getSimpleName();
     @BindView(R.id.recycler_list_vacancies)
     RecyclerView listVacanciesRecycler;
 
@@ -55,18 +53,24 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
     @Inject
     @InjectPresenter
     ListVacanciesPresenter listVacanciesPresenter;
+    ListVacanciesAdapter adapter;
+    private int totalItemCountFragment;
+
+    public ListVacanciesFragment() {
+    }
+
+    public static VacancyDescriptionFragment newInstance(Vacancy vacancy) {
+        Bundle args = new Bundle();
+        args.putParcelable(KEY_VACANCY, vacancy);
+        VacancyDescriptionFragment fragment = new VacancyDescriptionFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @ProvidePresenter
     ListVacanciesPresenter providePresenter() {
         return listVacanciesPresenter;
     }
-
-    public ListVacanciesFragment() {
-    }
-
-    ListVacanciesAdapter adapter;
-
-    private int totalItemCountFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,14 +94,6 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
         setUpAdapter(listVacanciesRecycler);
         setUpSwipeToRefreshLayout(view);
         listVacanciesPresenter.loadNextDataFromDatabase(totalItemCountFragment);
-    }
-
-    public static VacancyDescriptionFragment newInstance(Vacancy vacancy) {
-        Bundle args = new Bundle();
-        args.putParcelable(KEY_VACANCY, vacancy);
-        VacancyDescriptionFragment fragment = new VacancyDescriptionFragment();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -138,7 +134,7 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
 
     @Override
     public void showProgressLoad(boolean visibility) {
-            swipeRefreshLayout.setRefreshing(visibility);
+        swipeRefreshLayout.setRefreshing(visibility);
     }
 
     @Override

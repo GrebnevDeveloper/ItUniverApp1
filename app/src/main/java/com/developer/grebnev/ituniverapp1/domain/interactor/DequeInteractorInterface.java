@@ -12,13 +12,22 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public interface DequeInteractorInterface {
     Observable<DequeVacancies> getDequeVacancies(int totalItemCountPresenter, int route);
+
     boolean isInternetConnection();
+
     int getTotalItemCountPresenter();
+
     void setTotalItemCountPresenter(int countPresenter);
+
     DequeVacancies getDequeVacancies();
+
     void setDequeVacancies(DequeVacancies dequeVacancies);
+
     int getScrollConstants(int totalItemCount);
+
     String getTextSearch();
+
     void setTextSearch(String textSearch);
+
     CompositeDisposable getCompositeDisposableData();
 }

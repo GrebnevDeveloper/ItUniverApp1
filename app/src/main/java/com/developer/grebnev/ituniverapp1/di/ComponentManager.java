@@ -14,14 +14,15 @@ public class ComponentManager {
 
     private ApplicationComponent applicationComponent;
 
+    private ComponentManager() {
+    }
+
     public static ComponentManager getInstance() {
         if (componentManager == null) {
             componentManager = new ComponentManager();
         }
         return componentManager;
     }
-
-    private ComponentManager() {}
 
     public void initApplicationComponent() {
         if (applicationComponent == null) {

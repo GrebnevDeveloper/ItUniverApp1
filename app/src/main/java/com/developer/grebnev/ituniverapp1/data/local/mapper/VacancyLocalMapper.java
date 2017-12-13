@@ -22,7 +22,8 @@ import javax.inject.Inject;
 
 public class VacancyLocalMapper {
     @Inject
-    public VacancyLocalMapper() {}
+    public VacancyLocalMapper() {
+    }
 
     public List<Vacancy> transformListFromLocal(List<VacancyLocal> vacanciesLocal) {
         List<Vacancy> vacancies = new ArrayList<>();

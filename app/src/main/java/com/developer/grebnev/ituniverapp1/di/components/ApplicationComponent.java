@@ -15,5 +15,6 @@ import dagger.Component;
 @Component(modules = {ApplicationModule.class, DataModule.class, DequeModule.class})
 public interface ApplicationComponent {
     ListVacanciesComponent listVacanciesComponent();
+
     DescriptionVacancyComponent descriptionVacancyComponent();
 }

@@ -8,7 +8,7 @@ import com.activeandroid.annotation.Table;
  * Created by Grebnev on 26.11.2017.
  */
 @Table(name = "Salary")
-public class SalaryLocal extends Model{
+public class SalaryLocal extends Model {
     @Column(name = "to_sal")
     private Integer to;
     @Column(name = "from_sal")

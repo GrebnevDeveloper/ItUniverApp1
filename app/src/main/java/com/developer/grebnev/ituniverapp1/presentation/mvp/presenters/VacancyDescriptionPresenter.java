@@ -40,8 +40,7 @@ public class VacancyDescriptionPresenter extends MvpPresenter<VacancyDescription
     public void loadVacancyDescription(String vacancyId) {
         if (!dequeLoaderInterface.isInternetConnection()) {
             getViewState().showErrorConnection();
-        }
-        else {
+        } else {
             disposable.add(descriptionInteractorInterface.getDetailVacancy(vacancyId)
                     .map(vacancy -> vacancyPresentationMapper.transformFromEntity(vacancy))
                     .subscribeOn(Schedulers.io())

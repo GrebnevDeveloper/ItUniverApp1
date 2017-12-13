@@ -23,13 +23,13 @@ import dagger.Provides;
 @Module
 public class DequeModule {
     @Provides
-    public RepositoryInterface provideRepository(VacanciesRepository vacanciesRepository) {
-        return vacanciesRepository;
+    public static DequeVacanciesInterface provideDequeVacancies(DequeVacancies dequeVacancies) {
+        return dequeVacancies;
     }
 
     @Provides
-    public static DequeVacanciesInterface provideDequeVacancies(DequeVacancies dequeVacancies) {
-        return dequeVacancies;
+    public RepositoryInterface provideRepository(VacanciesRepository vacanciesRepository) {
+        return vacanciesRepository;
     }
 
     @Provides

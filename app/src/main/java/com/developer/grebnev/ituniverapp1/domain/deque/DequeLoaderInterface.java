@@ -9,6 +9,8 @@ import io.reactivex.disposables.CompositeDisposable;
 
 public interface DequeLoaderInterface {
     Observable<DequeVacancies> loadVacancies(String textSearch, int totalItemCountPresenter, int route);
+
     boolean isInternetConnection();
+
     CompositeDisposable getCompositeDisposableData();
 }

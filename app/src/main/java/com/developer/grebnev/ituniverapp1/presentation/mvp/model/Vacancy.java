@@ -9,10 +9,22 @@ import com.google.auto.value.AutoValue;
  */
 @AutoValue
 public abstract class Vacancy implements Parcelable {
+    public static Vacancy create(String salary,
+                                 String name,
+                                 String description,
+                                 String createdAt,
+                                 String address,
+                                 String employer,
+                                 String email,
+                                 String phone,
+                                 String idVacancy) {
+        return new AutoValue_Vacancy(salary, name, description, createdAt, address, employer, email, phone, idVacancy);
+    }
+
     public abstract String salary();
 
     public abstract String name();
-    
+
     public abstract String description();
 
     public abstract String createdAt();
@@ -26,16 +38,4 @@ public abstract class Vacancy implements Parcelable {
     public abstract String phone();
 
     public abstract String idVacancy();
-
-    public static Vacancy create(String salary,
-                                 String name,
-                                 String description,
-                                 String createdAt,
-                                 String address,
-                                 String employer,
-                                 String email,
-                                 String phone,
-                                 String idVacancy) {
-        return new AutoValue_Vacancy(salary, name, description, createdAt, address, employer, email, phone, idVacancy);
-    }
 }

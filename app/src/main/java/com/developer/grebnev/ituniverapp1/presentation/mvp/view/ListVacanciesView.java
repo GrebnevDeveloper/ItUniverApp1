@@ -12,6 +12,8 @@ import com.developer.grebnev.ituniverapp1.domain.deque.DequeVacancies;
 @StateStrategyType(SingleStateStrategy.class)
 public interface ListVacanciesView extends MvpView {
     void showProgressLoad(boolean visibility);
+
     void showListVacancies(DequeVacancies vacancies);
+
     void showErrorConnection();
 }

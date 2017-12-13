@@ -18,8 +18,8 @@ public interface RequestInterface {
 
     @GET("/vacancies")
     Observable<PageVacancyNetwork> getResultSearch(@Query("text") String textSearch,
-                                            @Query("per_page") int countVacancies,
-                                            @Query("page") int numberPage);
+                                                   @Query("per_page") int countVacancies,
+                                                   @Query("page") int numberPage);
 
     @GET("/vacancies/{vacancy_id}")
     Observable<VacancyNetwork> getVacancyDetail(@Path("vacancy_id") String vacancyId);

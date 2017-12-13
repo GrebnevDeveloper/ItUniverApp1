@@ -13,21 +13,20 @@ import io.reactivex.disposables.CompositeDisposable;
  * Created by Grebnev on 07.11.2017.
  */
 
-public class DequeVacanciesInteractor implements DequeInteractorInterface{
+public class DequeVacanciesInteractor implements DequeInteractorInterface {
     DequeLoaderInterface dequeLoaderInterface;
+    private DequeVacancies dequeVacancies = new DequeVacancies();
+    private int totalItemCountPresenter = EndlessRecyclerConstants.VOLUME_LOAD;
+    private String textSearch = "";
 
     @Inject
     public DequeVacanciesInteractor(DequeLoaderInterface dequeLoaderInterface) {
         this.dequeLoaderInterface = dequeLoaderInterface;
     }
 
-    private DequeVacancies dequeVacancies = new DequeVacancies();
-    private int totalItemCountPresenter = EndlessRecyclerConstants.VOLUME_LOAD;
-    private String textSearch = "";
-
     @Override
     public Observable<DequeVacancies> getDequeVacancies(int totalItemCountPresenter, int route) {
-        return dequeLoaderInterface.loadVacancies(textSearch ,totalItemCountPresenter, route);
+        return dequeLoaderInterface.loadVacancies(textSearch, totalItemCountPresenter, route);
     }
 
     @Override

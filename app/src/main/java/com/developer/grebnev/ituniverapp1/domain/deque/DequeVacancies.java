@@ -16,15 +16,15 @@ import javax.inject.Inject;
  */
 
 public class DequeVacancies implements DequeVacanciesInterface {
-    @Inject
-    public DequeVacancies() {
-    }
-
     private Deque<Map<Integer, List<Vacancy>>> dequeVacancies = new ArrayDeque<>(2);
     private int oldRoute = EndlessRecyclerConstants.SCROLL_DOWN;
     private Map<Integer, Long> mapTime = new HashMap<>();
     private String oldTextSearch = "";
     private int itemCount = 0;
+
+    @Inject
+    public DequeVacancies() {
+    }
 
     @Override
     public Deque<Map<Integer, List<Vacancy>>> getDequeVacancies() {
@@ -87,13 +87,13 @@ public class DequeVacancies implements DequeVacanciesInterface {
     }
 
     @Override
-    public void setOldTextSearch(String textSearch) {
-        this.oldTextSearch = textSearch;
+    public String getOldTextSearch() {
+        return oldTextSearch;
     }
 
     @Override
-    public String getOldTextSearch() {
-        return oldTextSearch;
+    public void setOldTextSearch(String textSearch) {
+        this.oldTextSearch = textSearch;
     }
 
     @Override

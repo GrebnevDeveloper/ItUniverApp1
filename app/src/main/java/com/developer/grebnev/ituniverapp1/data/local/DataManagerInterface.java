@@ -13,5 +13,6 @@ import io.reactivex.Observable;
 
 public interface DataManagerInterface {
     Observable saveData(List<Vacancy> vacancies);
+
     Observable overwriteData(List<Vacancy> vacancies, int totalItemCount);
 }

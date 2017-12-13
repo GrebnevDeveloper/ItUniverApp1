@@ -14,7 +14,8 @@ import javax.inject.Inject;
 
 public class DequeVacancyMapper {
     @Inject
-    public DequeVacancyMapper() {}
+    public DequeVacancyMapper() {
+    }
 
     public DequeVacancies createDequeVacancy(DequeVacancies dequeVacancies, Map<Integer, List<Vacancy>> mapVacancy, int route) {
         dequeVacancies.addElementIntoDeque(mapVacancy, route);
