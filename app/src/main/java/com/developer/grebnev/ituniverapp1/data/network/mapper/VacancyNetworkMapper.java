@@ -37,27 +37,27 @@ public class VacancyNetworkMapper {
     }
 
     public Vacancy transformFromNetwork(VacancyNetwork vacancyNetwork) {
-        Salary salary = new Salary(null, null, "Not specified salary");
+        Salary salary = new Salary(null, null, "");
         if (vacancyNetwork.getSalary() != null) {
             salary = new Salary(vacancyNetwork.getSalary().getTo(),
                     vacancyNetwork.getSalary().getFrom(),
                     vacancyNetwork.getSalary().getCurrency());
         }
 
-        String description = "Not specified description";
+        String description = "";
         if (vacancyNetwork.getDescription() != null) {
             description = vacancyNetwork.getDescription();
         }
 
-        Address address = new Address("Not specified address", "", "");
-        ;
+        Address address = new Address("", "", "");
+
         if (vacancyNetwork.getAddress() != null) {
             address = new Address(vacancyNetwork.getAddress().getBuilding(),
                     vacancyNetwork.getAddress().getCity(),
                     vacancyNetwork.getAddress().getStreet());
         }
 
-        Employer employer = new Employer("Not specified employer");
+        Employer employer = new Employer("");
         if (vacancyNetwork.getEmployer() != null) {
             employer = new Employer(vacancyNetwork.getEmployer().getName());
         }
@@ -71,7 +71,7 @@ public class VacancyNetworkMapper {
                 phones.add(phone);
             }
         }
-        Contacts contacts = new Contacts("Not specified email", new Phone("Not specified phone", null, null));
+        Contacts contacts = new Contacts("", new Phone("", null, null));
         if (vacancyNetwork.getContacts() != null) {
             contacts = new Contacts(vacancyNetwork.getContacts().getEmail(), phones.get(0));
         }

@@ -1,6 +1,6 @@
 package com.developer.grebnev.ituniverapp1.domain.mapper;
 
-import com.developer.grebnev.ituniverapp1.presentation.mvp.model.Vacancy;
+import com.developer.grebnev.ituniverapp1.presentation.mvp.model.VacancyPresentation;
 import com.developer.grebnev.ituniverapp1.utils.EndlessRecyclerConstants;
 
 import java.util.HashMap;
@@ -18,8 +18,8 @@ public class MapVacancyMapper {
     public MapVacancyMapper() {
     }
 
-    public Map<Integer, List<Vacancy>> createMapVacancies(int totalItemCountPresenter, List<Vacancy> vacancies) {
-        Map<Integer, List<Vacancy>> mapVacancies = new HashMap<>();
+    public Map<Integer, List<VacancyPresentation>> createMapVacancies(int totalItemCountPresenter, List<VacancyPresentation> vacancies) {
+        Map<Integer, List<VacancyPresentation>> mapVacancies = new HashMap<>();
         mapVacancies.put(totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD, vacancies);
         return mapVacancies;
     }

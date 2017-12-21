@@ -4,7 +4,7 @@ import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.developer.grebnev.ituniverapp1.domain.deque.DequeLoaderInterface;
 import com.developer.grebnev.ituniverapp1.domain.interactor.DescriptionInteractorInterface;
-import com.developer.grebnev.ituniverapp1.domain.mapper.VacancyPresentationMapper;
+import com.developer.grebnev.ituniverapp1.presentation.mvp.mapper.VacancyPresentationMapper;
 import com.developer.grebnev.ituniverapp1.presentation.mvp.view.VacancyDescriptionView;
 
 import javax.inject.Inject;

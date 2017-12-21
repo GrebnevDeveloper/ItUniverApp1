@@ -8,8 +8,8 @@ import com.google.auto.value.AutoValue;
  * Created by Grebnev on 07.12.2017.
  */
 @AutoValue
-public abstract class Vacancy implements Parcelable {
-    public static Vacancy create(String salary,
+public abstract class VacancyPresentation implements Parcelable {
+    public static VacancyPresentation create(String salary,
                                  String name,
                                  String description,
                                  String createdAt,
@@ -18,7 +18,7 @@ public abstract class Vacancy implements Parcelable {
                                  String email,
                                  String phone,
                                  String idVacancy) {
-        return new AutoValue_Vacancy(salary, name, description, createdAt, address, employer, email, phone, idVacancy);
+        return new AutoValue_VacancyPresentation(salary, name, description, createdAt, address, employer, email, phone, idVacancy);
     }
 
     public abstract String salary();

@@ -12,7 +12,13 @@
     <string name="no_connection">No internet connection</string>
     <string name="requirement">Requirement:</string>
     <string name="responsibility">Responsibility:</string>
+    <string name="not_description_specified">Description not specified</string>
     <string name="salary_not_specified">Salary not specified</string>
+    <string name="employer_not_specified">Employer not specified</string>
+    <string name="address_not_specified">Address not specified</string>
     <string name="not_phone">Not phone number</string>
     <string name="not_email">Not email</string>
+    <string name="from">from&#160;</string>
+    <string name="to">to&#160;</string>
+    <string name="in">&#160;in&#160;</string>
 </resources>

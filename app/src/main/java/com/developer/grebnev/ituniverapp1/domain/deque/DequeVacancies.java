@@ -1,6 +1,6 @@
 package com.developer.grebnev.ituniverapp1.domain.deque;
 
-import com.developer.grebnev.ituniverapp1.presentation.mvp.model.Vacancy;
+import com.developer.grebnev.ituniverapp1.presentation.mvp.model.VacancyPresentation;
 import com.developer.grebnev.ituniverapp1.utils.EndlessRecyclerConstants;
 
 import java.util.ArrayDeque;
@@ -16,7 +16,7 @@ import javax.inject.Inject;
  */
 
 public class DequeVacancies implements DequeVacanciesInterface {
-    private Deque<Map<Integer, List<Vacancy>>> dequeVacancies = new ArrayDeque<>(2);
+    private Deque<Map<Integer, List<VacancyPresentation>>> dequeVacancies = new ArrayDeque<>(2);
     private int oldRoute = EndlessRecyclerConstants.SCROLL_DOWN;
     private Map<Integer, Long> mapTime = new HashMap<>();
     private String oldTextSearch = "";
@@ -27,20 +27,20 @@ public class DequeVacancies implements DequeVacanciesInterface {
     }
 
     @Override
-    public Deque<Map<Integer, List<Vacancy>>> getDequeVacancies() {
+    public Deque<Map<Integer, List<VacancyPresentation>>> getDequeVacancies() {
         return dequeVacancies;
     }
 
     @Override
-    public void addElementIntoDeque(Map<Integer, List<Vacancy>> vacancies, int route) {
+    public void addElementIntoDeque(Map<Integer, List<VacancyPresentation>> vacancies, int route) {
         if (route == EndlessRecyclerConstants.SCROLL_NO) {
             route = EndlessRecyclerConstants.SCROLL_DOWN;
             oldRoute = EndlessRecyclerConstants.SCROLL_DOWN;
             dequeVacancies = new ArrayDeque<>(2);
         }
         if (dequeVacancies.isEmpty()) {
-            dequeVacancies.push(new HashMap<Integer, List<Vacancy>>());
-            dequeVacancies.push(new HashMap<Integer, List<Vacancy>>());
+            dequeVacancies.push(new HashMap<Integer, List<VacancyPresentation>>());
+            dequeVacancies.push(new HashMap<Integer, List<VacancyPresentation>>());
         }
         if (route == EndlessRecyclerConstants.SCROLL_DOWN && oldRoute == EndlessRecyclerConstants.SCROLL_DOWN) {
             dequeVacancies.pollFirst();
@@ -60,7 +60,7 @@ public class DequeVacancies implements DequeVacanciesInterface {
     }
 
     @Override
-    public Vacancy getVacancyOfDeque(int position) {
+    public VacancyPresentation getVacancyOfDeque(int position) {
         if (dequeVacancies.getFirst().containsKey(position / EndlessRecyclerConstants.VOLUME_LOAD + 1)) {
             return dequeVacancies
                     .getFirst()

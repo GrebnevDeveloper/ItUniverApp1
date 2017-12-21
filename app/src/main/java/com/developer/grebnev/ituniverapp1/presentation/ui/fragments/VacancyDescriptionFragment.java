@@ -18,7 +18,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.developer.grebnev.ituniverapp1.R;
 import com.developer.grebnev.ituniverapp1.di.ComponentManager;
-import com.developer.grebnev.ituniverapp1.presentation.mvp.model.Vacancy;
+import com.developer.grebnev.ituniverapp1.presentation.mvp.model.VacancyPresentation;
 import com.developer.grebnev.ituniverapp1.presentation.mvp.presenters.VacancyDescriptionPresenter;
 import com.developer.grebnev.ituniverapp1.presentation.mvp.view.VacancyDescriptionView;
 
@@ -49,8 +49,6 @@ public class VacancyDescriptionFragment extends MvpAppCompatFragment implements 
     TextView tvLocation;
     @BindView(R.id.text_description_vacancy)
     TextView tvDescriptionVacancy;
-    @BindView(R.id.text_address_vacancy)
-    TextView tvAddressVacancy;
     @BindView(R.id.text_phone)
     TextView tvPhone;
     @BindView(R.id.text_email)
@@ -100,7 +98,7 @@ public class VacancyDescriptionFragment extends MvpAppCompatFragment implements 
 
     @Override
     public void showDataFromDeque() {
-        Vacancy vacancy = getArguments().getParcelable(ListVacanciesFragment.KEY_VACANCY);
+        VacancyPresentation vacancy = getArguments().getParcelable(ListVacanciesFragment.KEY_VACANCY);
         tvNameVacancy.setText(vacancy.name());
         tvSalary.setText(vacancy.salary());
         tvDatePublished.setText(vacancy.createdAt());
@@ -119,12 +117,16 @@ public class VacancyDescriptionFragment extends MvpAppCompatFragment implements 
     }
 
     @Override
-    public void showFullData(Vacancy vacancy) {
+    public void showFullData(VacancyPresentation vacancy) {
         tvDescriptionVacancy.setText(Html.fromHtml(vacancy.description()));
         tvEmail.setText(vacancy.email());
-        tvEmail.setOnClickListener(this);
+        if (!vacancy.email().equals(getString(R.string.not_email))) {
+            tvEmail.setOnClickListener(this);
+        }
         tvPhone.setText(vacancy.phone());
-        tvPhone.setOnClickListener(this);
+        if (!vacancy.phone().equals(getString(R.string.not_phone))) {
+            tvPhone.setOnClickListener(this);
+        }
     }
 
     @Override

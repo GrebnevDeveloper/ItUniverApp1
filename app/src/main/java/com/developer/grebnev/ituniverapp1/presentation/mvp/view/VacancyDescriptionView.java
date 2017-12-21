@@ -3,7 +3,7 @@ package com.developer.grebnev.ituniverapp1.presentation.mvp.view;
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
-import com.developer.grebnev.ituniverapp1.presentation.mvp.model.Vacancy;
+import com.developer.grebnev.ituniverapp1.presentation.mvp.model.VacancyPresentation;
 
 /**
  * Created by Grebnev on 25.11.2017.
@@ -14,7 +14,7 @@ public interface VacancyDescriptionView extends MvpView {
 
     void showProgressLoad(boolean visibility);
 
-    void showFullData(Vacancy vacancy);
+    void showFullData(VacancyPresentation vacancy);
 
     void showErrorConnection();
 }

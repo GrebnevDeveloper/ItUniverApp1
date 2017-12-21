@@ -24,7 +24,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.developer.grebnev.ituniverapp1.R;
 import com.developer.grebnev.ituniverapp1.di.ComponentManager;
 import com.developer.grebnev.ituniverapp1.domain.deque.DequeVacancies;
-import com.developer.grebnev.ituniverapp1.presentation.mvp.model.Vacancy;
+import com.developer.grebnev.ituniverapp1.presentation.mvp.model.VacancyPresentation;
 import com.developer.grebnev.ituniverapp1.presentation.mvp.presenters.ListVacanciesPresenter;
 import com.developer.grebnev.ituniverapp1.presentation.mvp.view.ListVacanciesView;
 import com.developer.grebnev.ituniverapp1.presentation.ui.activities.MainActivity;
@@ -59,7 +59,7 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
     public ListVacanciesFragment() {
     }
 
-    public static VacancyDescriptionFragment newInstance(Vacancy vacancy) {
+    public static VacancyDescriptionFragment newInstance(VacancyPresentation vacancy) {
         Bundle args = new Bundle();
         args.putParcelable(KEY_VACANCY, vacancy);
         VacancyDescriptionFragment fragment = new VacancyDescriptionFragment();

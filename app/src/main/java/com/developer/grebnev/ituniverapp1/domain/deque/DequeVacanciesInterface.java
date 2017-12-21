@@ -1,7 +1,7 @@
 package com.developer.grebnev.ituniverapp1.domain.deque;
 
 
-import com.developer.grebnev.ituniverapp1.presentation.mvp.model.Vacancy;
+import com.developer.grebnev.ituniverapp1.presentation.mvp.model.VacancyPresentation;
 
 import java.util.Deque;
 import java.util.List;
@@ -12,11 +12,11 @@ import java.util.Map;
  */
 
 public interface DequeVacanciesInterface {
-    Deque<Map<Integer, List<Vacancy>>> getDequeVacancies();
+    Deque<Map<Integer, List<VacancyPresentation>>> getDequeVacancies();
 
-    void addElementIntoDeque(Map<Integer, List<Vacancy>> vacancies, int route);
+    void addElementIntoDeque(Map<Integer, List<VacancyPresentation>> vacancies, int route);
 
-    Vacancy getVacancyOfDeque(int position);
+    VacancyPresentation getVacancyOfDeque(int position);
 
     void writeTime(int page, long time);
 

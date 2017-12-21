@@ -34,23 +34,23 @@ public class VacancyLocalMapper {
     }
 
     public Vacancy transformFromLocal(VacancyLocal vacancyLocal) {
-        Salary salary = new Salary(null, null, "Not specified salary");
+        Salary salary = new Salary(null, null, "");
         if (vacancyLocal.getSalary() != null) {
             salary = new Salary(vacancyLocal.getSalary().getTo(),
                     vacancyLocal.getSalary().getFrom(),
                     vacancyLocal.getSalary().getCurrency());
         }
 
-        String description = "Not specified description";
+        String description = "";
 
-        Address address = new Address("Not specified address", "", "");
+        Address address = new Address("", "", "");
         if (vacancyLocal.getAddress() != null) {
             address = new Address(vacancyLocal.getAddress().getBuilding(),
                     vacancyLocal.getAddress().getCity(),
                     vacancyLocal.getAddress().getStreet());
         }
 
-        Employer employer = new Employer("Not specified employer");
+        Employer employer = new Employer("");
         if (vacancyLocal.getEmployer() != null) {
             employer = new Employer(vacancyLocal.getEmployer().getName());
         }
@@ -61,7 +61,7 @@ public class VacancyLocalMapper {
                 vacancyLocal.getCreatedAt(),
                 address,
                 employer,
-                new Contacts("Not specified email", new Phone("Not specified phone", null, null)),
+                new Contacts("", new Phone("", null, null)),
                 vacancyLocal.getIdVacancy());
         return vacancy;
     }

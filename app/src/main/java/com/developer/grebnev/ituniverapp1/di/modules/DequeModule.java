@@ -12,7 +12,7 @@ import com.developer.grebnev.ituniverapp1.domain.deque.DequeVacanciesInterface;
 import com.developer.grebnev.ituniverapp1.domain.deque.DequeVacanciesLoader;
 import com.developer.grebnev.ituniverapp1.domain.mapper.DequeVacancyMapper;
 import com.developer.grebnev.ituniverapp1.domain.mapper.MapVacancyMapper;
-import com.developer.grebnev.ituniverapp1.domain.mapper.VacancyPresentationMapper;
+import com.developer.grebnev.ituniverapp1.presentation.mvp.mapper.VacancyPresentationMapper;
 
 import dagger.Module;
 import dagger.Provides;

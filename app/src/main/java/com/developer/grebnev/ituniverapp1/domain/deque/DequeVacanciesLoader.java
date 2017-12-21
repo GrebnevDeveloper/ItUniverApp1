@@ -8,7 +8,7 @@ import com.developer.grebnev.ituniverapp1.data.local.DataQueryInterface;
 import com.developer.grebnev.ituniverapp1.data.repository.RepositoryInterface;
 import com.developer.grebnev.ituniverapp1.domain.mapper.DequeVacancyMapper;
 import com.developer.grebnev.ituniverapp1.domain.mapper.MapVacancyMapper;
-import com.developer.grebnev.ituniverapp1.domain.mapper.VacancyPresentationMapper;
+import com.developer.grebnev.ituniverapp1.presentation.mvp.mapper.VacancyPresentationMapper;
 import com.developer.grebnev.ituniverapp1.utils.EndlessRecyclerConstants;
 import com.developer.grebnev.ituniverapp1.utils.InternetConnection;
 
@@ -94,23 +94,9 @@ public class DequeVacanciesLoader implements DequeLoaderInterface {
                 totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD - 1)
                 .doOnNext(listVacancies -> {
                     if (totalItemCountPresenter > itemCount) {
-                        disposable.add(dataManagerInterface.saveData(listVacancies)
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(repository -> {
-                                    Log.d(TAG, "Save data " + repository);
-                                }, throwable -> {
-                                    Log.d(TAG, "Error save data " + throwable.toString());
-                                }));
+                        saveCache(dataManagerInterface.saveData(listVacancies));
                     } else {
-                        disposable.add(dataManagerInterface.overwriteData(listVacancies, totalItemCountPresenter)
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(repository -> {
-                                    Log.d(TAG, "Overwrite data " + repository);
-                                }, throwable -> {
-                                    Log.d(TAG, "Error overwrite data " + throwable.toString());
-                                }));
+                        saveCache(dataManagerInterface.overwriteData(listVacancies, totalItemCountPresenter));
                     }
                     dequeVacancies.writeTime(totalItemCountPresenter / EndlessRecyclerConstants.VOLUME_LOAD,
                             time);
@@ -150,5 +136,15 @@ public class DequeVacanciesLoader implements DequeLoaderInterface {
 
     private void setItemCount(int itemCount) {
         this.itemCount = itemCount;
+    }
+
+    private void saveCache(Observable data) {
+        disposable.add(data.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(repository -> {
+                    Log.d(TAG, "Overwrite data " + repository);
+                }, throwable -> {
+                    Log.d(TAG, "Error overwrite data " + throwable.toString());
+                }));
     }
 }
