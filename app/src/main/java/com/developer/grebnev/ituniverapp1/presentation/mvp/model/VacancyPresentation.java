@@ -10,14 +10,14 @@ import com.google.auto.value.AutoValue;
 @AutoValue
 public abstract class VacancyPresentation implements Parcelable {
     public static VacancyPresentation create(String salary,
-                                 String name,
-                                 String description,
-                                 String createdAt,
-                                 String address,
-                                 String employer,
-                                 String email,
-                                 String phone,
-                                 String idVacancy) {
+                                             String name,
+                                             String description,
+                                             String createdAt,
+                                             String address,
+                                             String employer,
+                                             String email,
+                                             String phone,
+                                             String idVacancy) {
         return new AutoValue_VacancyPresentation(salary, name, description, createdAt, address, employer, email, phone, idVacancy);
     }
 

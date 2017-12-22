@@ -58,8 +58,7 @@ public class VacancyPresentationMapper {
         }
         if (!salary.getCurrency().equals("")) {
             vacancyStr += salary.getCurrency();
-        }
-        else {
+        } else {
             vacancyStr += application.getString(R.string.salary_not_specified);
         }
         return vacancyStr;
@@ -72,8 +71,7 @@ public class VacancyPresentationMapper {
     private String buildDescriptionStr(String description) {
         if (!description.equals("")) {
             return description;
-        }
-        else {
+        } else {
             return application.getString(R.string.not_description_specified);
         }
     }
@@ -97,8 +95,7 @@ public class VacancyPresentationMapper {
     private String buildEmployerStr(String employer) {
         if (!employer.equals("")) {
             return employer;
-        }
-        else {
+        } else {
             return application.getString(R.string.employer_not_specified);
         }
     }
@@ -106,8 +103,7 @@ public class VacancyPresentationMapper {
     private String buildEmailStr(String email) {
         if (!email.equals("")) {
             return email;
-        }
-        else {
+        } else {
             return application.getString(R.string.not_email);
         }
     }
@@ -116,8 +112,7 @@ public class VacancyPresentationMapper {
         String phoneStr = "";
         if (phone.getCountry() != null && !phone.getCountry().equals("")) {
             phoneStr += phone.getCountry();
-        }
-        else {
+        } else {
             phoneStr += application.getString(R.string.not_phone);
         }
         if (phone.getCity() != null) {
