@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -105,13 +106,30 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
+
+
         MenuItem item = menu.findItem(R.id.action_search);
         SearchView searchView = new SearchView(((MainActivity) getContext()).getSupportActionBar().getThemedContext());
         searchView.setIconifiedByDefault(true);
         searchView.setSubmitButtonEnabled(true);
 
+        searchView.onActionViewExpanded();
+        searchView.setQuery(listVacanciesPresenter.getTextSearch(), false);
+
         MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
         MenuItemCompat.setActionView(item, searchView);
+
+        ImageView closeButton = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listVacanciesPresenter.setTextSearch(" ");
+                loadNewData();
+                listVacanciesPresenter.setTextSearch("");
+                searchView.setQuery(listVacanciesPresenter.getTextSearch(), false);
+            }
+        });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -123,10 +141,6 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (newText.equals("") && !listVacanciesPresenter.getTextSearch().equals("")) {
-                    listVacanciesPresenter.setTextSearch(newText);
-                    loadNewData();
-                }
                 return false;
             }
         });

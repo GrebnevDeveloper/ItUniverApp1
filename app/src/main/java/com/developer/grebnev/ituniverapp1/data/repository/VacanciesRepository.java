@@ -18,10 +18,10 @@ import io.reactivex.Observable;
  */
 @Singleton
 public class VacanciesRepository implements RepositoryInterface {
-    VacancyNetworkMapper vacancyNetworkMapper;
-    VacancyLocalMapper vacancyLocalMapper;
-    RequestInterface requestInterface;
-    DataQueryInterface dataQueryInterface;
+    private VacancyNetworkMapper vacancyNetworkMapper;
+    private VacancyLocalMapper vacancyLocalMapper;
+    private RequestInterface requestInterface;
+    private DataQueryInterface dataQueryInterface;
 
     @Inject
     public VacanciesRepository(VacancyNetworkMapper vacancyNetworkMapper,

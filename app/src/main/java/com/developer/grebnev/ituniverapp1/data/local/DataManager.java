@@ -21,7 +21,7 @@ import io.reactivex.Observable;
  */
 @Singleton
 public class DataManager implements DataManagerInterface {
-    VacancyLocalMapper vacancyLocalMapper;
+    private VacancyLocalMapper vacancyLocalMapper;
 
     @Inject
     public DataManager(VacancyLocalMapper vacancyLocalMapper) {

@@ -19,7 +19,7 @@ import javax.inject.Inject;
  */
 
 public class VacancyPresentationMapper {
-    Application application;
+    private Application application;
 
     @Inject
     public VacancyPresentationMapper(Application application) {

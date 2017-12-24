@@ -28,17 +28,17 @@ import io.reactivex.schedulers.Schedulers;
 @Singleton
 public class DequeVacanciesLoader implements DequeLoaderInterface {
     private static final String TAG = DequeVacanciesLoader.class.getSimpleName();
-    int itemCount = 0;
+    private int itemCount = 0;
 
-    Application application;
-    RepositoryInterface repositoryInterface;
-    DataManagerInterface dataManagerInterface;
-    DataQueryInterface queryInterface;
-    MapVacancyMapper mapVacancyMapper;
-    DequeVacancyMapper dequeVacancyMapper;
-    DequeVacanciesInterface dequeVacanciesInterface;
-    VacancyPresentationMapper vacancyPresentationMapper;
-    CompositeDisposable disposable = new CompositeDisposable();
+    private Application application;
+    private RepositoryInterface repositoryInterface;
+    private DataManagerInterface dataManagerInterface;
+    private DataQueryInterface queryInterface;
+    private MapVacancyMapper mapVacancyMapper;
+    private DequeVacancyMapper dequeVacancyMapper;
+    private DequeVacanciesInterface dequeVacanciesInterface;
+    private VacancyPresentationMapper vacancyPresentationMapper;
+    private CompositeDisposable disposable = new CompositeDisposable();
     private DequeVacancies dequeVacancies = new DequeVacancies();
 
     @Inject
@@ -78,9 +78,7 @@ public class DequeVacanciesLoader implements DequeLoaderInterface {
 
         disposable.add(queryInterface.getCountVacancies()
                 .subscribeOn(Schedulers.io())
-                .subscribe(value -> {
-                    setItemCount(value);
-                }));
+                .subscribe(this::setItemCount));
 
         Observable<DequeVacancies> vacanciesFromLocal = Observable.just(dequeVacancies);
         if (itemCount != 0) {

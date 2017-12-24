@@ -14,7 +14,7 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 
 public class DequeVacanciesInteractor implements DequeInteractorInterface {
-    DequeLoaderInterface dequeLoaderInterface;
+    private DequeLoaderInterface dequeLoaderInterface;
     private DequeVacancies dequeVacancies = new DequeVacancies();
     private int totalItemCountPresenter = EndlessRecyclerConstants.VOLUME_LOAD;
     private String textSearch = "";
