@@ -12,9 +12,11 @@ import io.reactivex.Observable;
  */
 
 public interface RepositoryInterface {
-    Observable<List<Vacancy>> getVacanciesNetwork(String textSearch, int countVacancies, int numberPage);
+    Observable<List<Vacancy>> getVacanciesNetwork(int countVacancies, int numberPage);
 
     Observable<List<Vacancy>> getVacanciesLocal(int start, int end);
+
+    Observable<List<Vacancy>> getVacanciesSearch(String textSearch, int countVacancies, int numberPage);
 
     Observable<Vacancy> getVacancyDetail(String vacancyId);
 }

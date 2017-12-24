@@ -32,7 +32,7 @@ public class ListVacanciesPresenter extends MvpPresenter<ListVacanciesView> impl
 
     public void loadNextDataFromDatabase(int totalItemCount) {
         int scroll = dequeInteractorInterface.getScrollConstants(totalItemCount);
-        if (scroll == EndlessRecyclerConstants.SCROLL_NO && getTextSearch().equals("")) {
+        if (scroll == EndlessRecyclerConstants.SCROLL_NO) {
             getViewState().showListVacancies(dequeInteractorInterface.getDequeVacancies());
         } else {
             loadData(scroll);

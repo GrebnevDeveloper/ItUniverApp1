@@ -57,7 +57,7 @@ public class DequeVacanciesInteractor implements DequeInteractorInterface {
     @Override
     public int getScrollConstants(int totalItemCount) {
         if (totalItemCountPresenter == totalItemCount) {
-            if (!dequeVacancies.getDequeVacancies().isEmpty()) {
+            if (!dequeVacancies.getDequeVacancies().isEmpty() && dequeVacancies.getOldTextSearch().equals(textSearch)) {
                 return EndlessRecyclerConstants.SCROLL_NO;
             } else {
                 return EndlessRecyclerConstants.SCROLL_DOWN;

@@ -4,6 +4,7 @@ import com.developer.grebnev.ituniverapp1.data.local.DataQueryInterface;
 import com.developer.grebnev.ituniverapp1.data.local.mapper.VacancyLocalMapper;
 import com.developer.grebnev.ituniverapp1.data.network.RequestInterface;
 import com.developer.grebnev.ituniverapp1.data.network.mapper.VacancyNetworkMapper;
+import com.developer.grebnev.ituniverapp1.data.network.model.PageVacancyNetwork;
 import com.developer.grebnev.ituniverapp1.domain.entity.Vacancy;
 
 import java.util.List;
@@ -35,16 +36,8 @@ public class VacanciesRepository implements RepositoryInterface {
     }
 
     @Override
-    public Observable<List<Vacancy>> getVacanciesNetwork(String textSearch, int countVacancies, int numberPage) {
-        if (textSearch.equals("")) {
-            return requestInterface.getVacancies(countVacancies, numberPage)
-                    .map(pageVacancy -> vacancyNetworkMapper.transformJsonToVacancy(pageVacancy))
-                    .map(listVacanciesNetwork -> vacancyNetworkMapper.transformListFromNetwork(listVacanciesNetwork));
-        } else {
-            return requestInterface.getResultSearch(textSearch, countVacancies, numberPage)
-                    .map(pageVacancy -> vacancyNetworkMapper.transformJsonToVacancy(pageVacancy))
-                    .map(listVacanciesNetwork -> vacancyNetworkMapper.transformListFromNetwork(listVacanciesNetwork));
-        }
+    public Observable<List<Vacancy>> getVacanciesNetwork(int countVacancies, int numberPage) {
+        return buildListVacancy(requestInterface.getVacancies(countVacancies, numberPage));
     }
 
     @Override
@@ -54,8 +47,19 @@ public class VacanciesRepository implements RepositoryInterface {
     }
 
     @Override
+    public Observable<List<Vacancy>> getVacanciesSearch(String textSearch, int countVacancies, int numberPage) {
+        return buildListVacancy(requestInterface.getResultSearch(textSearch, countVacancies, numberPage));
+    }
+
+    @Override
     public Observable<Vacancy> getVacancyDetail(String vacancyId) {
         return requestInterface.getVacancyDetail(vacancyId)
                 .map(vacancyNetwork -> vacancyNetworkMapper.transformFromNetwork(vacancyNetwork));
+    }
+
+    private Observable<List<Vacancy>> buildListVacancy(Observable<PageVacancyNetwork> vacancyNetwork) {
+        return vacancyNetwork
+                .map(pageVacancy -> vacancyNetworkMapper.transformJsonToVacancy(pageVacancy))
+                .map(listVacanciesNetwork -> vacancyNetworkMapper.transformListFromNetwork(listVacanciesNetwork));
     }
 }

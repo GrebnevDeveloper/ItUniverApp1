@@ -107,7 +107,6 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
 
-
         MenuItem item = menu.findItem(R.id.action_search);
         SearchView searchView = new SearchView(((MainActivity) getContext()).getSupportActionBar().getThemedContext());
         searchView.setIconifiedByDefault(true);
@@ -120,13 +119,11 @@ public class ListVacanciesFragment extends MvpAppCompatFragment implements ListV
         MenuItemCompat.setActionView(item, searchView);
 
         ImageView closeButton = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
-
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listVacanciesPresenter.setTextSearch(" ");
-                loadNewData();
                 listVacanciesPresenter.setTextSearch("");
+                loadNewData();
                 searchView.setQuery(listVacanciesPresenter.getTextSearch(), false);
             }
         });
